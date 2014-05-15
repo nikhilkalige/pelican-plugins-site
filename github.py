@@ -1,9 +1,10 @@
 import github3 as github
 import re
+import os
 
 REPO_USERNAME = 'nikhilkalige'
 REPO_NAME = 'pelican-plugins'
-
+RAW_FILE_LOCATION = 'content'
 
 def dir_readme(path):
     contents = repo.contents(path)
@@ -63,4 +64,9 @@ if 'tree' in tree:
         d['contents'], d['ext'] = module_readme(value['path'])
         file_list.append(d)
 
+    cwd = os.path.getcwd()
+    loc = os.path.join(cwd, RAW_FILE_LOCATION)
+    if not os.path.exists(loc):
+
+    # create files from readme
     print(file_list)
