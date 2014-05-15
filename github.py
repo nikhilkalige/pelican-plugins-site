@@ -6,6 +6,7 @@ REPO_USERNAME = 'nikhilkalige'
 REPO_NAME = 'pelican-plugins'
 RAW_FILE_LOCATION = 'content'
 
+
 def dir_readme(path):
     contents = repo.contents(path)
     # get the readme file
@@ -53,20 +54,25 @@ if 'tree' in tree:
         file_contents, extension = dir_readme(value['path'])
         if file_contents is not None:
             d = {}
-            d['path'] = value['path']
+            d['name'] = value['path']
             d['contents'] = file_contents
             d['ext'] = extension
             file_list.append(d)
 
     for value in sub_module:
         d = {}
-        d['path'] = value['path']
+        d['name'] = value['path']
         d['contents'], d['ext'] = module_readme(value['path'])
         file_list.append(d)
 
-    cwd = os.path.getcwd()
+    cwd = os.getcwd()
     loc = os.path.join(cwd, RAW_FILE_LOCATION)
     if not os.path.exists(loc):
+        os.mkdir(loc)
+
+    for value in file_list:
+        with open(os.path.join(loc, (value['name'] + '.' + value['ext'])), 'w') as outfile:
+            outfile.write(value['contents'])
 
     # create files from readme
-    print(file_list)
+    #print(file_list)
