@@ -1,0 +1,203 @@
+@font-face {
+    font-family: 'BebasNeueRegular';
+    src: url('fonts/BebasNeue-webfont.eot');
+    src: url('fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/BebasNeue-webfont.woff') format('woff'),
+         url('fonts/BebasNeue-webfont.ttf') format('truetype'),
+         url('fonts/BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FFF';
+    src:
+         url('fonts/FFF_Tusj.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'oswald';
+    src:
+         url('fonts/Oswald-Light.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'or';
+    src:
+         url('fonts/Oswald-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Six';
+    src:
+         url('fonts/SixCaps.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    background-color: #EDEDED;
+    font-size: 18px;
+}
+
+header {
+    padding-top: 15em;
+    position: relative;
+    //padding-top: 8em;
+    text-align: center;
+    overflow: hidden;
+
+    h1 {
+        font-family: six;
+        font-size: 4em;
+    }
+
+    p {
+        font-family: 'oswald';
+        font-size: 1.4em;
+        margin: 1em 0;
+    }
+}
+
+dl dd {
+    margin-bottom: 2px;
+}
+
+section {
+
+    h2 {
+        font-size: 3em;
+        margin-bottom: .5em;
+        font-family: "six";
+        text-transform: uppercase;
+        color: #262727;
+        text-align: center;
+        font-weight: 500;
+    }
+    p {
+        font-family: 'oswald';
+        font-size: 1.4em;
+        text-align: center;
+    }
+
+    .accordion {
+        transition: all 0.5s linear;
+        //width: 400px;
+        margin: 10px auto 30px auto;
+        text-align: left;
+
+        & dd > a {
+            font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+            padding: 5px 20px;
+            position: relative;
+            z-index: 20;
+            display: block;
+            height: 40px;
+            cursor: pointer;
+            color: #777;
+            color: #393b40;
+            color: #262727;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+            line-height: 33px;
+            font-size: 19px;
+            background: #ffffff;
+            /* box-shadow:
+                0px 0px 0px 1px rgba(155,155,155,0.3),
+                1px 0px 0px 0px rgba(255,255,255,0.9) inset,
+                0px 2px 2px rgba(0,0,0,0.1); */
+
+            &:hover{
+                background: #fff;
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                right: 13px;
+                top: 7px;
+                background: transparent url(../images/arrow_down.png) no-repeat center center;
+            }
+        }
+        & dd.active a:after {
+            background-image: url(../images/arrow_up.png);
+        }
+
+        & dd.active a, & dd.active a:hover {
+            background: #fff;
+            //color: #3d7489;
+            //text-shadow: 0px 1px 1px rgba(255,255,255, 0.6);
+            /* box-shadow:
+                0px 0px 0px 1px rgba(155,155,155,0.3),
+                0px 2px 2px rgba(0,0,0,0.1); */
+        }
+
+        article{
+            background: #fff;
+            margin-top: -1px;
+            overflow: hidden;
+            //height: 0px;
+            position: relative;
+            z-index: 10;
+            -webkit-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+            -moz-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+            -o-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+            -ms-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+            transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+
+            p {
+                font-style: italic;
+                color: #777;
+                line-height: 23px;
+                font-size: 14px;
+                padding: 20px;
+                text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+            }
+        }
+    }
+}
+
+footer {
+
+    text-align: center;
+    padding-bottom: 7em;
+
+    span {
+        display: block;
+        text-transform: uppercase;
+        font-family: "six", sans-serif;
+        //color: #a3a3a4;
+        font-size: 1.4em;
+    }
+
+    h2 {
+        font-family: "impact";
+        font-size: 2em;
+        height: 1em
+    }
+}
+
+.or-spacer {
+  margin: 8em auto;
+  position:relative;
+
+  .mask {
+    overflow:hidden; height:20px;
+    &:after {
+      content:'';
+      display:block; margin:-25px auto 0;
+      width:100%; height:25px;
+      border-radius:125px / 12px;
+      box-shadow:0 0 8px black;
+    }
+  }
+}
