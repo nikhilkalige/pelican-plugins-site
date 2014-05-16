@@ -2358,7 +2358,7 @@ label.error {
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 40rem;
+  max-width: 45rem;
   *zoom: 1;
 }
 /* line 116, ../bower_components/foundation/scss/foundation/components/_global.scss */
@@ -6093,7 +6093,7 @@ meta.foundation-mq-topbar {
 
   /* line 452, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .contain-to-grid .top-bar {
-    max-width: 40rem;
+    max-width: 45rem;
     margin: 0 auto;
     margin-bottom: 0;
   }
@@ -7740,8 +7740,14 @@ section .accordion {
   text-align: left;
 }
 /* line 97, ../scss/_mystyle.scss */
+section .accordion dd {
+  margin-bottom: 2px;
+  padding: 1.5em 2em;
+  background: #fff;
+}
+/* line 103, ../scss/_mystyle.scss */
 section .accordion dd > a {
-  font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'or';
   padding: 5px 20px;
   position: relative;
   z-index: 20;
@@ -7753,18 +7759,19 @@ section .accordion dd > a {
   color: #262727;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
   line-height: 33px;
-  font-size: 19px;
+  font-size: 20px;
   background: #ffffff;
+  text-transform: uppercase;
   /* box-shadow:
       0px 0px 0px 1px rgba(155,155,155,0.3),
       1px 0px 0px 0px rgba(255,255,255,0.9) inset,
       0px 2px 2px rgba(0,0,0,0.1); */
 }
-/* line 117, ../scss/_mystyle.scss */
+/* line 124, ../scss/_mystyle.scss */
 section .accordion dd > a:hover {
   background: #fff;
 }
-/* line 121, ../scss/_mystyle.scss */
+/* line 128, ../scss/_mystyle.scss */
 section .accordion dd > a:after {
   content: '';
   position: absolute;
@@ -7774,18 +7781,18 @@ section .accordion dd > a:after {
   top: 7px;
   background: transparent url(../images/arrow_down.png) no-repeat center center;
 }
-/* line 131, ../scss/_mystyle.scss */
+/* line 138, ../scss/_mystyle.scss */
 section .accordion dd.active a:after {
   background-image: url(../images/arrow_up.png);
 }
-/* line 135, ../scss/_mystyle.scss */
+/* line 142, ../scss/_mystyle.scss */
 section .accordion dd.active a, section .accordion dd.active a:hover {
   background: #fff;
   /* box-shadow:
       0px 0px 0px 1px rgba(155,155,155,0.3),
       0px 2px 2px rgba(0,0,0,0.1); */
 }
-/* line 144, ../scss/_mystyle.scss */
+/* line 151, ../scss/_mystyle.scss */
 section .accordion article {
   background: #fff;
   margin-top: -1px;
@@ -7798,46 +7805,46 @@ section .accordion article {
   -ms-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
   transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
 }
-/* line 157, ../scss/_mystyle.scss */
+/* line 164, ../scss/_mystyle.scss */
 section .accordion article p {
-  font-style: italic;
-  color: #777;
-  line-height: 23px;
-  font-size: 14px;
+  text-align: left;
   padding: 20px;
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+  padding-left: 26px;
+  padding-top: 40px;
+  line-height: 1.5em;
+  font-size: 1.2em;
 }
 
-/* line 169, ../scss/_mystyle.scss */
+/* line 179, ../scss/_mystyle.scss */
 footer {
   text-align: center;
   padding-bottom: 7em;
 }
-/* line 174, ../scss/_mystyle.scss */
+/* line 184, ../scss/_mystyle.scss */
 footer span {
   display: block;
   text-transform: uppercase;
   font-family: "six", sans-serif;
   font-size: 1.4em;
 }
-/* line 182, ../scss/_mystyle.scss */
+/* line 192, ../scss/_mystyle.scss */
 footer h2 {
   font-family: "impact";
   font-size: 2em;
   height: 1em;
 }
 
-/* line 189, ../scss/_mystyle.scss */
+/* line 199, ../scss/_mystyle.scss */
 .or-spacer {
   margin: 8em auto;
   position: relative;
 }
-/* line 193, ../scss/_mystyle.scss */
+/* line 203, ../scss/_mystyle.scss */
 .or-spacer .mask {
   overflow: hidden;
   height: 20px;
 }
-/* line 195, ../scss/_mystyle.scss */
+/* line 205, ../scss/_mystyle.scss */
 .or-spacer .mask:after {
   content: '';
   display: block;
