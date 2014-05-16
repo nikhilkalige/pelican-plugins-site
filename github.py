@@ -1,6 +1,8 @@
 import github3 as github
 import re
 import os
+import codecs
+
 
 REPO_USERNAME = 'nikhilkalige'
 REPO_NAME = 'pelican-plugins'
@@ -14,7 +16,7 @@ def dir_readme(path):
     for value in contents.keys():
         match = re.match('^(readme\\.(rst|md))$', value, re.I)
         if match is not None and match.group(1) is not None:
-            file_contents = repo.contents(path + '/' + match.group(1)).decoded
+            file_contents = repo.contents(path + '/' + match.group(1)).decoded.decode('utf-8')
             extension = match.group(2)
             return file_contents, extension
 
@@ -29,10 +31,10 @@ def module_readme(path):
     _repo = user.repository(user_name, path)
     readme = _repo.readme()
     extension = re.match('^(readme\\.(rst|md))$', readme.name, re.I).group(2)
-    return readme.decoded, extension
+    return readme.decoded.decode('utf-8'), extension
 
 
-user = github.login('nikhilkalige', '##')
+user = github.login('nikhilkalige', '147nik369')
 repo = user.repository(REPO_USERNAME, REPO_NAME)
 tree = repo.tree('master').to_json()
 
@@ -71,7 +73,7 @@ if 'tree' in tree:
         os.mkdir(loc)
 
     for value in file_list:
-        with open(os.path.join(loc, (value['name'] + '.' + value['ext'])), 'w') as outfile:
+        with codecs.open(os.path.join(loc, (value['name'] + '.' + value['ext'])), 'w', 'utf-8') as outfile:
             if value['ext'] == 'rst':
                 outfile.write(value['name'] + '\n' + '#' * len(value['name']) + '\n' + '\n' + value['contents'])
             elif value['ext'] == 'md':
