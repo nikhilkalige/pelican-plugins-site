@@ -72,7 +72,10 @@ if 'tree' in tree:
 
     for value in file_list:
         with open(os.path.join(loc, (value['name'] + '.' + value['ext'])), 'w') as outfile:
-            outfile.write(value['contents'])
+            if value['ext'] == 'rst':
+                outfile.write(value['name'] + '\n' + '#' * len(value['name']) + '\n' + '\n' + value['contents'])
+            elif value['ext'] == 'md':
+                outfile.write('Title:' + value['name'] + '\n' + '\n' + value['contents'])
 
     # create files from readme
     #print(file_list)
