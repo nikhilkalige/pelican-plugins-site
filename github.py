@@ -34,7 +34,20 @@ def module_readme(path):
     return readme.decoded.decode('utf-8'), extension
 
 
-user = github.login('nikhilkalige', '147nik369')
+def convert_to_html(content, title):
+    html = user.markdown(content)
+    # format it to suit requirements pelican
+    html = (
+        "<html>\n<head>\n<title>"
+        + title
+        + "</title>\n </head>\n <body>"
+        + html.decode('utf-8')
+        + "</body></html>"
+        )
+    return html
+
+
+user = github.login('nikhilkalige', '##')
 repo = user.repository(REPO_USERNAME, REPO_NAME)
 tree = repo.tree('master').to_json()
 
@@ -73,11 +86,13 @@ if 'tree' in tree:
         os.mkdir(loc)
 
     for value in file_list:
-        with codecs.open(os.path.join(loc, (value['name'] + '.' + value['ext'])), 'w', 'utf-8') as outfile:
-            if value['ext'] == 'rst':
-                outfile.write(value['name'] + '\n' + '#' * len(value['name']) + '\n' + '\n' + value['contents'])
-            elif value['ext'] == 'md':
-                outfile.write('Title:' + value['name'] + '\n' + '\n' + value['contents'])
+        with codecs.open(os.path.join(loc, (value['name'] + '.' + 'html')), 'w', 'utf-8') as outfile:
+            # if value['ext'] == 'rst':
+            #     outfile.write(value['name'] + '\n' + '#' * len(value['name']) + '\n' + '\n' + value['contents'])
+            # elif value['ext'] == 'md':
+            #     outfile.write('Title:' + value['name'] + '\n' + '\n' + value['contents'])
+            html = convert_to_html(value['contents'], value['name'])
+            outfile.write(html)
 
     # create files from readme
     #print(file_list)
