@@ -86,12 +86,13 @@ if 'tree' in tree:
         os.mkdir(loc)
 
     for value in file_list:
-        with codecs.open(os.path.join(loc, (value['name'] + '.' + 'html')), 'w', 'utf-8') as outfile:
-            # if value['ext'] == 'rst':
-            #     outfile.write(value['name'] + '\n' + '#' * len(value['name']) + '\n' + '\n' + value['contents'])
-            # elif value['ext'] == 'md':
-            #     outfile.write('Title:' + value['name'] + '\n' + '\n' + value['contents'])
-            html = convert_to_html(value['contents'], value['name'])
+        name = value['name'] + '.' + ('rst' if value['ext'] == 'rst' else 'html')
+        with codecs.open(os.path.join(loc, name), 'w', 'utf-8') as outfile:
+            if value['ext'] == 'rst':
+                html = (value['name'] + '\n' + '#' * len(value['name']) + '\n' + '\n' + value['contents'])
+            elif value['ext'] == 'md':
+            #    outfile.write('Title:' + value['name'] + '\n' + '\n' + value['contents'])
+                html = convert_to_html(value['contents'], value['name'])
             outfile.write(html)
 
     # create files from readme
