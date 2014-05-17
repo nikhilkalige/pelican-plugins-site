@@ -31,13 +31,9 @@ DEFAULT_PAGINATION = False
 #RELATIVE_URLS = True
 
 THEME = 'templates'
-#THEME = 'dev-random2'
 DEFAULT_DATE = 'fs'
-JINJA_EXTENSIONS = ['jinja2.ext.loopcontrols']
 DIRECT_TEMPLATES = ['index']
-#DIRECT_TEMPLATES = ['index', 'blog']
-#PAGINATED_DIRECT_TEMPLATES = ['blog']
-DEFAULT_PAGINATION = 3
+PAGINATED_DIRECT_TEMPLATES = []
 #TYPOGRIFY = True
 STATIC_PATHS = [
     'images',
@@ -46,6 +42,3 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     'extras/htaccess': {'path': '.htaccess'},
     }
-
-#PLUGIN_PATH = '../pelican-plugins'
-#PLUGINS = ['multiple_files']
