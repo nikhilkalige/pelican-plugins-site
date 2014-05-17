@@ -46,8 +46,7 @@ def convert_to_html(content, title):
         )
     return html
 
-
-user = github.login('nikhilkalige', '##')
+user = github.login(token=os.environ.get('TOKEN'))
 repo = user.repository(REPO_USERNAME, REPO_NAME)
 tree = repo.tree('master').to_json()
 
