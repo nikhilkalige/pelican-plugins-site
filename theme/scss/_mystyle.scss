@@ -1,3 +1,7 @@
+@import 'dillinger/style';
+@import 'stackedit/default';
+
+
 @font-face {
     font-family: 'BebasNeueRegular';
     src: url('fonts/BebasNeue-webfont.eot');
@@ -161,7 +165,7 @@ section {
             -ms-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
             transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
 
-            p {
+            /* p {
                 //font-style: italic;
                 //color: #777;
                 text-align: left;
@@ -172,6 +176,8 @@ section {
                 font-size: 1.2em;
                 //text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
             }
+ */
+            @include dillinger;
         }
     }
 }
