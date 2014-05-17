@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <header class="row">
+      <div class="large-12 columns">
+        <h1>PELICAN PLUGINS</h1>
+        <p>A collection of plugins for pelican</p>
+      </div>
+    </header>
+
+    <div class="row">
+      <div class="or-spacer">
+        <div class="mask"></div>
+      </div>
+    </div>
+
+    <section class="row">
+      <div class="large-12 columns">
+
+        <h2 id="the-plugins">The Plugins</h1>
+        <p>Plugins are a way to add features to Pelican without having to directly modify the Pelican core</p>
+
+        <dl class="accordion" data-accordion>
+        {% set i = 0 %}
+        {% for article in articles|sort(attribute='title') %}
+          <dd>
+            <a href="{{"#" ~ 'p' ~ i}}">{{article.title}}</a>
+            <article id="{{'p' ~ i}}" class="content">
+              <p>{{ article.content }}</p>
+            </article>
+          </dd>
+        {% set i = i + 1 %}
+        {% endfor %}
+        </dl>
+    </section>
+
+    <div class="row">
+      <div class="or-spacer">
+        <div class="mask"></div>
+      </div>
+    </div>
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <span>Built by</span>
+        <h2><a href="https://github.com/nikhilkalige">Nikhil Kalige</a></h2>
+      </div>
+    </footer>
+
+{% endblock %}
