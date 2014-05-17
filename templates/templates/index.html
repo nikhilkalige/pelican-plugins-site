@@ -22,7 +22,7 @@
 
         <dl class="accordion" data-accordion>
         {% set i = 0 %}
-        {% for article in articles %}
+        {% for article in articles|sort(attribute='title') %}
           <dd>
             <a href="{{"#" ~ 'p' ~ i}}">{{article.title}}</a>
             <article id="{{'p' ~ i}}" class="content">
