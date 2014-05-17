@@ -1,0 +1,2729 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pelican Plugins</title>
+    <link rel="stylesheet" href="http://nikhilkalige.github.io/pelican-plugins-site/theme/css/app.css" />
+    <script src="http://nikhilkalige.github.io/pelican-plugins-site/theme/js/modernizr.js"></script>
+  </head>
+  <body>
+
+    <header class="row">
+      <div class="large-12 columns">
+        <h1>PELICAN PLUGINS</h1>
+        <p>A collection of plugins for pelican</p>
+      </div>
+    </header>
+
+    <div class="row">
+      <div class="or-spacer">
+        <div class="mask"></div>
+      </div>
+    </div>
+
+    <section class="row">
+      <div class="large-12 columns">
+
+        <h2 id="the-plugins">The Plugins</h1>
+        <p>Plugins are a way to add features to Pelican without having to directly modify the Pelican core</p>
+
+        <dl class="accordion" data-accordion>
+          <dd>
+            <a href="#p0">assets</a>
+            <article id="p0" class="content">
+              <p><p>This plugin allows you to use the <a class="reference external" href="https://github.com/miracle2k/webassets">Webassets</a> module to manage assets such as
+CSS and JS files. The module must first be installed:</p>
+<pre class="literal-block">
+pip install webassets
+</pre>
+<p>The Webassets module allows you to perform a number of useful asset management
+functions, including:</p>
+<ul class="simple">
+<li>CSS minifier (<tt class="docutils literal">cssmin</tt>, <tt class="docutils literal">yui_css</tt>, ...)</li>
+<li>CSS compiler (<tt class="docutils literal">less</tt>, <tt class="docutils literal">sass</tt>, ...)</li>
+<li>JS minifier (<tt class="docutils literal">uglifyjs</tt>, <tt class="docutils literal">yui_js</tt>, <tt class="docutils literal">closure</tt>, ...)</li>
+</ul>
+<p>Others filters include CSS URL rewriting, integration of images in CSS via data
+URIs, and more. Webassets can also append a version identifier to your asset
+URL to convince browsers to download new versions of your assets when you use
+far-future expires headers. Please refer to the <a class="reference external" href="http://webassets.readthedocs.org/en/latest/builtin_filters.html">Webassets documentation</a> for
+more information.</p>
+<p>When used with Pelican, Webassets is configured to process assets in the
+<tt class="docutils literal">OUTPUT_PATH/theme</tt> directory. You can use Webassets in your templates by
+including one or more template tags. The Jinja variable <tt class="docutils literal">{{ ASSET_URL }}</tt> can
+be used in templates and is relative to the <tt class="docutils literal">theme/</tt> url. The
+<tt class="docutils literal">{{ ASSET_URL }}</tt> variable should be used in conjunction with the
+<tt class="docutils literal">{{ SITEURL }}</tt> variable in order to generate URLs properly. For example:</p>
+<div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;cssmin&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;css/style.min.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/inuit.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/pygment-monokai.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/main.css&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    &lt;link rel=&quot;stylesheet&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
+<span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+<p>... will produce a minified css file with a version identifier that looks like:</p>
+<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://{SITEURL}/theme/css/style.min.css?b3a7c807&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+<p>These filters can be combined. Here is an example that uses the SASS compiler
+and minifies the output:</p>
+<div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;sass,cssmin&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;css/style.min.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/style.scss&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    &lt;link rel=&quot;stylesheet&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
+<span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+<p>Another example for Javascript:</p>
+<div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;uglifyjs&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;js/packed.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/jquery.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/base.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/widgets.js&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    &lt;script src=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;&lt;/script&gt;</span>
+<span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+<p>The above will produce a minified JS file:</p>
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://{SITEURL}/theme/js/packed.js?00703b9d&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+<p>Pelican's debug mode is propagated to Webassets to disable asset packaging
+and instead work with the uncompressed assets.</p>
+<p>If you need to create named bundles (for example, if you need to compile SASS
+files before minifying with other CSS files), you can use the <tt class="docutils literal">ASSET_BUNDLES</tt>
+variable in your settings file. This is an ordered sequence of 3-tuples, where
+the 3-tuple is defined as <tt class="docutils literal">(name, args, kwargs)</tt>. This tuple is passed to the
+<a class="reference external" href="http://webassets.readthedocs.org/en/latest/environment.html#registering-bundles">environment's register() method</a>. The following will compile two SCSS files
+into a named bundle, using the <tt class="docutils literal">pyscss</tt> filter:</p>
+<div class="highlight"><pre><span class="n">ASSET_BUNDLES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;scss&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;colors.scss&#39;</span><span class="p">,</span> <span class="s">&#39;main.scss&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;filters&#39;</span><span class="p">:</span> <span class="s">&#39;pyscss&#39;</span><span class="p">}),</span>
+<span class="p">)</span>
+</pre></div>
+<p>Many of Webasset's available compilers have additional configuration options
+(i.e. 'Less', 'Sass', 'Stylus', 'Closure_js').  You can pass these options to
+Webassets using the <tt class="docutils literal">ASSET_CONFIG</tt> in your settings file.</p>
+<p>The following will handle Google Closure's compilation level and locate
+LessCSS's binary:</p>
+<div class="highlight"><pre><span class="n">ASSET_CONFIG</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;closure_compressor_optimization&#39;</span><span class="p">,</span> <span class="s">&#39;WHITESPACE_ONLY&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;less_bin&#39;</span><span class="p">,</span> <span class="s">&#39;lessc.cmd&#39;</span><span class="p">),</span> <span class="p">)</span>
+</pre></div>
+<p>If you wish to place your assets in locations other than the theme output
+directory, you can use <tt class="docutils literal">ASSET_SOURCE_PATHS</tt> in your settings file to provide
+webassets with a list of additional directories to search, relative to the
+theme's top-level directory. For example:</p>
+<div class="highlight"><pre><span class="n">ASSET_SOURCE_PATHS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;vendor/css&#39;</span><span class="p">,</span>
+    <span class="s">&#39;scss&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p1">better figures and images</a>
+            <article id="p1" class="content">
+              <p><ul class="simple">
+<li>pip install pillow beautifulsoup4</li>
+</ul>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<p>This plug-in:</p>
+<ul class="simple">
+<li>Adds a <cite>style=&quot;width: ???px; height: auto;&quot;</cite> attribute to any <cite>&lt;img&gt;</cite> tags in the content, by checking</li>
+</ul>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 15)</p>
+Bullet list ends without a blank line; unexpected unindent.</div>
+<p>the dimensions of the image file and adding the appropriate <cite>style=&quot;width: ???px; height: auto;&quot;</cite> to the <cite>&lt;img&gt;</cite> tag.
+- Also finds any <cite>div class=&quot;figures&quot;</cite> tags in the content, that contain images and adds the same style to them too.
+- If RESPONSIVE_IMAGES setting is true, it adds <cite>style=&quot;width: ???px; max-width: 100%; height: auto;&quot;</cite> instead.
+- Corrects Alt text: If an img alt attribute = the image filename, it sets it to &quot;&quot;</p>
+<p>Assuming that the image is 250px wide, it turns output like this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>&lt;div class=&quot;figure&quot;&gt;</dt>
+<dd><p class="first">&lt;img alt=&quot;/static/images/image.jpg&quot; src=&quot;/static/images/image.jpg&quot; /&gt;
+&lt;p class=&quot;caption&quot;&gt;</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 26)</p>
+Unexpected indentation.</div>
+<blockquote>
+This is the caption of the figure.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 27)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p>&lt;/p&gt;
+&lt;div class=&quot;legend&quot;&gt;</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 29)</p>
+Unexpected indentation.</div>
+<blockquote>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 31)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p class="last">&lt;/div&gt;</p>
+</dd>
+</dl>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 32)</p>
+Definition list ends without a blank line; unexpected unindent.</div>
+<p>&lt;/div&gt;</p>
+</blockquote>
+<p>into output like this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>&lt;div class=&quot;figure&quot; style=&quot;width: 250px; height: auto;&quot;&gt;</dt>
+<dd><p class="first">&lt;img style=&quot;width: 250px; height: auto;&quot; alt=&quot;&quot; src=&quot;/static/images/image.jpg&quot; /&gt;
+&lt;p class=&quot;caption&quot;&gt;</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 39)</p>
+Unexpected indentation.</div>
+<blockquote>
+This is the caption of the figure.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 40)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p>&lt;/p&gt;
+&lt;div class=&quot;legend&quot;&gt;</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 42)</p>
+Unexpected indentation.</div>
+<blockquote>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 44)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p class="last">&lt;/div&gt;</p>
+</dd>
+</dl>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 45)</p>
+Definition list ends without a blank line; unexpected unindent.</div>
+<p>&lt;/div&gt;</p>
+</blockquote>
+<p>or this, if RESPONSIVE_IMAGES = True:</p>
+<blockquote>
+<dl class="docutils">
+<dt>&lt;div class=&quot;figure&quot; style=&quot;width: 250px; max-width: 100%; height: auto;&quot;&gt;</dt>
+<dd><p class="first">&lt;img style=&quot;width: 250px; max-width: 100%; height: auto;&quot; alt=&quot;&quot; src=&quot;/static/images/image.jpg&quot; /&gt;
+&lt;p class=&quot;caption&quot;&gt;</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 52)</p>
+Unexpected indentation.</div>
+<blockquote>
+This is the caption of the figure.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 53)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p>&lt;/p&gt;
+&lt;div class=&quot;legend&quot;&gt;</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 55)</p>
+Unexpected indentation.</div>
+<blockquote>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 57)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p class="last">&lt;/div&gt;</p>
+</dd>
+</dl>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 58)</p>
+Definition list ends without a blank line; unexpected unindent.</div>
+<p>&lt;/div&gt;</p>
+</blockquote>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p2">cjk-auto-spacing</a>
+            <article id="p2" class="content">
+              <p><h1>
+<a name="user-content-cjk-auto-spacing" class="anchor" href="#cjk-auto-spacing"><span class="octicon octicon-link"></span></a>CJK Auto Spacing</h1>
+
+<p>A pelican plugin to insert spaces between Chinese/Japanese/Korean characters and English words.</p>
+
+<h1>
+<a name="user-content-why" class="anchor" href="#why"><span class="octicon octicon-link"></span></a>Why</h1>
+
+<p>For Chinese readers, If Chinese characters and English words are put together without a single tiny space, they are reading for torture rather than pleasure. </p>
+
+<p>Moreover, research shows those who like putting Chinese characters and English words together without space between them have more troubles in love (<a href="https://github.com/vinta/paranoid-auto-spacing">why not space?</a>in Chinese).
+Up to 70% get married with ones they don't love at 34 years old.
+And the remaining 30%, even worse, they have no one to inherent their legacies except their cats. </p>
+
+<p>Therefore, it's not hard to conclude that there must be space for pelican users who write in Chinese. </p>
+
+<p><strong>Note:</strong> I'm not a Japanese or Korean speaker, but the same thing can be concluded. 
+After all, they have lots in common with Chinese. And that's exactly why they, together as a whole, are called CJK Unified Ideographs in unicode standards</p>
+
+<h1>
+<a name="user-content-effects" class="anchor" href="#effects"><span class="octicon octicon-link"></span></a>Effects</h1>
+
+<p>Mardown test page</p>
+
+<pre><code>:::markdown
+Title: CJK Auto Spacing Test Page
+中文Chinese西文English字符Character自动Auto空格Spacing
+</code></pre>
+
+<p>Without CJK Auto Spacing</p>
+
+<p><a href="./screenshot2.png" target="_blank"><img src="./screenshot2.png" alt="without spacing" style="max-width:100%;"></a></p>
+
+<p>With CJK Auto Spacing</p>
+
+<p><a href="./screenshot1.png" target="_blank"><img src="./screenshot1.png" alt="with spacing" style="max-width:100%;"></a></p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p3">clean summary</a>
+            <article id="p3" class="content">
+              <p><h1>
+<a name="user-content-clean-summary-plugin" class="anchor" href="#clean-summary-plugin"><span class="octicon octicon-link"></span></a>Clean Summary Plugin</h1>
+
+<p>Plugin to clean your summary of excess images. Images can take up much more
+space than text and lead to summaries being different sizes on archive and 
+index pages. With this plugin you can specify a maximum number of images that
+will appear in your summaries.</p>
+
+<p>There is also an option to include a minimum of one image.</p>
+
+<h2>
+<a name="user-content-settings" class="anchor" href="#settings"><span class="octicon octicon-link"></span></a>Settings</h2>
+
+<p>This plugin has two settings. <code>CLEAN_SUMMARY_MAXIMUM</code> which takes an int, and 
+<code>CLEAN_SUMMARY_MINIMUM_ONE</code> which takes a boolean. They default to 0 and False.</p>
+
+<p><code>CLEAN_SUMMARY_MAXIMUM</code> sets the maximum number of images that will appear in 
+your summary.</p>
+
+<p>if <code>CLEAN_SUMMARY_MINIMUM_ONE</code> is set to <code>True</code> and your summary doesn't already
+contain an image, the plugin will add the first image in your article (if one 
+exists) to the beginning of the summary.</p>
+
+<h2>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>Requires Beautiful Soup:</p>
+
+<pre><code>pip install BeautifulSoup4
+</code></pre>
+
+<h2>
+<a name="user-content-usage-with-summary-plugin" class="anchor" href="#usage-with-summary-plugin"><span class="octicon octicon-link"></span></a>Usage with Summary Plugin</h2>
+
+<p>If using the summary plugin, make sure summary appears in your plugins before
+clean summary. Eg.</p>
+
+<pre><code>PLUGINS = ['summary', 'clean_summary', ... ]
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p4">code include</a>
+            <article id="p4" class="content">
+              <p><p>Use this plugin to make writing coding tutorials easier! You can
+maintain the example source files separately from the actual article.</p>
+<p>Based heavily on <tt class="docutils literal">docutils.parsers.rst.directives.Include</tt>. Include
+a file and output as a code block formatted with pelican's Pygments
+directive.</p>
+<p>Note that this is broken with the Docutils 0.10 release, there's a
+circular import. It was fixed in trunk:
+<a class="reference external" href="http://sourceforge.net/p/docutils/bugs/214/">http://sourceforge.net/p/docutils/bugs/214/</a></p>
+<div class="section" id="directives">
+<h2>Directives</h2>
+<pre class="code rst literal-block">
+<span class="p">..</span> <span class="ow">code-include</span><span class="p">::</span> incfile.py
+    <span class="nc">:lexer:</span> <span class="nf">string, name of the Pygments lexer to use, default 'text'</span>
+    <span class="nc">:encoding:</span> <span class="nf">string, encoding with which to open the file</span>
+    <span class="nc">:tab-width:</span> <span class="nf">integer, hard tabs are replaced with `tab-width` spaces</span>
+    <span class="nc">:start-line:</span> <span class="nf">integer, starting line to begin reading include file</span>
+    <span class="nc">:end-line:</span> <span class="nf">integer, last line from include file to display</span>
+</pre>
+<p><tt class="docutils literal"><span class="pre">start-line</span></tt>, and <tt class="docutils literal"><span class="pre">end-line</span></tt> have the same meaning as in the
+docutils <tt class="docutils literal">include</tt> directive, that is, they index from zero.</p>
+</div>
+<div class="section" id="example">
+<h2>Example</h2>
+<p>./incfile.py:</p>
+<pre class="code python literal-block">
+<span class="c"># These two comment lines will not</span>
+<span class="c"># be included in the output</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">insults</span> <span class="o">=</span> <span class="p">[</span><span class="s">'I fart in your general direction'</span><span class="p">,</span>
+           <span class="s">'your mother was a hampster'</span><span class="p">,</span>
+           <span class="s">'your father smelt of elderberries'</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">insult</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">insults</span><span class="p">)</span>
+<span class="c"># This comment line will be included</span>
+<span class="c"># ...but this one won't</span>
+</pre>
+<p>./yourfile.rst:</p>
+<pre class="code rst literal-block">
+<span class="gh">How to Insult the English</span>
+<span class="gh">=========================</span>
+
+<span class="nc">:author:</span> <span class="nf">Pierre Devereaux</span>
+
+A function to help insult those silly English knnnnnnniggets:
+
+<span class="p">..</span> <span class="ow">code-include</span><span class="p">::</span> incfile.py
+    :lexer: python
+    <span class="nc">:encoding:</span> <span class="nf">utf-8</span>
+    <span class="nc">:tab-width:</span> <span class="nf">4</span>
+    <span class="nc">:start-line:</span> <span class="nf">3</span>
+    <span class="nc">:end-line:</span> <span class="nf">11</span>
+</pre>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p5">creole reader</a>
+            <article id="p5" class="content">
+              <p><h1>
+<a name="user-content-creole-reader" class="anchor" href="#creole-reader"><span class="octicon octicon-link"></span></a>Creole Reader</h1>
+
+<p>This plugins allows you to write your posts using the wikicreole syntax. Give to
+these files the creole extension. The metadata are between <code>&lt;&lt;header&gt;&gt; &lt;&lt;/header&gt;&gt;</code>
+tags.</p>
+
+<h2>
+<a name="user-content-dependency" class="anchor" href="#dependency"><span class="octicon octicon-link"></span></a>Dependency</h2>
+
+<p>This plugin relies on <a href="https://pypi.python.org/pypi/python-creole/">python-creole</a> to work. Install it with:
+<code>pip install python-creole</code></p>
+
+<h2>
+<a name="user-content-syntax" class="anchor" href="#syntax"><span class="octicon octicon-link"></span></a>Syntax</h2>
+
+<p>Use ** for strong, // for emphasis, one = for 1st level titles. Please use the
+following macro for code highlighting:
+<code>&lt;&lt;code ext=".file_extension"&gt;&gt; &lt;&lt;/code&gt;&gt;</code></p>
+
+<p>For the complete syntax, look at: <a href="http://www.wikicreole.org/">http://www.wikicreole.org/</a></p>
+
+<h2>
+<a name="user-content-basic-example" class="anchor" href="#basic-example"><span class="octicon octicon-link"></span></a>Basic example</h2>
+
+<pre><code>&lt;&lt;header&gt;&gt;
+title: Créole
+tags: creole, python, pelican_open
+date: 2013-12-12
+&lt;&lt;/header&gt;&gt;
+
+= Title 1
+== Title 2
+
+Some nice text with **strong** and //emphasis//.
+
+* A nice list
+** With sub-elements
+* Python
+
+&lt;&lt;code ext=".py"&gt;&gt;
+print("Hello World")
+&lt;&lt;/code&gt;&gt;
+
+# An ordered list
+# A second item
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p6">custom article urls</a>
+            <article id="p6" class="content">
+              <p><h1>
+<a name="user-content-custom-article-urls" class="anchor" href="#custom-article-urls"><span class="octicon octicon-link"></span></a>Custom Article URLs</h1>
+
+<p>This plugin adds support for defining different default URLs for different
+categories, or different subcategories if using the subcategory plugin.</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>After adding <code>custom_article_urls</code> to your <code>PLUGINS</code>, add a
+<code>CUSTOM_ARTICLE_URLS</code> setting, which is a dictionary of rules. The rules are
+also a dictionary, consisting of the <code>URL</code> and the <code>SAVE_AS</code> values.</p>
+
+<p>For example, if you had two categories, <em>Category 1</em> and <em>Category 2</em>, and you
+would like <em>Category 1</em> saved as <code>category-1/article-slug/</code> and <em>Category 2</em>
+saved as <code>/year/month/article-slug/</code>, you would add:</p>
+
+<pre><code>CUSTOM_ARTICLE_URLS = {
+    'Category 1': {'URL': '{category}/{slug}/,
+        'SAVE_AS': '{category}/{slug}/index.html},
+    'Category 2': {'URL': '{date:%Y}/{date:%B}/{slug}/,
+        'SAVE_AS': '{date:%Y}/{date:%B}/{slug}/index.html},
+    }
+</code></pre>
+
+<p>If you had any other categories, they would use the default <code>ARTICLE_SAVE_AS</code>
+and <code>ARTICLE_URL</code> settings.</p>
+
+<p>If you are using the subcategory plugin, you can define them the same way.
+For example, if <em>Category 1</em> had a subcategory called <em>Sub Category</em>, you could
+define its rules with::</p>
+
+<pre><code>'Category 1/Sub Category`: ...
+</code></pre>
+
+<h2>
+<a name="user-content-other-usage-article-metadata" class="anchor" href="#other-usage-article-metadata"><span class="octicon octicon-link"></span></a>Other Usage: Article Metadata</h2>
+
+<p>If you define <code>URL</code> and <code>Save_as</code> in your article metadata, then this plugin
+will not alter that value. So you can still specify special one-off URLs as
+you normally would.</p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p7">disqus static</a>
+            <article id="p7" class="content">
+              <p><div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/lonewolf/workspace/web_development/python/pelican/pelican-plugins-site/content/disqus_static.rst</tt>, line 5)</p>
+<p>Title underline too short.</p>
+<pre class="literal-block">
+Disqus static comment plugin for Pelican
+====================================
+</pre>
+</div>
+<p>This plugin adds a disqus_comments property to all articles.
+Comments are fetched at generation time using disqus API.</p>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>Because we use disqus API to retrieve the comments you need to create an application at
+<a class="reference external" href="http://disqus.com/api/applications/">http://disqus.com/api/applications/</a> which will provide you with a secret and public keys for the API.</p>
+<p>We use disqus-python package for communication with disqus API:
+<tt class="docutils literal">pip install <span class="pre">disqus-python</span></tt></p>
+<p>Put <tt class="docutils literal">disqus_static.py</tt> plugin in <tt class="docutils literal">plugins</tt> folder in pelican installation
+and use the following in your settings:</p>
+<pre class="literal-block">
+PLUGINS = [u&quot;disqus_static&quot;]
+
+DISQUS_SITENAME = u'YOUR_SITENAME'
+DISQUS_SECRET_KEY = u'YOUR_SECRET_KEY'
+DISQUS_PUBLIC_KEY = u'YOUR_PUBLIC_KEY'
+</pre>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.disqus_comments</span> <span class="cp">%}</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;disqus_static_comments&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h4&gt;</span><span class="cp">{{</span> <span class="nv">article.disqus_comment_count</span> <span class="cp">}}</span> comments<span class="nt">&lt;/h4&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;post-list&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">{%</span> <span class="k">for</span> <span class="nv">comment</span> <span class="k">in</span> <span class="nv">article.disqus_comments</span> <span class="k">recursive</span> <span class="cp">%}</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post-content&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;avatar hovercard&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">&quot;Avatar&quot;</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">comment.author.avatar.small.cache</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post-body&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;header&gt;</span>
+                        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;publisher-anchor-color&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">comment.author.name</span> <span class="cp">}}</span><span class="nt">&lt;/span&gt;</span>
+                        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;time-ago&quot;</span> <span class="na">title=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">comment.createdAt</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">comment.createdAt</span> <span class="cp">}}</span><span class="nt">&lt;/span&gt;</span>
+                    <span class="nt">&lt;/header&gt;</span>
+                    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post-message-container&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;post-message publisher-anchor-color &quot;</span><span class="nt">&gt;</span>
+                            <span class="cp">{{</span> <span class="nv">comment.message</span> <span class="cp">}}</span>
+                        <span class="nt">&lt;/div&gt;</span>
+                    <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="cp">{%</span> <span class="k">if</span> <span class="nv">comment.children</span> <span class="cp">%}</span>
+            <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;children&quot;</span><span class="nt">&gt;</span>
+                <span class="cp">{{</span> <span class="nb">loop</span><span class="o">(</span><span class="nv">comment.children</span><span class="o">)</span> <span class="cp">}}</span>
+            <span class="nt">&lt;/ul&gt;</span>
+            <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p8">extract toc</a>
+            <article id="p8" class="content">
+              <p><h1>
+<a name="user-content-extract-table-of-content" class="anchor" href="#extract-table-of-content"><span class="octicon octicon-link"></span></a>Extract Table of Content</h1>
+
+<p>A Pelican plugin to extract table of contents (ToC) from <code>article.content</code> and
+place it in its own <code>article.toc</code> variable.</p>
+
+<p>Copyright (c) Talha Mansoor</p>
+
+<table>
+<thead><tr>
+<th>Author</th>
+<th>Talha Mansoor</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Author Email</td>
+<td><a href="mailto:talha131@gmail.com">talha131@gmail.com</a></td>
+</tr>
+<tr>
+<td>Author Homepage</td>
+<td><a href="http://onCrashReboot.com">http://onCrashReboot.com</a></td>
+</tr>
+<tr>
+<td>Github Account</td>
+<td><a href="https://github.com/talha131">https://github.com/talha131</a></td>
+</tr>
+</tbody>
+</table><h2>
+<a name="user-content-acknowledgement" class="anchor" href="#acknowledgement"><span class="octicon octicon-link"></span></a>Acknowledgement</h2>
+
+<p>Thanks to <a href="https://github.com/avaris">Avaris</a> for going out of the way to help
+me fix Unicode issues and doing a thorough code review.</p>
+
+<h1>
+<a name="user-content-why-do-you-need-it" class="anchor" href="#why-do-you-need-it"><span class="octicon octicon-link"></span></a>Why do you need it?</h1>
+
+<p>Pelican can generate ToC of reST and Markdown files, using markup's respective
+directive and extension. ToC is generated and placed at the beginning of
+<code>article.content</code>. You cannot place the ToC in <code>&lt;nav&gt;</code> HTML5 tag, nor can you
+place the ToC at the end of your article's content because ToC is part of
+<code>article.content</code>.</p>
+
+<p>This plugin extracts ToC from <code>article.content</code> and places it in <code>article.toc</code>.</p>
+
+<h1>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+<p><code>extract_toc</code> requires BeautifulSoup.</p>
+
+<div class="highlight highlight-bash"><pre>pip install beautifulsoup4
+</pre></div>
+
+<h1>
+<a name="user-content-how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h1>
+
+<p><strong>Important!</strong> This plugin only works with reST and Markdown files. reST files
+should have <code>.rst</code> extension. Markdown files can have <code>.md</code>, <code>.mkd</code> or
+<code>markdown</code>.</p>
+
+<p>If ToC appears in your article at more than one places, <code>extract_toc</code> will
+remove only the first occurrence. You shouldn't probably need to have multiple
+ToC in your article. In case you need to display it multiple times, you can
+print it via your template.</p>
+
+<p>ToC generated by Markdown is enclosed in <code>&lt;div class="toc"&gt;</code>. On the other hand
+ToC generated by reST is enclosed in <code>&lt;div class="contents topic"&gt;</code>.
+<code>extract_toc</code> relies on this behavior to work.</p>
+
+<h2>
+<a name="user-content-restructuredtext-example" class="anchor" href="#restructuredtext-example"><span class="octicon octicon-link"></span></a>reStructuredText Example</h2>
+
+<p>To add a table of contents to your reStructuredText document you need to add a 'contents directive' at the place where you want the table of contents to appear. See the <a href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#table-of-contents">documentation</a> for more details.</p>
+
+<div class="highlight highlight-rst"><pre><span class="gh">My super title</span>
+<span class="gh">##############</span>
+
+<span class="nc">:date:</span> <span class="nf">2010-10-03</span>
+<span class="nc">:tags:</span> <span class="nf">thats, awesome</span>
+
+<span class="p">..</span> <span class="ow">contents</span><span class="p">::</span>
+<span class="cp">..</span>
+<span class="cp">   1  Head 1</span>
+<span class="cp">     1.1  Head 2</span>
+<span class="cp">   2  Head 3</span>
+<span class="cp">   3  head 4</span>
+
+<span class="gh">Heading 1</span>
+<span class="gh">---------</span>
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+</pre></div>
+
+<h2>
+<a name="user-content-markdown-example" class="anchor" href="#markdown-example"><span class="octicon octicon-link"></span></a>Markdown Example</h2>
+
+<p>To add a table of contents to your Markdown document you need to place the 'TOC marker' at the place where you would like the table of contents to appear. See the Python Markdown  <a href="http://pythonhosted.org/Markdown/extensions/toc.html">documentation</a> for more details.</p>
+
+<p>Important! To enable table of contents generation for the markdown reader you need to set <code>MD_EXTENSIONS = (['toc'])</code> in your pelican configuration file.</p>
+
+<pre lang="Markdown"><code>title: My super title
+date: 4-4-2013
+tags: thats, awesome
+
+[TOC]
+
+# Heading 1 #
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+</code></pre>
+
+<h1>
+<a name="user-content-template-example" class="anchor" href="#template-example"><span class="octicon octicon-link"></span></a>Template Example</h1>
+
+<div class="highlight highlight-python"><pre><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">article</span><span class="o">.</span><span class="n">toc</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">nav</span> <span class="n">class</span><span class="o">=</span><span class="s">"affix"</span><span class="o">&gt;</span>
+    <span class="p">{{</span> <span class="n">article</span><span class="o">.</span><span class="n">toc</span> <span class="p">}}</span>
+    <span class="o">&lt;/</span><span class="n">nav</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p9">feed summary</a>
+            <article id="p9" class="content">
+              <p><h1>
+<a name="user-content-feed-summary" class="anchor" href="#feed-summary"><span class="octicon octicon-link"></span></a>Feed Summary</h1>
+
+<p>This plugin allows article summaries to be used in ATOM and RSS feeds instead of the entire article. It uses the
+built-in pelican <code>Summary:</code> metadata.</p>
+
+<p>The summary of an article can either be set explicitly with the <code>Summary:</code> metadata attribute as described in the
+<a href="http://docs.getpelican.com/en/latest/getting_started.html#file-metadata">pelican getting started docs</a>,
+or automatically generated using the number of words specified in the
+<a href="http://docs.getpelican.com/en/latest/settings.html">SUMMARY_MAX_LENGTH</a> setting.</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To use this plugin, ensure the following are set in your <code>pelicanconf.py</code> file:</p>
+
+<pre><code>PLUGIN_PATH = '/path/to/pelican-plugins'
+PLUGINS = [
+    'feed_summary',
+    ]
+'FEED_USE_SUMMARY' = True
+</code></pre>
+
+<p>The default value of <code>'FEED_USE_SUMMARY'</code> is <code>False</code>, so it must be set to <code>True</code> to enable the plugin, even if it is loaded.</p>
+
+<p>This plugin is written for pelican 3.3 and later.</p>
+
+<h2>
+<a name="user-content-implementation-notes" class="anchor" href="#implementation-notes"><span class="octicon octicon-link"></span></a>Implementation Notes</h2>
+
+<p>This plugin derives <code>FeedSummaryWriter</code> from the <code>Writer</code> class, duplicating code of the <code>Writer._add_item_to_the_feed</code> method.</p>
+
+<p>When the <code>initialized</code> signal is sent, it alternates the <code>get_writer</code> method of the <code>Pelican</code> object to use <code>FeedSummaryWriter</code> instead of <code>Writer</code>.</p>
+
+<p>A little hackish, but currently this can't be done otherwise via the regular plugin methods.</p>
+
+<ul>
+<li><em>Initial Code (PR #36): Michelle L. Gill <a href="mailto:michelle.lynn.gill@gmail.com">michelle.lynn.gill@gmail.com</a></em></li>
+<li><em>Resumption of PR and Maintainer: Florian Jacob ( projects[PLUS]pelican[ÄT]florianjacob.de )</em></li>
+</ul></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p10">gallery</a>
+            <article id="p10" class="content">
+              <p><h1>
+<a name="user-content-gallery" class="anchor" href="#gallery"><span class="octicon octicon-link"></span></a>Gallery</h1>
+
+<ul>
+<li>Allows an article to contain an album of pictures.</li>
+<li>All albums can also be syndicated into a central gallery page.</li>
+</ul><h2>
+<a name="user-content-how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h2>
+
+<ol>
+<li>Group images into folders, with each folder representing an album.</li>
+<li>
+<p>Place all album folders within a folder named gallery, which resides within the images folder.</p>
+
+<pre><code>./content/images/gallery/album_name
+</code></pre>
+</li>
+</ol><h3>
+<a name="user-content-articles" class="anchor" href="#articles"><span class="octicon octicon-link"></span></a>Articles</h3>
+
+<p>Attach an album to an article/post by placing a gallery metadata tag with the name of the album.</p>
+
+<pre><code>gallery:album_name
+</code></pre>
+
+<p>The template has access to the album name.</p>
+
+<pre><code>article.album
+</code></pre>
+
+<p>And the filename of images within an album.</p>
+
+<pre><code>article.albumimages
+</code></pre>
+
+<h3>
+<a name="user-content-gallery-page" class="anchor" href="#gallery-page"><span class="octicon octicon-link"></span></a>Gallery Page</h3>
+
+<p>Create a page and a gallery template (named gallery.html). And inform pelican to use the gallery template for the page.</p>
+
+<pre><code>template:gallery
+</code></pre>
+
+<p>The template has access to a dictionary of lists.<br>
+The dictionary key is the name of the album and the lists contain the filenames.</p>
+
+<pre><code>page.gallery
+</code></pre>
+
+<h2>
+<a name="user-content-examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<h3>
+<a name="user-content-articlehtml" class="anchor" href="#articlehtml"><span class="octicon octicon-link"></span></a>article.html</h3>
+
+<pre><code>&lt;h2&gt;&lt;a href="{{ SITEURL }}/pages/gallery.html#{{ article.album }}"&gt;{{ article.album }}&lt;/a&gt;&lt;/h2&gt;
+    &lt;ul&gt;
+    {% for image in article.galleryimages %}
+    &lt;li&gt;&lt;a class="{{ article.album }} cboxElement" href="{{ SITEURL }}/static/images/gallery/{{ article.album }}/{{ image }}"&gt;&lt;img src="{{ SITEURL }}/static/images/gallery200x200/{{ article.album }}/{{ image }}"&gt;&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+</code></pre>
+
+<h3>
+<a name="user-content-galleryhtml" class="anchor" href="#galleryhtml"><span class="octicon octicon-link"></span></a>gallery.html</h3>
+
+<pre><code>{% for album, images in page.gallery.iteritems() %}
+&lt;h2&gt;&lt;a name="{{ album }}"&gt;{{ album }}&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+    {% for image in images %}
+    &lt;li&gt;&lt;a class="{{ album }} cboxElement" href="{{ SITEURL }}/static/images/gallery/{{album}}/{{ image }}" title="{{ image }}"&gt;&lt;img src="{{ SITEURL }}/static/images/gallery200x200/{{album}}/{{ image }}"&gt;&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+&lt;/ul&gt;
+{% endfor %}
+</code></pre>
+
+<h3>
+<a name="user-content-postsfoomd" class="anchor" href="#postsfoomd"><span class="octicon octicon-link"></span></a>posts/foo.md</h3>
+
+<pre><code>title:Foo
+gallery:albumname
+</code></pre>
+
+<h3>
+<a name="user-content-pagesgallerymd" class="anchor" href="#pagesgallerymd"><span class="octicon octicon-link"></span></a>pages/gallery.md</h3>
+
+<pre><code>title:All Images
+template:gallery
+</code></pre>
+
+<h2>
+<a name="user-content-reasoning" class="anchor" href="#reasoning"><span class="octicon octicon-link"></span></a>Reasoning</h2>
+
+<p>The album name and filenames are returned as opposed to the direct path to the images,
+to allow flexibility of different thumbnail sizes to be used it different locations of a website.</p>
+
+<pre><code>href="{{ SITEURL }}/static/images/gallery/{{album}}/{{ image }}"
+href="{{ SITEURL }}/static/images/gallery200x200/{{album}}/{{ image }}"
+</code></pre>
+
+<p>It also allows a thumbnail to link to the full image,
+as well as the filename extension to be stripped and the title of an image to be displayed along side the title of an album.</p>
+
+<h2>
+<a name="user-content-recommendation" class="anchor" href="#recommendation"><span class="octicon octicon-link"></span></a>Recommendation</h2>
+
+<p>It is recommended to use this extension along with the thumbnailer plugin.</p>
+
+<pre><code>RESIZE = [
+        ('gallery', False, 200,200),
+      ]
+</code></pre>
+
+<p>You may also wish to use this along with a gallery plugin such as <a href="http://www.jacklmoore.com/colorbox/">Colorbox</a>.</p>
+
+<h2>
+<a name="user-content-in-use" class="anchor" href="#in-use"><span class="octicon octicon-link"></span></a>In Use</h2>
+
+<ul>
+<li><a href="http://sesif.github.io/my-super-title.html">SESIF Article</a></li>
+<li><a href="http://sesif.github.io/pages/gallery.html">SESIF Gallery</a></li>
+<li><a href="http://github.com/SESIF/SESIF.github.io/tree/source">SESIF Source</a></li>
+</ul></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p11">github activity</a>
+            <article id="p11" class="content">
+              <p><p>This plugin makes use of the <a class="reference external" href="https://crate.io/packages/feedparser/">feedparser</a> library that you'll need to
+install.</p>
+<p>Set the <tt class="docutils literal">GITHUB_ACTIVITY_FEED</tt> parameter to your GitHub activity feed.
+For example, to track Pelican project activity, the setting would be:</p>
+<pre class="literal-block">
+GITHUB_ACTIVITY_FEED = 'https://github.com/getpelican.atom'
+</pre>
+<p>If you want to limit the amount of entries to a certain maximum set the
+<tt class="docutils literal">GITHUB_ACTIVITY_MAX_ENTRIES</tt> parameter.</p>
+<blockquote>
+GITHUB_ACTIVITY_MAX_ENTRIES = 10</blockquote>
+<p>On the template side, you just have to iterate over the <tt class="docutils literal">github_activity</tt>
+variable, as in this example:</p>
+<pre class="literal-block">
+{% if GITHUB_ACTIVITY_FEED %}
+   &lt;div class=&quot;social&quot;&gt;
+           &lt;h2&gt;Github Activity&lt;/h2&gt;
+           &lt;ul&gt;
+
+           {% for entry in github_activity %}
+               &lt;li&gt;&lt;b&gt;{{ entry[0] }}&lt;/b&gt;&lt;br /&gt; {{ entry[1] }}&lt;/li&gt;
+           {% endfor %}
+           &lt;/ul&gt;
+   &lt;/div&gt;&lt;!-- /.github_activity --&gt;
+{% endif %}
+</pre>
+<p><tt class="docutils literal">github_activity</tt> is a list of lists. The first element is the title,
+and the second element is the raw HTML from GitHub.</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p12">global license</a>
+            <article id="p12" class="content">
+              <p><p>This plugin allows you to define a <tt class="docutils literal">LICENSE</tt> setting and adds the contents of that
+license variable to the article's context, making that variable available to use
+from within your theme's templates.</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p13">goodreads activity</a>
+            <article id="p13" class="content">
+              <p><h1>
+<a name="user-content-goodreads-activity" class="anchor" href="#goodreads-activity"><span class="octicon octicon-link"></span></a>Goodreads Activity</h1>
+
+<p>A Pelican plugin to lists books from your Goodreads shelves.</p>
+
+<p>Copyright (c) Talha Mansoor</p>
+
+<table>
+<thead><tr>
+<th>Author</th>
+<th>Talha Mansoor</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Author Email</td>
+<td><a href="mailto:talha131@gmail.com">talha131@gmail.com</a></td>
+</tr>
+<tr>
+<td>Author Homepage</td>
+<td><a href="http://onCrashReboot.com">http://onCrashReboot.com</a></td>
+</tr>
+<tr>
+<td>Github Account</td>
+<td><a href="https://github.com/talha131">https://github.com/talha131</a></td>
+</tr>
+</tbody>
+</table><h3>
+<a name="user-content-credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h3>
+
+<p>This plugin is inspired by Marco Milanesi <a href="mailto:kpanic@gnufunk.org">kpanic@gnufunk.org</a> Github activity plugin.</p>
+
+<h1>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+<p><code>goodreads_activity</code> requires feedparser.</p>
+
+<div class="highlight highlight-bash"><pre>pip install feedparser
+</pre></div>
+
+<h1>
+<a name="user-content-how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h1>
+
+<p><strong>Important</strong> Unlike Marco's Github activity plugin, this plugin returns
+a dictionary composed of the books in your Goodreads shelf and their
+details.</p>
+
+<p>To enable it, set <code>GOODREADS_ACTIVITY_FEED</code> in your pelican config file. It should point to the activity feed of your bookshelf.</p>
+
+<p>To find your self's activity feed,</p>
+
+<ol>
+<li> Open Goodreads homepage and login</li>
+<li> Click on My Books in the top navigational bar</li>
+<li> Select the bookshelf you are interested in from the left hand column</li>
+<li> Look for RSS link in the footer. Copy it's link.</li>
+</ol><p>Here is an example feed of currently-reading shelf,</p>
+
+<div class="highlight highlight-python"><pre><span class="n">GOODREADS_ACTIVITY_FEED</span><span class="o">=</span><span class="s">'http://www.goodreads.com/review/list_rss/8028663?key=b025l3000336epw1pix047e853agggannc9932ed&amp;shelf=currently-reading'</span>
+</pre></div>
+
+<p>You can access the <code>goodreads_activity</code> in your Jinja2 template. <code>goodreads_activity</code> is a dictionary. Its valid keys are</p>
+
+<ol>
+<li> <code>shelf_title</code> it has the title of your shelf</li>
+<li> <code>books</code> it is an array of book dictionary</li>
+</ol><p>Valid keys for <code>book</code> dictionary are</p>
+
+<ol>
+<li> <code>title</code>
+</li>
+<li> <code>author</code>
+</li>
+<li> <code>link</code> link to your book review</li>
+<li> <code>l_cover</code> large cover</li>
+<li> <code>m_cover</code> medium cover</li>
+<li> <code>s_cover</code> small cover</li>
+<li> <code>description</code>
+</li>
+<li> <code>rating</code>
+</li>
+<li> <code>review</code>
+</li>
+<li><code>tags</code></li>
+</ol><h1>
+<a name="user-content-template-example" class="anchor" href="#template-example"><span class="octicon octicon-link"></span></a>Template Example</h1>
+
+<div class="highlight highlight-python"><pre><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">GOODREADS_ACTIVITY_FEED</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">goodreads_activity</span><span class="o">.</span><span class="n">shelf_title</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">goodreads_activity</span><span class="o">.</span><span class="n">books</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">"{{book.s_cover}}"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">header</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">book</span><span class="o">.</span><span class="n">title</span><span class="p">}}</span><span class="o">&lt;</span><span class="n">small</span><span class="o">&gt;</span> <span class="n">by</span> <span class="p">{{</span><span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">small</span><span class="o">&gt;&lt;/</span><span class="n">header</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">article</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">book</span><span class="o">.</span><span class="n">description</span><span class="o">|</span><span class="n">truncate</span><span class="p">(</span><span class="n">end</span><span class="o">=</span><span class="s">''</span><span class="p">)}}</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="p">{{</span><span class="n">book</span><span class="o">.</span><span class="n">link</span><span class="p">}}</span> <span class="n">target</span><span class="o">=</span><span class="s">"_blank"</span><span class="o">&gt;...</span><span class="n">more</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">article</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p14">googleplus comments</a>
+            <article id="p14" class="content">
+              <p><h1>
+<a name="user-content-googleplus-comments-plugin-for-pelican" class="anchor" href="#googleplus-comments-plugin-for-pelican"><span class="octicon octicon-link"></span></a>GooglePlus Comments Plugin For Pelican</h1>
+
+<p>Adds GooglePlus comments to Pelican</p>
+
+<p>Add the plugin to <code>pelicanconf.py</code>:</p>
+
+<pre><code>PLUGIN_PATH = 'pelican-plugins'
+PLUGINS = ["googleplus_comments"]
+</code></pre>
+
+<p>Add a <code>&lt;div&gt;</code> for comments to the <code>article.html</code> of your template:</p>
+
+<pre><code>&lt;div id="commentswrap"&gt;
+&lt;div id="comments"&gt;&lt;/div&gt;
+&lt;/div&gt;
+{{ article.metadata.googleplus_comments }}
+</code></pre>
+
+<p>See it working, and ask for support:</p>
+
+<p><a href="http://zonca.github.io/2013/09/google-plus-comments-plugin-for-pelican.html">http://zonca.github.io/2013/09/google-plus-comments-plugin-for-pelican.html</a></p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p15">gravatar</a>
+            <article id="p15" class="content">
+              <p><p>This plugin assigns the <tt class="docutils literal">author_gravatar</tt> variable to the Gravatar URL and
+makes the variable available within the article's context. You can add
+<tt class="docutils literal">AUTHOR_EMAIL</tt> to your settings file to define the default author's email
+address. Obviously, that email address must be associated with a Gravatar
+account.</p>
+<p>Alternatively, you can provide an email address from within article metadata.</p>
+<p>In ReSTructuredText:</p>
+<pre class="literal-block">
+:email:  john.doe&#64;example.com
+</pre>
+<p>In Markdown:</p>
+<pre class="literal-block">
+Email:  john.doe&#64;example.com
+</pre>
+<p>If the email address is defined via at least one of the two methods above, the
+<tt class="docutils literal">author_gravatar</tt> variable is added to the article's context. For markdown,
+it is critical the 'E' in Email is capitalized.</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p16">gzip cache</a>
+            <article id="p16" class="content">
+              <p><p>Certain web servers (e.g., Nginx) can use a static cache of gzip-compressed
+files to prevent the server from compressing files during an HTTP call. Since
+compression occurs at another time, these compressed files can be compressed
+at a higher compression level for increased optimization.</p>
+<p>The <tt class="docutils literal">gzip_cache</tt> plugin compresses all common text type files into a <tt class="docutils literal">.gz</tt>
+file within the same directory as the original file.</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p17">HTML Entities for reStructuredText</a>
+            <article id="p17" class="content">
+              <p><p>This plugin allows you to enter HTML entities such as &amp;copy;, &amp;lt;, &amp;#149; inline in a RST document, as opposed
+to the tedious method of creating substitution definitions.</p>
+<div class="section" id="roles">
+<h2>Roles</h2>
+<p>Adds one inline role:</p>
+<pre class="literal-block">
+:html_entity:
+</pre>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<pre class="literal-block">
+:html_entity:`copy` 2013 :html_entity:`lt` Pelican :html_entity:`gt` Industries :html_entity:`149` All Rights Reserved
+</pre>
+<p>produces:</p>
+<p>© 2013 &lt; Pelican &gt; Industries • All Rights Reserved</p>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p18">html rst directive</a>
+            <article id="p18" class="content">
+              <p><div class="section" id="html-tags-for-restructuredtext">
+<h2>HTML tags for reStructuredText</h2>
+<p>This plugin allows you to use HTML tags from within reST documents.</p>
+</div>
+<div class="section" id="directives">
+<h2>Directives</h2>
+<pre class="literal-block">
+.. html::
+
+    (HTML code)
+</pre>
+</div>
+<div class="section" id="example">
+<h2>Example</h2>
+<p>A search engine:</p>
+<pre class="literal-block">
+.. html::
+
+   &lt;form action=&quot;http://seeks.fr/search&quot; method=&quot;GET&quot;&gt;
+     &lt;input type=&quot;text&quot; value=&quot;Pelican v2&quot; title=&quot;Search&quot; maxlength=&quot;2048&quot; name=&quot;q&quot; autocomplete=&quot;on&quot; /&gt;
+     &lt;input type=&quot;hidden&quot; name=&quot;lang&quot; value=&quot;en&quot; /&gt;
+     &lt;input type=&quot;submit&quot; value=&quot;Seeks !&quot; id=&quot;search_button&quot; /&gt;
+   &lt;/form&gt;
+</pre>
+<p>A contact form:</p>
+<pre class="literal-block">
+.. html::
+
+    &lt;form method=&quot;GET&quot; action=&quot;mailto:some email&quot;&gt;
+      &lt;p&gt;
+        &lt;input type=&quot;text&quot; placeholder=&quot;Subject&quot; name=&quot;subject&quot;&gt;
+        &lt;br /&gt;
+        &lt;textarea name=&quot;body&quot; placeholder=&quot;Message&quot;&gt;
+        &lt;/textarea&gt;
+        &lt;br /&gt;
+        &lt;input type=&quot;reset&quot;&gt;&lt;input type=&quot;submit&quot;&gt;
+      &lt;/p&gt;
+    &lt;/form&gt;
+</pre>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p19">i18n subsites</a>
+            <article id="p19" class="content">
+              <p><p>This plugin extends the translations functionality by creating internationalized sub-sites for the default site. It is therefore redundant with the <em>*_LANG_{SAVE_AS,URL}</em> variables, so it disables them to prevent conflicts.</p>
+<div class="section" id="what-it-does">
+<h2>What it does</h2>
+<ol class="arabic simple">
+<li>The <em>*_LANG_URL</em> and <em>*_LANG_SAVE_AS</em> variables are set to their normal counterparts (e.g. <em>ARTICLE_URL</em>) so they don't conflict with this scheme.</li>
+<li>While building the site for <em>DEFAULT_LANG</em> the translations of pages and articles are not generated, but their relations to the original content is kept via links to them.</li>
+<li>For each non-default language a &quot;sub-site&quot; with a modified config <a class="footnote-reference" href="#conf" id="id1">[1]</a> is created <a class="footnote-reference" href="#run" id="id2">[2]</a>, linking the translations to the originals (if available). The configured language code is appended to the <em>OUTPUT_PATH</em> and <em>SITEURL</em> of each sub-site. For each sub-site, <em>DEFAULT_LANG</em> is changed to the language of the sub-site so that articles in a different language are treated as translations.</li>
+</ol>
+<p>If <em>HIDE_UNTRANSLATED_CONTENT</em> is True (default), content without a translation for a language is generated as hidden (for pages) or draft (for articles) for the corresponding language sub-site.</p>
+<table class="docutils footnote" frame="void" id="conf" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>For each language a config override is given in the <em>I18N_SUBSITES</em> dictionary.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="run" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Using a new <em>PELICAN_CLASS</em> instance and its <tt class="docutils literal">run</tt> method, so each sub-site could even have a different <em>PELICAN_CLASS</em> if specified in <em>I18N_SUBSITES</em> conf overrides.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setting-it-up">
+<h2>Setting it up</h2>
+<p>For each extra used language code, a language-specific variables overrides dictionary must be given (but can be empty) in the <em>I18N_SUBSITES</em> dictionary</p>
+<div class="highlight"><pre><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;i18n_subsites&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+<span class="c"># mapping: language_code -&gt; conf_overrides_dict</span>
+<span class="n">I18N_SUBSITES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;cz&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;SITENAME&#39;</span><span class="p">:</span> <span class="s">&#39;Hezkej blog&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+<ul class="simple">
+<li>The language code is the language identifier used in the <em>lang</em> metadata. It is appended to <em>OUTPUT_PATH</em> and <em>SITEURL</em> of each I18N sub-site.</li>
+<li>The internationalized config overrides dictionary may specify configuration variable overrides — e.g. a different <em>LOCALE</em>, <em>SITENAME</em>, <em>TIMEZONE</em>, etc. However, it <strong>must not</strong> override <em>OUTPUT_PATH</em> and <em>SITEURL</em> as they are modified automatically by appending the language code.</li>
+</ul>
+<div class="section" id="localizing-templates">
+<h3>Localizing templates</h3>
+<p>Most importantly, this plugin can use localized templates for each sub-site. There are two approaches to having the templates localized:</p>
+<ul class="simple">
+<li>You can set a different <em>THEME</em> override for each language in <em>I18N_SUBSITES</em>, e.g. by making a copy of a theme <tt class="docutils literal">my_theme</tt> to <tt class="docutils literal">my_theme_lang</tt> and then editing the templates in the new localized theme. This approach means you don't have to deal with gettext <tt class="docutils literal">*.po</tt> files, but it is harder to maintain over time.</li>
+<li>You use only one theme and localize the templates using the <a class="reference external" href="http://jinja.pocoo.org/docs/templates/#i18n">jinja2.ext.i18n Jinja2 extension</a>. For a kickstart read this <a class="reference external" href="./localizing_using_jinja2.rst">guide</a>.</li>
+</ul>
+<p>It may be convenient to add language buttons to your theme in addition to the translation links of articles and pages. These buttons could, for example, point to the <em>SITEURL</em> of each (sub-)site. For this reason the plugin adds these variables to the template context:</p>
+<dl class="docutils">
+<dt>main_lang</dt>
+<dd>The language of the top-level site — the original <em>DEFAULT_LANG</em></dd>
+<dt>main_siteurl</dt>
+<dd>The <em>SITEURL</em> of the top-level site — the original <em>SITEURL</em></dd>
+<dt>lang_siteurls</dt>
+<dd>An ordered dictionary, mapping all used languages to their <em>SITEURL</em>. The <tt class="docutils literal">main_lang</tt> is the first key with <tt class="docutils literal">main_siteurl</tt> as the value. This dictionary is useful for implementing global language buttons that show the language of the currently viewed (sub-)site too.</dd>
+<dt>extra_siteurls</dt>
+<dd>An ordered dictionary, subset of <tt class="docutils literal">lang_siteurls</tt>, the current <em>DEFAULT_LANG</em> of the rendered (sub-)site is not included, so for each (sub-)site <tt class="docutils literal">set(extra_siteurls) == set(lang_siteurls) - <span class="pre">set([DEFAULT_LANG])</span></tt>. This dictionary is useful for implementing global language buttons that do not show the current language.</dd>
+</dl>
+<p>If you don't like the default ordering of the ordered dictionaries, use a Jinja2 filter to alter the ordering.</p>
+<p>This short <a class="reference external" href="./implementing_language_buttons.rst">howto</a> shows two example implementations of language buttons.</p>
+</div>
+</div>
+<div class="section" id="usage-notes">
+<h2>Usage notes</h2>
+<ul class="simple">
+<li>It is <strong>mandatory</strong> to specify <em>lang</em> metadata for each article and page as <em>DEFAULT_LANG</em> is later changed for each sub-site, so content without <em>lang</em> metadata woudl be rendered in every (sub-)site.</li>
+<li>As with the original translations functionality, <em>slug</em> metadata is used to group translations. It is therefore often convenient to compensate for this by overriding the content URL (which defaults to slug) using the <em>URL</em> and <em>Save_as</em> metadata.</li>
+</ul>
+</div>
+<div class="section" id="future-plans">
+<h2>Future plans</h2>
+<ul class="simple">
+<li>add a test suite</li>
+</ul>
+</div>
+<div class="section" id="development">
+<h2>Development</h2>
+<ul class="simple">
+<li>A demo and test site is in the <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch and can be seen at <a class="reference external" href="http://smartass101.github.io/pelican-plugins/">http://smartass101.github.io/pelican-plugins/</a></li>
+</ul>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p20">ical</a>
+            <article id="p20" class="content">
+              <p><div class="section" id="id1">
+<h2>ical</h2>
+<p>This plugin looks for and parses an <tt class="docutils literal">.ics</tt> file if it is defined in a given
+page's <tt class="docutils literal">calendar</tt> metadata. One calendar can be defined per page.</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies</h2>
+<p>This plugin depends on the <tt class="docutils literal">icalendar</tt> package, which can be installed via
+pip:</p>
+<pre class="literal-block">
+pip install icalendar
+</pre>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<p>For a reST-formatted page, include the following line in the metadata:</p>
+<pre class="literal-block">
+:calendar: /path/to/your/ics/file
+</pre>
+<p>For Markdown, include the following line in the page metadata:</p>
+<pre class="literal-block">
+Calendar: /path/to/your/ics/file
+</pre>
+<p>Following is some example code that can be added to your theme's <tt class="docutils literal">page.html</tt>
+template in order to display the calendar:</p>
+<pre class="literal-block">
+{% if page.calendar %}
+&lt;dl&gt;
+    {% for vevent in events[page.slug] %}
+        &lt;dt&gt;{{ vevent.summary }}&lt;/dt&gt;
+        &lt;dd&gt;{{ vevent.description|replace('\n\n', '&lt;br&gt;') }}&lt;/dd&gt;
+        &lt;dd&gt;{{ vevent.dtstart }}&lt;/dd&gt;
+        &lt;dd&gt;{{ vevent.dtend }}&lt;/dd&gt;
+        &lt;dd class=&quot;footer&quot;&gt;&lt;a href=&quot;{{ vevent.url }}&quot;&gt;See more&lt;/a&gt;&lt;/dd&gt;
+    {% endfor %}
+&lt;/dl&gt;
+{% endif %}
+</pre>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p21">interlinks</a>
+            <article id="p21" class="content">
+              <p><h1>
+<a name="user-content-interlinks" class="anchor" href="#interlinks"><span class="octicon octicon-link"></span></a>Interlinks</h1>
+
+<p>This plugin lets you add frequently used URLs to your markup using short keywords. Short URL format is 
+<code>keyword&gt;rest-of-url</code> where <code>keyword</code> is defined in the settings.py. Later it is replaced with acutal URL in
+the generated HTML output.</p>
+
+<h2>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p><code>interlinks</code> requires BeautifulSoup</p>
+
+<pre><code>pip install beautifulsoup4
+</code></pre>
+
+<h2>
+<a name="user-content-installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install the plugin normally (plugins folder), then add interlinks in the settings.py:</p>
+
+<pre><code>PLUGINS = ["interlinks"]
+</code></pre>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The interlinks are specified in the settings.py file as (example):</p>
+
+<pre><code>INTERLINKS = {
+    'wikipedia_en': 'http://en.wikipedia.org/wiki/',
+    'wikipedia_es': 'http://es.wikipedia.org/wiki/',
+    'ddg': 'https://duckduckgo.com/?q='
+}
+</code></pre>
+
+<p>There's also a default key, <code>this</code>, that is mapped to the <code>SITEURL</code> variable.</p>
+
+<p>Then, in a blog post, you just create a normal link but adding the <code>keyword&gt;</code> syntax in the url specification, followed by the rest of the url. </p>
+
+<h2>
+<a name="user-content-example-" class="anchor" href="#example-"><span class="octicon octicon-link"></span></a>Example </h2>
+
+<p>(markdown syntax)</p>
+
+<pre><code>[Normal boring link](http://www.example.com). But this is a [cool link](this&gt;) that links to this site.
+
+Search in [Wikipedia](wikipedia_en&gt;python), ([here](wikipedia_es&gt;python) in spanish). Also can [search](ddg&gt;python) it.
+</code></pre>
+
+<p>All the above will be rendered as: </p>
+
+<pre><code>&lt;p&gt;&lt;a href="http://www.example.com"&gt;Normal boring link&lt;/a&gt;. But this is a &lt;a href="http://[yoursite]/index.html"&gt;cool link&lt;/a&gt; that links to this site.&lt;/p&gt;
+
+&lt;p&gt;Search in &lt;a href="http://en.wikipedia.org/wiki/python"&gt;Wikipedia&lt;/a&gt;, (&lt;a href="http://es.wikipedia.org/wiki/python"&gt;here&lt;/a&gt; in spanish). Also can &lt;a href="https://duckduckgo.com/?q=python"&gt;search&lt;/a&gt; it.&lt;/p&gt;
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p22">liquid tags</a>
+            <article id="p22" class="content">
+              <p><h1>
+<a name="user-content-liquid-style-tags" class="anchor" href="#liquid-style-tags"><span class="octicon octicon-link"></span></a>Liquid-style Tags</h1>
+
+<p><em>Author: Jake Vanderplas <a href="mailto:jakevdp@cs.washington.edu">jakevdp@cs.washington.edu</a></em></p>
+
+<p>This plugin allows liquid-style tags to be inserted into markdown within
+Pelican documents. Liquid uses tags bounded by <code>{% ... %}</code>, and is used
+to extend markdown in other blogging platforms such as octopress.</p>
+
+<p>This set of extensions does not actually interface with liquid, but allows
+users to define their own liquid-style tags which will be inserted into
+the markdown preprocessor stream.  There are several built-in tags, which
+can be added as follows.</p>
+
+<p>First, in your pelicanconf.py file, add the plugins you want to  use:</p>
+
+<pre><code>PLUGIN_PATH = '/path/to/pelican-plugins'
+PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
+           'liquid_tags.youtube', 'liquid_tags.vimeo',
+           'liquid_tags.include_code', 'liquid_tags.notebook']
+</code></pre>
+
+<p>There are several options available</p>
+
+<h2>
+<a name="user-content-image-tag" class="anchor" href="#image-tag"><span class="octicon octicon-link"></span></a>Image Tag</h2>
+
+<p>To insert a sized and labeled image in your document, enable the
+<code>liquid_tags.img</code> plugin and use the following:</p>
+
+<pre><code>{% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
+</code></pre>
+
+<h2>
+<a name="user-content-youtube-tag" class="anchor" href="#youtube-tag"><span class="octicon octicon-link"></span></a>Youtube Tag</h2>
+
+<p>To insert youtube video into a post, enable the
+<code>liquid_tags.youtube</code> plugin, and add to your document:</p>
+
+<pre><code>{% youtube youtube_id [width] [height] %}
+</code></pre>
+
+<p>The width and height are in pixels, and can be optionally specified.  If they
+are not, then the dimensions will be 640 (wide) by 390 (tall).</p>
+
+<h2>
+<a name="user-content-vimeo-tag" class="anchor" href="#vimeo-tag"><span class="octicon octicon-link"></span></a>Vimeo Tag</h2>
+
+<p>To insert a Vimeo video into a post, enable the
+<code>liquid_tags.vimeo</code> plugin, and add to your document:</p>
+
+<pre><code>{% vimeo vimeo_id [width] [height] %}
+</code></pre>
+
+<p>The width and height are in pixels, and can be optionally specified.  If they
+are not, then the dimensions will be 640 (wide) by 390 (tall).</p>
+
+<h2>
+<a name="user-content-video-tag" class="anchor" href="#video-tag"><span class="octicon octicon-link"></span></a>Video Tag</h2>
+
+<p>To insert flash/HTML5-friendly video into a post, enable the
+<code>liquid_tags.video</code> plugin, and add to your document:</p>
+
+<pre><code>{% video /url/to/video.mp4 [width] [height] [/path/to/poster.png] %}
+</code></pre>
+
+<p>The width and height are in pixels, and can be optionally specified.  If they
+are not, then the original video size will be used.  The poster is an image
+which is used as a preview of the video.</p>
+
+<p>To use a video from file, make sure it's in a static directory and put in
+the appropriate url.</p>
+
+<h2>
+<a name="user-content-include-code" class="anchor" href="#include-code"><span class="octicon octicon-link"></span></a>Include Code</h2>
+
+<p>To include code from a file in your document with a link to the original
+file, enable the <code>liquid_tags.include_code</code> plugin, and add to your
+document:</p>
+
+<pre><code>{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}
+</code></pre>
+
+<p>All arguments are optional but their order must be kept. <code>:hidefilename:</code> is
+only allowed if a title is also given.</p>
+
+<pre><code>{% include_code /path/to/code.py lines:1-10 :hidefilename: Test Example %}
+</code></pre>
+
+<p>This example will show the first 10 lines of the file while hiding the actual
+filename.</p>
+
+<p>The script must be in the <code>code</code> subdirectory of your content folder:
+this default location can be changed by specifying</p>
+
+<p>CODE_DIR = 'code'</p>
+
+<p>within your configuration file. Additionally, in order for the resulting
+hyperlink to work, this directory must be listed under the STATIC_PATHS
+setting, e.g.:</p>
+
+<pre><code>STATIC_PATHS = ['images', 'code']
+</code></pre>
+
+<h2>
+<a name="user-content-ipython-notebooks" class="anchor" href="#ipython-notebooks"><span class="octicon octicon-link"></span></a>IPython notebooks</h2>
+
+<p>To insert an ipython notebook into your post, enable the
+<code>liquid_tags.notebook</code> plugin and add to your document:</p>
+
+<pre><code>{% notebook filename.ipynb %}
+</code></pre>
+
+<p>The file should be specified relative to the <code>notebooks</code> subdirectory of the
+content directory.  Optionally, this subdirectory can be specified in the
+config file:</p>
+
+<pre><code>NOTEBOOK_DIR = 'notebooks'
+</code></pre>
+
+<p>Because the conversion and rendering of notebooks is rather involved, there
+are a few extra steps required for this plugin:</p>
+
+<ul>
+<li><p>First, you will need to install IPython &gt;= 1.0 [1]_</p></li>
+<li>
+<p>After typing "make html" when using the notebook tag, a file called
+<code>_nb_header.html</code> will be produced in the main directory.  The content
+of the file should be included in the header of the theme.  An easy way
+to accomplish this is to add the following lines within the header template
+of the theme you use:</p>
+
+<pre><code>{% if EXTRA_HEADER %}
+{{ EXTRA_HEADER }}
+{% endif %}
+</code></pre>
+
+<p>and in your configuration file, include the line:</p>
+
+<pre><code>EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
+</code></pre>
+
+<p>this will insert the proper css formatting into your document.</p>
+</li>
+</ul><h3>
+<a name="user-content-collapsible-code-in-ipython-notebooks" class="anchor" href="#collapsible-code-in-ipython-notebooks"><span class="octicon octicon-link"></span></a>Collapsible Code in IPython Notebooks</h3>
+
+<p>The plugin also enables collapsible code input boxes. For this to work
+you first need to copy the file <code>pelicanhtml_1.tpl</code> (for IPython
+1.x) <code>pelicanhtml_2.tpl</code> (for IPython 2.x) to the top level of your
+Pelican blog. Notebook input cells containing the comment line <code>#
+&lt;!-- collapse=True --&gt;</code> will be collapsed when the html page is
+loaded and can be expanded by clicking on them. Cells containing the
+comment line <code># &lt;!-- collapse=False --&gt;</code> will be open on load but
+can be collapsed by clicking on their header. Cells without collapse
+comments are rendered as standard code input cells.</p>
+
+<p>[1] <a href="http://ipython.org/">http://ipython.org/</a></p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p23">multi part</a>
+            <article id="p23" class="content">
+              <p><h2>
+<a name="user-content-multi-parts-posts" class="anchor" href="#multi-parts-posts"><span class="octicon octicon-link"></span></a>Multi parts posts</h2>
+
+<p>The multi-part posts plugin allow you to write multi-part posts.</p>
+
+<p>In order to mark posts as part of a multi-part post, use the <code>:parts:</code> metadata:</p>
+
+<pre><code>:parts:  MY_AWESOME_MULTI_PART_POST
+</code></pre>
+
+<p>You can then use the <code>article.metadata.parts_articles</code> variable in your templates 
+to display other parts of current post.</p>
+
+<p>For example:</p>
+
+<pre><code>{% if article.metadata.parts_articles %}
+    &lt;p&gt;This post is part of a series:&lt;/p&gt;
+    &lt;ol class="parts"&gt;
+        {% for part_article in article.metadata.parts_articles %}
+            &lt;li {% if part_article == article %}class="active"{% endif %}&gt;
+                &lt;a href='{{ SITEURL }}/{{ part_article.url }}'&gt;{{ part_article.title }}&lt;/a&gt;
+            &lt;/li&gt;
+        {% endfor %}
+    &lt;/ol&gt;
+{% endif %}
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p24">neighbors</a>
+            <article id="p24" class="content">
+              <p><p>This plugin adds <tt class="docutils literal">next_article</tt> (newer) and <tt class="docutils literal">prev_article</tt> (older)
+variables to the article's context.</p>
+<p>Also adds <tt class="docutils literal">next_article_in_category</tt> and <tt class="docutils literal">prev_article_in_category</tt>.</p>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<div class="highlight"><pre> <span class="nt">&lt;ul&gt;</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.prev_article</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.prev_article.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.prev_article.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.next_article</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.next_article.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.next_article.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.prev_article_in_category</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.prev_article_in_category.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.prev_article_in_category.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.next_article</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.next_article_in_category.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.next_article_in_category.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+ <span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="usage-with-the-subcategory-plugin">
+<h2>Usage with the Subcategory plugin</h2>
+<p>If you want to get the neigbors within a subcategory it's a little different.
+Since an article can belong to more than one subcategory, subcategories are
+stored in a list. If you have an article with subcategories like</p>
+<p><tt class="docutils literal">Category/Foo/Bar</tt></p>
+<p>it will belong to both subcategory Foo, and Foo/Bar. Subcategory neighbors are
+added to an article as <tt class="docutils literal">next_article_in_subcategory#</tt> and
+<tt class="docutils literal">prev_article_in_subcategory#</tt> where <tt class="docutils literal">#</tt> is the level of subcategory. So using
+the example from above, subcategory1 will be Foo, and subcategory2 Foo/Bar.
+Therefor the usage with subcategories is:</p>
+<div class="highlight"><pre> <span class="nt">&lt;ul&gt;</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.prev_article_subcategory1</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.prev_article_in_subcategory1.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.prev_article_in_subcategory1.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.next_article</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.next_article_subcategory1.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.next_article_subcategory1.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.prev_article_in_subcategory2</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.prev_article_in_subcategory2.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.prev_article_in_subcategory2.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+ <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.next_article</span> <span class="cp">%}</span>
+     <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="s">/</span><span class="cp">{{</span> <span class="nv">article.next_article_in_subcategory2.url</span><span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+             <span class="cp">{{</span> <span class="nv">article.next_article_in_subcategory2.title</span> <span class="cp">}}</span>
+         <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+ <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+ <span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p25">optimize images</a>
+            <article id="p25" class="content">
+              <p><h1>
+<a name="user-content-optimize-images-plugin-for-pelican" class="anchor" href="#optimize-images-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Optimize Images Plugin For Pelican</h1>
+
+<p>This plugin applies lossless compression on JPEG and PNG images, with no
+effect on image quality. It uses <a href="http://jpegclub.org/jpegtran/" title="jpegtran">jpegtran</a> and <a href="http://optipng.sourceforge.net/" title="OptiPNG">OptiPNG</a>. It assumes
+that both of these tools are installed on system path.</p>
+
+<h2>
+<a name="user-content-installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To enable, ensure that <code>optimize_images.py</code> is put somewhere that is accessible.
+Then use as follows by adding the following to your settings.py:</p>
+
+<pre><code>PLUGIN_PATH = 'path/to/pelican-plugins'
+PLUGINS = ["optimize_images"]
+</code></pre>
+
+<p><code>PLUGIN_PATH</code> can be a path relative to your settings file or an absolute path.</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The plugin will activate and optimize images upon <code>finalized</code> signal of
+pelican.</p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p26">pdf</a>
+            <article id="p26" class="content">
+              <p><p>The PDF Generator plugin automatically exports RST articles and pages
+as PDF files as part of the site-generation process. PDFs are saved to
+output/pdf/</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p27">pelican comment system</a>
+            <article id="p27" class="content">
+              <p><h1>
+<a name="user-content-pelican-comment-system" class="anchor" href="#pelican-comment-system"><span class="octicon octicon-link"></span></a>Pelican comment system</h1>
+
+<p>The pelican comment system allows you to add static comments to your articles.
+The comments are stored in Markdown files. Each comment in it own file.</p>
+
+<h4>
+<a name="user-content-features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h4>
+
+<ul>
+<li>Static comments for each article</li>
+<li>Replies to comments</li>
+<li>Avatars and <a href="https://en.wikipedia.org/wiki/Identicon">Identicons</a>
+</li>
+<li>Comment Atom Feed for each article</li>
+<li>Easy styleable via the themes</li>
+</ul><p>See it in action here: <a href="http://blog.scheirle.de/posts/2014/March/29/static-comments-via-email/">blog.scheirle.de</a></p>
+
+<table>
+<thead><tr>
+<th>Author</th>
+<th>Website</th>
+<th>Github</th>
+</tr></thead>
+<tbody><tr>
+<td>Bernhard Scheirle</td>
+<td><a href="http://blog.scheirle.de">http://blog.scheirle.de</a></td>
+<td><a href="https://github.com/Scheirle">https://github.com/Scheirle</a></td>
+</tr></tbody>
+</table><h2>
+<a name="user-content-instructions" class="anchor" href="#instructions"><span class="octicon octicon-link"></span></a>Instructions</h2>
+
+<ul>
+<li><a href="doc/installation.md">Installation and basic usage</a></li>
+<li><a href="doc/avatars.md">Avatars and Identicons</a></li>
+<li><a href="doc/feed.md">Comment Atom Feed</a></li>
+<li><a href="doc/form.md">Comment Form (aka: never gather Metadata)</a></li>
+</ul><h2>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>To create identicons the Python Image Library is needed. Therefore you either need PIL <strong>or</strong> Pillow (recommended).</p>
+
+<h5>
+<a name="user-content-install-pillow" class="anchor" href="#install-pillow"><span class="octicon octicon-link"></span></a>Install Pillow</h5>
+
+<pre><code>easy_install Pillow
+</code></pre>
+
+<p>If you don't use avatars or identicons this plugin works fine without PIL/Pillow. You will however get a warning that identicons are deactivated (as expected).</p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p28">pelican vimeo</a>
+            <article id="p28" class="content">
+              <p><p>Pelican Vimeo is a plugin to enabled you to embed Vimeo videos in your pages
+and articles.</p>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>To install pelican-vimeo, simply install it from PyPI:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install pelican-vimeo
+</pre></div>
+<p>Then enabled it in your pelicanconf.py</p>
+<div class="highlight"><pre><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;pelican_vimeo&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<p>In your article or page, you simply need to add a line to embed you video.</p>
+<div class="highlight"><pre><span class="p">..</span> <span class="ow">vimeo</span><span class="p">::</span> VIDEO_ID
+</pre></div>
+<p>Which will result in:</p>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;vimeo&quot;</span> <span class="na">align=</span><span class="s">&quot;left&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;420&quot;</span> <span class="na">height=</span><span class="s">&quot;315&quot;</span> <span class="na">src=</span><span class="s">&quot;https://player.vimeo.com/video/VIDEO_ID&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+<div class="section" id="additional-arguments">
+<h3>Additional arguments</h3>
+<p>You can also specify a <cite>width</cite>, <cite>height</cite> and <cite>alignment</cite></p>
+<div class="highlight"><pre><span class="p">..</span> <span class="ow">vimeo</span><span class="p">::</span> 37818131
+<span class="nc">:width:</span> <span class="nf">800</span>
+<span class="nc">:height:</span> <span class="nf">500</span>
+<span class="nc">:align:</span> <span class="nf">center</span>
+</pre></div>
+<p>Which will result in:</p>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;vimeo&quot;</span> <span class="na">align=</span><span class="s">&quot;center&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;800&quot;</span> <span class="na">height=</span><span class="s">&quot;500&quot;</span> <span class="na">src=</span><span class="s">&quot;https://player.vimeo.com/video/37818131&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License</h2>
+<p><a class="reference external" href="http://opensource.org/licenses/MIT">MIT</a> license.</p>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p29">pelican youtube</a>
+            <article id="p29" class="content">
+              <p><p>Pelican YouTube is a plugin to enabled you to embed YouTube videos in your pages
+and articles.</p>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>To install pelican-youtube, simply install it from PyPI:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install pelican-youtube
+</pre></div>
+<p>Then enabled it in your pelicanconf.py</p>
+<div class="highlight"><pre><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;pelican_youtube&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<p>In your article or page, you simply need to add a line to embed you video.</p>
+<div class="highlight"><pre><span class="p">..</span> <span class="ow">youtube</span><span class="p">::</span> VIDEO_ID
+</pre></div>
+<p>Which will result in:</p>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;youtube&quot;</span> <span class="na">align=</span><span class="s">&quot;left&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;420&quot;</span> <span class="na">height=</span><span class="s">&quot;315&quot;</span> <span class="na">src=</span><span class="s">&quot;https://www.youtube.com/embed/VIDEO_ID&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+<div class="section" id="additional-arguments">
+<h3>Additional arguments</h3>
+<p>You can also specify a <cite>width</cite>, <cite>height</cite> and <cite>alignment</cite></p>
+<div class="highlight"><pre><span class="p">..</span> <span class="ow">youtube</span><span class="p">::</span> 37818131
+<span class="nc">:width:</span> <span class="nf">800</span>
+<span class="nc">:height:</span> <span class="nf">500</span>
+<span class="nc">:align:</span> <span class="nf">center</span>
+</pre></div>
+<p>Which will result in:</p>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;youtube&quot;</span> <span class="na">align=</span><span class="s">&quot;center&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;800&quot;</span> <span class="na">height=</span><span class="s">&quot;500&quot;</span> <span class="na">src=</span><span class="s">&quot;https://www.youtube.com/embed/37818131&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License</h2>
+<p><a class="reference external" href="http://opensource.org/licenses/MIT">MIT</a> license.</p>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p30">post stats</a>
+            <article id="p30" class="content">
+              <p><p>A Pelican plugin to calculate various statistics about a post and store them in an article.stats dictionary:</p>
+<ul class="simple">
+<li><tt class="docutils literal">wc</tt>: how many words</li>
+<li><tt class="docutils literal">read_mins</tt>: how many minutes would it take to read this article, based on 250 wpm (<a class="reference external" href="http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension">http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension</a>)</li>
+<li><tt class="docutils literal">word_counts</tt>: frquency count of all the words in the article; can be used for tag/word clouds</li>
+<li><tt class="docutils literal">fi</tt>: Flesch-kincaid Index/ Reading Ease (see: <a class="reference external" href="http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests</a>)</li>
+<li><tt class="docutils literal">fk</tt>: Flesch-kincaid Grade Level</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&#39;wc&#39;</span><span class="p">:</span> <span class="mi">2760</span><span class="p">,</span>
+    <span class="s">&#39;fi&#39;</span><span class="p">:</span> <span class="s">&#39;65.94&#39;</span><span class="p">,</span>
+    <span class="s">&#39;fk&#39;</span><span class="p">:</span> <span class="s">&#39;7.65&#39;</span><span class="p">,</span>
+    <span class="s">&#39;word_counts&#39;</span><span class="p">:</span> <span class="n">Counter</span><span class="p">({</span><span class="s">u&#39;to&#39;</span><span class="p">:</span> <span class="mi">98</span><span class="p">,</span> <span class="s">u&#39;a&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s">u&#39;the&#39;</span><span class="p">:</span> <span class="mi">83</span><span class="p">,</span> <span class="s">u&#39;of&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="o">...</span><span class="p">}),</span>
+    <span class="s">&#39;read_mins&#39;</span><span class="p">:</span> <span class="mi">12</span>
+<span class="p">}</span>
+</pre></div>
+<p>This allows you to output these values in your templates, like this, for example:</p>
+<div class="highlight"><pre><span class="nt">&lt;p</span> <span class="na">title=</span><span class="s">&quot;~</span><span class="cp">{{</span> <span class="nv">article.stats</span><span class="o">[</span><span class="s1">&#39;wc&#39;</span><span class="o">]</span> <span class="cp">}}</span><span class="s"> words&quot;</span><span class="nt">&gt;</span>~<span class="cp">{{</span> <span class="nv">article.stats</span><span class="o">[</span><span class="s1">&#39;read_mins&#39;</span><span class="o">]</span> <span class="cp">}}</span> min read<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+    <span class="nt">&lt;li&gt;</span>Flesch-kincaid Index/ Reading Ease: <span class="cp">{{</span> <span class="nv">article.stats</span><span class="o">[</span><span class="s1">&#39;fi&#39;</span><span class="o">]</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>Flesch-kincaid Grade Level: <span class="cp">{{</span> <span class="nv">article.stats</span><span class="o">[</span><span class="s1">&#39;fk&#39;</span><span class="o">]</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+<p>The <tt class="docutils literal">word_counts</tt> variable is a python <tt class="docutils literal">Counter</tt> dictionary and looks something like this, with each unique word and it's frequency:</p>
+<div class="highlight"><pre><span class="n">Counter</span><span class="p">({</span><span class="s">u&#39;to&#39;</span><span class="p">:</span> <span class="mi">98</span><span class="p">,</span> <span class="s">u&#39;a&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s">u&#39;the&#39;</span><span class="p">:</span> <span class="mi">83</span><span class="p">,</span> <span class="s">u&#39;of&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">u&#39;karma&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="o">.....</span>
+</pre></div>
+<p>and can be used to create a tag/word cloud for a post.</p>
+<div class="section" id="requirements">
+<h2>Requirements</h2>
+<p><cite>post_stats</cite> requires BeautifulSoup.</p>
+<div class="highlight"><pre><span class="gp">$</span> pip install beautifulsoup4
+</pre></div>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p31">random article</a>
+            <article id="p31" class="content">
+              <p><h1>
+<a name="user-content-random-article-plugin-for-pelican" class="anchor" href="#random-article-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Random Article Plugin For Pelican</h1>
+
+<p>This plugin generates a html file which redirect to a random article
+using javascript's <code>window.location</code>. The generated html file is 
+saved at <code>SITEURL</code>.</p>
+
+<p>Only published articles are listed to redirect.</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To use it you have to add in your config file the name of the file to use:</p>
+
+<pre><code>RANDOM = 'random.html'
+</code></pre>
+
+<p>Then in some template you add:</p>
+
+<pre><code>&lt;a href="{{ SITEURL }}/{{ RANDOM }}"&gt;random article&lt;/a&gt;
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p32">read more link</a>
+            <article id="p32" class="content">
+              <p><h1>
+<a name="user-content-read-more-link" class="anchor" href="#read-more-link"><span class="octicon octicon-link"></span></a>Read More Link</h1>
+
+<p><strong>Author</strong>: Vuong Nguyen (<a href="http://vuongnguyen.com">http://vuongnguyen.com</a>)</p>
+
+<p>This plugin inserts an inline "read more" or "continue" link into the last html element of the object summary.</p>
+
+<p>For more information, please visit: <a href="http://vuongnguyen.com/creating-inline-read-more-link-python-pelican-lxml.html">http://vuongnguyen.com/creating-inline-read-more-link-python-pelican-lxml.html</a></p>
+
+<h2>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<pre><code>lxml - for parsing html elements
+</code></pre>
+
+<h2>
+<a name="user-content-settings" class="anchor" href="#settings"><span class="octicon octicon-link"></span></a>Settings</h2>
+
+<pre><code># This settings indicates that you want to create summary at a certain length
+SUMMARY_MAX_LENGTH = 50
+
+# This indicates what goes inside the read more link
+READ_MORE_LINK = None (ex: '&lt;span&gt;continue&lt;/span&gt;')
+
+# This is the format of the read more link
+READ_MORE_LINK_FORMAT = '&lt;a class="read-more" href="/{url}"&gt;{text}&lt;/a&gt;'
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p33">related posts</a>
+            <article id="p33" class="content">
+              <p><p>This plugin adds the <tt class="docutils literal">related_posts</tt> variable to the article's context.
+By default, up to 5 articles are listed. You can customize this value by
+defining <tt class="docutils literal">RELATED_POSTS_MAX</tt> in your settings file:</p>
+<pre class="literal-block">
+RELATED_POSTS_MAX = 10
+</pre>
+<p>You can then use the <tt class="docutils literal">article.related_posts</tt> variable in your templates.
+For example:</p>
+<pre class="literal-block">
+{% if article.related_posts %}
+    &lt;ul&gt;
+    {% for related_post in article.related_posts %}
+        &lt;li&gt;&lt;a href=&quot;{{ SITEURL }}/{{ related_post.url }}&quot;&gt;{{ related_post.title }}&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% endif %}
+</pre>
+<p>Your related posts should share a common tag. You can also use <tt class="docutils literal">related_posts:</tt> in your post's meta data.
+The 'related_posts:' meta data works together with your existing slugs:</p>
+<blockquote>
+related_posts: slug1,slug2,slug3...slugN</blockquote>
+<p>N represents the RELATED_POSTS_MAX</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p34">render math</a>
+            <article id="p34" class="content">
+              <p><h1>
+<a name="user-content-math-render-plugin-for-pelican" class="anchor" href="#math-render-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Math Render Plugin For Pelican</h1>
+
+<p>This plugin gives pelican the ability to render mathematics. It accomplishes
+this by using the <a href="http://www.mathjax.org/">MathJax</a> javascript engine. Both
+<a href="http://en.wikipedia.org/wiki/LaTeX">LaTex</a> and <a href="http://en.wikipedia.org/wiki/MathML">MathML</a> 
+can be rendered within the content.</p>
+
+<p>The plugin also ensures that pelican and recognized math "play" nicely together, by
+ensuring <a href="https://github.com/mintchaos/typogrify">Typogrify</a> does not alter math content
+and summaries that get cut off are repaired.</p>
+
+<p>Recognized math in the context of this plugin is either LaTex or MathML as described below.</p>
+
+<h3>
+<a name="user-content-latex" class="anchor" href="#latex"><span class="octicon octicon-link"></span></a>LaTex</h3>
+
+<p>Anything between <code>$</code>...<code>$</code> (inline math) and <code>$$</code>..<code>$$</code> (displayed math) will be recognized as
+LaTex. In addition, anything the <code>\begin</code> and <code>\end</code> LaTex macros will also be 
+recognized as LaTex. For example, <code>\begin{equation}</code>...<code>\end{equation}</code> would be used to 
+render math equations with numbering.</p>
+
+<p>Within recognized LaTex as described above, any supported LaTex macro can be used.</p>
+
+<h3>
+<a name="user-content-mathml" class="anchor" href="#mathml"><span class="octicon octicon-link"></span></a>MathML</h3>
+
+<p>Anything between <code>&lt;math&gt;</code> and <code>&lt;/math&gt;</code> tags will be recognized as MathML</p>
+
+<h2>
+<a name="user-content-installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To enable, ensure that <code>render_math</code> plugin is accessible.
+Then add the following to settings.py:</p>
+
+<pre><code>PLUGINS = ["render_math"]
+</code></pre>
+
+<p>Your site is now capable of rendering math math using the mathjax JavaScript
+engine. No alterations to the template is needed, just use and enjoy!</p>
+
+<h3>
+<a name="user-content-typogrify" class="anchor" href="#typogrify"><span class="octicon octicon-link"></span></a>Typogrify</h3>
+
+<p>In the past, using <a href="https://github.com/mintchaos/typogrify">Typgogrify</a> would alter the math contents resulting
+in math that could not be rendered by MathJax. The only option was to ensure
+that Typogrify was disabled in the settings.</p>
+
+<p>The problem has been recitified in this plugin, but it requires <a href="https://pypi.python.org/pypi/typogrify">Typogrify version 2.04</a>
+(or higher). If this version of Typogrify is not present, the plugin will inform that an incorrect
+version of Typogrify is not present and disable Typogrify for the entire site</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="user-content-backward-compatibility" class="anchor" href="#backward-compatibility"><span class="octicon octicon-link"></span></a>Backward Compatibility</h3>
+
+<p>This plugin is backward compatible in the sense that it
+will render previous setups correctly. This is because those
+settings and metadata information is ignored by this version. Therefore
+you can remove them to neaten up your site</p>
+
+<h3>
+<a name="user-content-templates" class="anchor" href="#templates"><span class="octicon octicon-link"></span></a>Templates</h3>
+
+<p>No alteration is needed to a template for this plugin to work. Just install
+the plugin and start writing your Math. </p>
+
+<p>If on the other hand, you are template designer and want total control
+over the MathJax JavaScript, you can set the <code>auto_insert</code> setting to 
+<code>False</code> which will cause no MathJax JavaScript to be added to the content.</p>
+
+<p>If you choose this option, you should really know what you are doing. Therefore
+only do this if you are designing your template. There is no real advantage to
+to letting template logic handle the insertion of the MathJax JavaScript other
+than it being slightly neater.</p>
+
+<p>By setting <code>auto_insert</code> to <code>False</code>, metadata with <code>key</code> value of <code>mathjax</code>
+will be present in all pages and articles where MathJax should be present.
+The template designer can detect this and then use the <code>MATHJAXSCRIPT</code> setting
+which will contain the user specified MathJax script to insert into the content.</p>
+
+<p>For example, this code could be used:</p>
+
+<pre><code>{% if not MATH['auto_insert'] %}
+    {% if page and page.mathjax or article and article.mathjax %}
+        {{ MATHJAXSCRIPT }}
+    {% endif %}
+{% endif %}
+</code></pre>
+
+<h3>
+<a name="user-content-settings" class="anchor" href="#settings"><span class="octicon octicon-link"></span></a>Settings</h3>
+
+<p>Certain MathJax rendering options can be set. These options 
+are in a dictionary variable called <code>MATH</code> in the pelican
+settings file.</p>
+
+<p>The dictionary can be set with the following keys:</p>
+
+<ul>
+<li>
+<code>auto_insert</code>: controls whether plugin should automatically insert
+MathJax JavaScript in content that has Math. It is only recommended
+to set this to False if you are a template designer and you want
+extra control over where the MathJax JavaScript is renderd. <strong>Default Value</strong>:
+True</li>
+<li>
+<code>wrap_latex</code>: controls the tags that LaTex math is wrapped with inside the resulting
+html. For example, setting <code>wrap_latex</code> to <code>mathjax</code> would wrap all LaTex math inside
+<code>&lt;mathjax&gt;...&lt;/mathjax&gt;</code> tags. If typogrify is set to True, then math needs
+to be wrapped in tags and <code>wrap_latex</code> will therefore default to <code>mathjax</code> if not
+set. <code>wrap_latex</code> cannot be set to <code>'math'</code> because this tag is reserved for 
+mathml notation. <strong>Default Value</strong>: None unless Typogrify is enabled in which case, 
+it defaults to <code>mathjax</code>
+</li>
+<li>
+<code>align</code>: controls how displayed math will be aligned. Can be set to either
+<code>left</code>, <code>right</code> or <code>center</code>. <strong>Default Value</strong>: <code>center</code>.</li>
+<li>
+<code>indent</code>: if <code>align</code> not set to <code>center</code>, then this controls the indent
+level. <strong>Default Value</strong>: <code>0em</code>.</li>
+<li>
+<code>show_menu</code>: a boolean value that controls whether the mathjax contextual 
+menu is shown. <strong>Default Value</strong>: True</li>
+<li>
+<code>process_escapes</code>: a boolean value that controls whether mathjax processes escape 
+sequences. <strong>Default Value</strong>: True</li>
+<li>
+<code>latex_preview</code>: controls the preview message users are seen while mathjax is
+rendering LaTex. If set to <code>Tex</code>, then the TeX code is used as the preview 
+(which will be visible until it is processed by MathJax). <strong>Default Value</strong>: <code>Tex</code>
+</li>
+<li>
+<code>color</code>: controls the color of the mathjax rendered font. <strong>Default Value</strong>: <code>black</code>
+</li>
+<li>
+<code>ssl</code>: specifies if ssl should be used to load MathJax engine. Can be set to one
+of three things
+
+<ul>
+<li>
+<code>auto</code>: <strong>Default Value</strong> will automatically determine what protodol to use 
+based on current protocol of the site. </li>
+<li>
+<code>force</code>: will force ssl to be used.</li>
+<li>
+<code>off</code>: will ensure that ssl is not used</li>
+</ul>
+</li>
+</ul><p>For example, in settings.py, the following would make math render in blue and
+displaymath align to the left:</p>
+
+<pre><code>MATH = {'color':'blue','align':left}
+</code></pre>
+
+<h2>
+<a name="user-content-latex-examples" class="anchor" href="#latex-examples"><span class="octicon octicon-link"></span></a>LaTex Examples</h2>
+
+<h3>
+<a name="user-content-inline" class="anchor" href="#inline"><span class="octicon octicon-link"></span></a>Inline</h3>
+
+<p>LaTex between <code>$</code>..<code>$</code>, for example, <code>$</code>x^2<code>$</code>, will be rendered inline
+with respect to the current html block.</p>
+
+<h3>
+<a name="user-content-displayed-math" class="anchor" href="#displayed-math"><span class="octicon octicon-link"></span></a>Displayed Math</h3>
+
+<p>LaTex between <code>$$</code>..<code>$$</code>, for example, <code>$$</code>x^2<code>$$</code>, will be rendered centered in a
+new paragraph.</p>
+
+<h3>
+<a name="user-content-equations" class="anchor" href="#equations"><span class="octicon octicon-link"></span></a>Equations</h3>
+
+<p>LaTex between <code>\begin</code> and <code>\end</code>, for example, <code>begin{equation}</code> x^2 <code>\end{equation}</code>,
+will be rendered centered in a new paragraph with a right justified equation number
+at the top of the paragraph. This equation number can be referenced in the document.
+To do this, use a <code>label</code> inside of the equation format and then refer to that label
+using <code>ref</code>. For example: <code>begin{equation}</code> <code>\label{eq}</code> X^2 <code>\end{equation}</code>. Now
+refer to that equation number by <code>$</code>\ref{eq}<code>$</code>.</p>
+
+<h2>
+<a name="user-content-mathml-examples" class="anchor" href="#mathml-examples"><span class="octicon octicon-link"></span></a>MathML Examples</h2>
+
+<p>The following will render the Quadratic formula:</p>
+
+<pre><code>&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt; 
+  &lt;mrow&gt;
+    &lt;mi&gt;x&lt;/mi&gt;
+    &lt;mo&gt;=&lt;/mo&gt;
+    &lt;mfrac&gt;
+      &lt;mrow&gt;
+        &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+        &lt;mi&gt;b&lt;/mi&gt;
+        &lt;mo&gt;&amp;#xB1;&lt;/mo&gt;
+        &lt;msqrt&gt;
+          &lt;mrow&gt;
+            &lt;msup&gt;
+              &lt;mi&gt;b&lt;/mi&gt;
+              &lt;mn&gt;2&lt;/mn&gt;
+            &lt;/msup&gt;
+            &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+            &lt;mn&gt;4&lt;/mn&gt;
+            &lt;mi&gt;a&lt;/mi&gt;
+            &lt;mi&gt;c&lt;/mi&gt;
+          &lt;/mrow&gt;
+        &lt;/msqrt&gt;
+      &lt;/mrow&gt;
+      &lt;mrow&gt;
+        &lt;mn&gt;2&lt;/mn&gt;
+        &lt;mi&gt;a&lt;/mi&gt;
+      &lt;/mrow&gt;
+    &lt;/mfrac&gt;
+  &lt;/mrow&gt;
+&lt;/math&gt;
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p35">representative image</a>
+            <article id="p35" class="content">
+              <p><h1>
+<a name="user-content-summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a>Summary</h1>
+
+<p>This plugin extracts a representative image (i.e, featured image) from the article's summary or article's content. The image can be access at <code>article.featured_image</code>. </p>
+
+<p>The plugin also remove any images from the summary after extraction to avoid duplication. </p>
+
+<p>It allows the flexibility on where and how to display the featured image of an article together with its summary in a template page. For example, the article metadata can be displayed in thumbnail format, in which there is a short summary and an image. The layout of the summary and the image can be varied for aesthetical purpose. It doesn't have to depend on article's content format. </p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p36">share post</a>
+            <article id="p36" class="content">
+              <p><h1>
+<a name="user-content-share-post" class="anchor" href="#share-post"><span class="octicon octicon-link"></span></a>Share Post</h1>
+
+<p>A Pelican plugin to create share URLs of article</p>
+
+<p>Copyright (c) Talha Mansoor</p>
+
+<table>
+<thead><tr>
+<th>Author</th>
+<th>Talha Mansoor</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Author Email</td>
+<td><a href="mailto:talha131@gmail.com">talha131@gmail.com</a></td>
+</tr>
+<tr>
+<td>Author Homepage</td>
+<td><a href="http://onCrashReboot.com">http://onCrashReboot.com</a></td>
+</tr>
+<tr>
+<td>Github Account</td>
+<td><a href="https://github.com/talha131">https://github.com/talha131</a></td>
+</tr>
+</tbody>
+</table><h1>
+<a name="user-content-why-do-you-need-it" class="anchor" href="#why-do-you-need-it"><span class="octicon octicon-link"></span></a>Why do you need it?</h1>
+
+<p>Almost all website have share widgets to let readers share posts on social
+networks. Most of these widgets are used by vendors for online tracking. These
+widgets are also visual which quite often become a distraction and negatively
+affect readers attention.</p>
+
+<p><code>share_post</code> creates old school URLs for some popular sites which your theme
+can use. These links do not have the ability to track the users. They can also
+be unobtrusive depending on how Pelican theme uses them.</p>
+
+<h1>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+<p><code>share_post</code> requires BeautifulSoup</p>
+
+<div class="highlight highlight-bash"><pre>pip install beautifulsoup4
+</pre></div>
+
+<h1>
+<a name="user-content-how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h1>
+
+<p><code>share_post</code> adds a dictionary attribute to <code>article</code> which can be accessed via
+<code>article.share_post</code>. Keys of the dictionary are as follows,</p>
+
+<ol>
+<li><code>facebook</code></li>
+<li><code>google-plus</code></li>
+<li><code>email</code></li>
+<li><code>twitter</code></li>
+</ol><h1>
+<a name="user-content-template-example" class="anchor" href="#template-example"><span class="octicon octicon-link"></span></a>Template Example</h1>
+
+<div class="highlight highlight-python"><pre><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">article</span><span class="o">.</span><span class="n">share_post</span> <span class="ow">and</span> <span class="n">article</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s">'draft'</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="n">section</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span> <span class="nb">id</span><span class="o">=</span><span class="s">"post-share-links"</span><span class="o">&gt;</span>
+        <span class="n">Share</span> <span class="n">on</span><span class="p">:</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{{article.share_post['twitter']}}"</span> <span class="n">target</span><span class="o">=</span><span class="s">"_blank"</span> <span class="n">title</span><span class="o">=</span><span class="s">"Share on Twitter"</span><span class="o">&gt;</span><span class="n">Twitter</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+        <span class="err">❄</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{{article.share_post['facebook']}}"</span> <span class="n">target</span><span class="o">=</span><span class="s">"_blank"</span> <span class="n">title</span><span class="o">=</span><span class="s">"Share on Facebook"</span><span class="o">&gt;</span><span class="n">Facebook</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+        <span class="err">❄</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{{article.share_post['google-plus']}}"</span> <span class="n">target</span><span class="o">=</span><span class="s">"_blank"</span> <span class="n">title</span><span class="o">=</span><span class="s">"Share on Google Plus"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">+&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+        <span class="err">❄</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{{article.share_post['email']}}"</span> <span class="n">target</span><span class="o">=</span><span class="s">"_blank"</span> <span class="n">title</span><span class="o">=</span><span class="s">"Share via Email"</span><span class="o">&gt;</span><span class="n">Email</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">section</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p37">simple footnotes</a>
+            <article id="p37" class="content">
+              <p><h1>
+<a name="user-content-simple-footnotes" class="anchor" href="#simple-footnotes"><span class="octicon octicon-link"></span></a>Simple Footnotes</h1>
+
+<p>A Pelican plugin to add footnotes to blog posts.</p>
+
+<p>When writing a post or page, add a footnote like this:</p>
+
+<pre><code>Here's my written text[ref]and here is a footnote[/ref].
+</code></pre>
+
+<p>This will appear as, roughly:</p>
+
+<p>Here's my written text<sup>1</sup></p>
+
+<ol>
+<li>and here is a footnote ↩</li>
+</ol><p>Inspired by Andrew Nacin's <a href="http://wordpress.org/plugins/simple-footnotes/">Simple Footnotes WordPress plugin</a>.</p>
+
+<h1>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+<p>Needs html5lib, so you'll want to <code>pip install html5lib</code> before running.</p>
+
+<p>Should work with any content format (ReST, Markdown, whatever), because
+it looks for the <code>[ref]</code> and <code>[/ref]</code> once the conversion to HTML has happened.</p>
+
+<p>Stuart Langridge, <a href="http://www.kryogenix.org/">http://www.kryogenix.org/</a>, February 2014.</p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p38">sitemap</a>
+            <article id="p38" class="content">
+              <p><p>The sitemap plugin generates plain-text or XML sitemaps. You can use the
+<tt class="docutils literal">SITEMAP</tt> variable in your settings file to configure the behavior of the
+plugin.</p>
+<p>The <tt class="docutils literal">SITEMAP</tt> variable must be a Python dictionary and can contain three keys:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">format</tt>, which sets the output format of the plugin (<tt class="docutils literal">xml</tt> or <tt class="docutils literal">txt</tt>)</p>
+</li>
+<li><p class="first"><tt class="docutils literal">priorities</tt>, which is a dictionary with three keys:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">articles</tt>, the priority for the URLs of the articles and their
+translations</p>
+</li>
+<li><p class="first"><tt class="docutils literal">pages</tt>, the priority for the URLs of the static pages</p>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">indexes</tt>, the priority for the URLs of the index pages, such as tags,</dt>
+<dd><p class="first last">author pages, categories indexes, archives, etc...</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>All the values of this dictionary must be decimal numbers between <tt class="docutils literal">0</tt> and <tt class="docutils literal">1</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">changefreqs</tt>, which is a dictionary with three items:</p>
+<ul class="simple">
+<li><tt class="docutils literal">articles</tt>, the update frequency of the articles</li>
+<li><tt class="docutils literal">pages</tt>, the update frequency of the pages</li>
+<li><tt class="docutils literal">indexes</tt>, the update frequency of the index pages</li>
+</ul>
+<p>Valid frequency values are <tt class="docutils literal">always</tt>, <tt class="docutils literal">hourly</tt>, <tt class="docutils literal">daily</tt>, <tt class="docutils literal">weekly</tt>, <tt class="docutils literal">monthly</tt>,
+<tt class="docutils literal">yearly</tt> and <tt class="docutils literal">never</tt>.</p>
+</li>
+</ul>
+<p>If a key is missing or a value is incorrect, it will be replaced with the
+default value.</p>
+<p>The sitemap is saved in <tt class="docutils literal"><span class="pre">&lt;output_path&gt;/sitemap.&lt;format&gt;</span></tt>.</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal">priorities</tt> and <tt class="docutils literal">changefreqs</tt> are information for search engines.
+They are only used in the XML sitemaps.
+For more information: &lt;<a class="reference external" href="http://www.sitemaps.org/protocol.html#xmlTagDefinitions">http://www.sitemaps.org/protocol.html#xmlTagDefinitions</a>&gt;</p>
+</div>
+<p><strong>Example</strong></p>
+<p>Here is an example configuration (it's also the default settings):</p>
+<div class="highlight"><pre><span class="n">PLUGINS</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;pelican.plugins.sitemap&#39;</span><span class="p">,]</span>
+
+<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;format&#39;</span><span class="p">:</span> <span class="s">&#39;xml&#39;</span><span class="p">,</span>
+    <span class="s">&#39;priorities&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;articles&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s">&#39;indexes&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s">&#39;pages&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
+    <span class="p">},</span>
+    <span class="s">&#39;changefreqs&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;articles&#39;</span><span class="p">:</span> <span class="s">&#39;monthly&#39;</span><span class="p">,</span>
+        <span class="s">&#39;indexes&#39;</span><span class="p">:</span> <span class="s">&#39;daily&#39;</span><span class="p">,</span>
+        <span class="s">&#39;pages&#39;</span><span class="p">:</span> <span class="s">&#39;monthly&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p39">static comments</a>
+            <article id="p39" class="content">
+              <p><h2>
+<a name="user-content-static-comments" class="anchor" href="#static-comments"><span class="octicon octicon-link"></span></a>Static comments</h2>
+
+<p>This plugin allows you to add static comments to an article. By default the
+plugin looks for the comments of each article in a local file named
+<code>comments/{slug}.md</code>, where <code>{slug}</code> is the value of the slug tag for the
+article. The comments file should be formatted using markdown.</p>
+
+<p>Set the <code>STATIC_COMMENTS</code> parameter to True to enable the plugin. Default is
+False.</p>
+
+<p>Set the <code>STATIC_COMMENTS_DIR</code> parameter to the directory where the comments
+are located. Default is <code>comments</code>.</p>
+
+<p>On the template side, you just have to add a section for the comments to your
+<code>article.html</code>, as in this example::</p>
+
+<pre><code>{% if STATIC_COMMENTS %}
+&lt;section id="comments" class="body"&gt;
+&lt;h2&gt;Comments!&lt;/h2&gt;
+{{ article.metadata.static_comments }}
+&lt;/section&gt;
+{% endif %}
+</code></pre>
+
+<p>Here is an example of usage:
+<a href="http://jesrui.sdf-eu.org/pelican-static-comments.html">http://jesrui.sdf-eu.org/pelican-static-comments.html</a></p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p40">subcategory</a>
+            <article id="p40" class="content">
+              <p><h1>
+<a name="user-content-subcategory-plugin" class="anchor" href="#subcategory-plugin"><span class="octicon octicon-link"></span></a>Subcategory Plugin</h1>
+
+<p>This plugin adds support for subcategories in addition to article categories.</p>
+
+<p>Subcategories are hierarchical. Each subcategory has a parent, which is either a
+regular category or another subcategory.</p>
+
+<p>Feeds can be generated for each subcategory, just like categories and tags.</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Subcategories are an extension to categories. Add subcategories to an article's
+category metadata using a <code>/</code> like this:</p>
+
+<pre><code>Category: Regular Category/Sub-Category/Sub-Sub-category
+</code></pre>
+
+<p>Then create a <code>subcategory.html</code> template in your theme, similar to the
+<code>category.html</code> or <code>tag.html</code> templates.</p>
+
+<p>In your templates, <code>article.category</code> continues to act the same way. Your
+subcategories are stored in the <code>articles.subcategories</code> list. To create
+breadcrumb-style navigation you might try something like this:</p>
+
+<pre><code>&lt;nav class="breadcrumb"&gt;
+&lt;ol&gt;
+    &lt;li&gt;
+        &lt;a href="{{ SITEURL }}/{{ article.category.url }}"&gt;{{ article.category}}&lt;/a&gt;
+    &lt;/li&gt;
+{% for subcategory in article.subcategories %}
+    &lt;li&gt;
+        &lt;a href="{{ SITEURL }}/{{ subcategory.url }}"&gt;{{ subcategory.shortname }}&lt;/a&gt;
+    &lt;/li&gt;
+{% endfor %}
+&lt;/ol&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<h2>
+<a name="user-content-subcategory-names" class="anchor" href="#subcategory-names"><span class="octicon octicon-link"></span></a>Subcategory Names</h2>
+
+<p>Each subcategory's full name is a <code>/</code>-separated list of it parents and itself.
+This is necessary to keep each subcategory unique. It means you can have
+<code>Category 1/Foo</code> and <code>Category 2/Foo</code> and they won't interfere with each other.
+Each subcategory has an attribute <code>shortname</code> which is just the name without
+its parents associated. For example if you had…</p>
+
+<pre><code>Category/Sub Category1/Sub Category2
+</code></pre>
+
+<p>… the full name for Sub Category2 would be <code>Category/Sub Category1/Sub Category2</code> and
+the "short name" would be <code>Sub Category2</code>.</p>
+
+<p>If you need to use the slug, it is generated from the short name — not the full
+name.</p>
+
+<h2>
+<a name="user-content-settings" class="anchor" href="#settings"><span class="octicon octicon-link"></span></a>Settings</h2>
+
+<p>Consistent with the default settings for Tags and Categories, the default
+settings for subcategories are:</p>
+
+<pre><code>'SUBCATEGORY_SAVE_AS' = os.path.join('subcategory', '{savepath}.html')
+'SUBCATEGORY_URL' = 'subcategory/(fullurl).html'
+</code></pre>
+
+<p><code>savepath</code> and <code>fullurl</code> are generated recursively, using slugs. So the full
+URL would be:</p>
+
+<pre><code>category-slug/sub-category-slug/sub-sub-category-slug
+</code></pre>
+
+<p>… with <code>savepath</code> being similar but joined using <code>os.path.join</code>.</p>
+
+<p>Similarly, you can save subcategory feeds by adding one of the following
+to your Pelican configuration file:</p>
+
+<pre><code>SUBCATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
+SUBCATEGORY_FEED_RSS = 'feeds/%s.rss.xml'
+</code></pre>
+
+<p>… and this will create a feed with <code>fullurl</code> of the subcategory. For example:</p>
+
+<pre><code>feeds/category/subcategory.atom.xml
+</code></pre></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p41">summary</a>
+            <article id="p41" class="content">
+              <p><p>This plugin allows easy, variable length summaries directly embedded into the
+body of your articles. It introduces two new settings: <tt class="docutils literal">SUMMARY_BEGIN_MARKER</tt>
+and <tt class="docutils literal">SUMMARY_END_MARKER</tt>: strings which can be placed directly into an article
+to mark the beginning and end of a summary. When found, the standard
+<tt class="docutils literal">SUMMARY_MAX_LENGTH</tt> setting will be ignored. The markers themselves will also
+be removed from your articles before they are published. The default values
+are <tt class="docutils literal"><span class="pre">&lt;!--</span> PELICAN_BEGIN_SUMMARY <span class="pre">--&gt;</span></tt> and <tt class="docutils literal"><span class="pre">&lt;!--</span> PELICAN_END_SUMMARY <span class="pre">--&gt;</span></tt>.
+For example:</p>
+<pre class="literal-block">
+Title: My super title
+Date: 2010-12-03 10:20
+Tags: thats, awesome
+Category: yeah
+Slug: my-super-post
+Author: Alexis Metaireau
+
+This is the content of my super blog post.
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+and this content occurs after the summary.
+</pre>
+<p>Here, the summary is taken to be the first line of the post. Because no
+beginning marker was found, it starts at the top of the body. It is possible
+to leave out the end marker instead, in which case the summary will start at the
+beginning marker and continue to the end of the body.</p>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p42">test data</a>
+            <article id="p42" class="content">
+              <p><p>Place tests for your plugin here. <tt class="docutils literal">test_data</tt> folder contains following
+common data for your tests, if you need them.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">File/Folder</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>content</td>
+<td>A sample content folder</td>
+</tr>
+<tr><td>themes</td>
+<td>Default themes from Pelican</td>
+</tr>
+<tr><td>pelican.conf.py</td>
+<td>A sample settings file</td>
+</tr>
+</tbody>
+</table>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p43">thumbnailer</a>
+            <article id="p43" class="content">
+              <p><h1>
+<a name="user-content-thumbnail-creation-of-images" class="anchor" href="#thumbnail-creation-of-images"><span class="octicon octicon-link"></span></a>Thumbnail Creation of images</h1>
+
+<p>This plugin creates thumbnails for all of the images found under a specific directory, in various thumbnail sizes
+It requires PIL to function properly since PIL is used to resize the images, and will only rebuild a thumbnail if it
+doesn't already exists (to save processing time)</p>
+
+<h2>
+<a name="user-content-installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Setup up like a normal plugin by setting PLUGIN_PATH, and adding "thumbnailer" to the PLUGINS list</p>
+
+<h2>
+<a name="user-content-configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<ul>
+<li>IMAGE_PATH is the path to the image directory.  It should reside under content, and defaults to "pictures"</li>
+<li>THUMBNAIL_DIR is the path to the output sub directory where the thumbnails are generated</li>
+<li>THUMBNAIL_SIZES is a dictionary mapping name of size to size specifications.
+The generated filename will be originalname_thumbnailname.ext unless THUMBNAIL_KEEP_NAME is set.</li>
+<li>THUMBNAIL_KEEP_NAME is a boolean which if set puts the file with the original name in a thumbnailname folder.</li>
+</ul><p>Sizes can be specified using any of the following formats:</p>
+
+<ul>
+<li>wxh will resize to exactly wxh cropping as necessary to get that size</li>
+<li>wx? will resize so that the width is the specified size, and the height will scale to retain aspect ratio</li>
+<li>?xh same as wx? but will height being a set size</li>
+<li>s is a shorthand for wxh where w=h</li>
+</ul></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p44">tipue search</a>
+            <article id="p44" class="content">
+              <p><h1>
+<a name="user-content-tipue-search" class="anchor" href="#tipue-search"><span class="octicon octicon-link"></span></a>Tipue Search</h1>
+
+<p>A Pelican plugin to serialize generated HTML to JSON that can be used by jQuery plugin - Tipue Search.</p>
+
+<p>Copyright (c) Talha Mansoor</p>
+
+<table>
+<thead><tr>
+<th>Author</th>
+<th>Talha Mansoor</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Author Email</td>
+<td><a href="mailto:talha131@gmail.com">talha131@gmail.com</a></td>
+</tr>
+<tr>
+<td>Author Homepage</td>
+<td><a href="http://onCrashReboot.com">http://onCrashReboot.com</a></td>
+</tr>
+<tr>
+<td>Github Account</td>
+<td><a href="https://github.com/talha131">https://github.com/talha131</a></td>
+</tr>
+</tbody>
+</table><h1>
+<a name="user-content-why-do-you-need-it" class="anchor" href="#why-do-you-need-it"><span class="octicon octicon-link"></span></a>Why do you need it?</h1>
+
+<p>Static sites do not offer search feature out of the box. <a href="http://www.tipue.com/search/">Tipue Search</a>
+is a jQuery plugin that search the static site without using any third party service, like DuckDuckGo or Google.</p>
+
+<p>Tipue Search offers 4 search modes. Its <a href="http://www.tipue.com/search/docs/json/">JSON search mode</a> is the best search mode
+especially for large sites.</p>
+
+<p>Tipue's JSON search mode requires the textual content of site in JSON format.</p>
+
+<h1>
+<a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+<p>Tipue Search requires BeautifulSoup.</p>
+
+<div class="highlight highlight-bash"><pre>pip install beautifulsoup4
+</pre></div>
+
+<h1>
+<a name="user-content-how-tipue-search-works" class="anchor" href="#how-tipue-search-works"><span class="octicon octicon-link"></span></a>How Tipue Search works</h1>
+
+<p>Tipue Search serializes the generated HTML into JSON. Format of JSON is as follows</p>
+
+<div class="highlight highlight-python"><pre><span class="p">{</span>
+    <span class="s">"pages"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> 
+            <span class="s">"text"</span><span class="p">:</span> <span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero."</span><span class="p">,</span>
+            <span class="s">"tags"</span><span class="p">:</span> <span class="s">"Example Category"</span><span class="p">,</span>
+            <span class="s">"loc"</span> <span class="p">:</span> <span class="s">"http://oncrashreboot.com/plugin-example.html"</span><span class="p">,</span>
+            <span class="s">"title"</span><span class="p">:</span> <span class="s">"Everything you want to know about Lorem Ipsum"</span>
+        <span class="p">},</span>
+        <span class="p">{</span> 
+            <span class="s">"text"</span><span class="p">:</span> <span class="s">"Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh."</span><span class="p">,</span>
+            <span class="s">"tags"</span><span class="p">:</span> <span class="s">"Example Category"</span><span class="p">,</span>
+            <span class="s">"loc"</span> <span class="p">:</span> <span class="s">"http://oncrashreboot.com/plugin-example-2.html"</span><span class="p">,</span>
+            <span class="s">"title"</span><span class="p">:</span> <span class="s">"Review of the book Lorem Ipsum"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>JSON is written to file <code>tipuesearch_content.json</code> which is created in the root of <code>output</code> directory.</p>
+
+<h1>
+<a name="user-content-how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h1>
+
+<p>To utilize JSON Search mode, your theme needs to have Tipue Search properly configured in it. <a href="http://www.tipue.com/search/docs/json/">Official documentation</a> has the required details.</p>
+
+<p>Pelican <a href="https://github.com/talha131/pelican-elegant">Elegant Theme</a> has Tipue Search configured. You can view its code to understand the configuration. </p></p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p45">twitter bootstrap rst directives</a>
+            <article id="p45" class="content">
+              <p><div class="section" id="twitter-bootstrap-directive-for-restructured-text">
+<h2>Twitter Bootstrap Directive for restructured text</h2>
+<p>This plugin defines some rst directive that enable a clean usage of the twitter bootstrap CSS and Javascript components.</p>
+</div>
+<div class="section" id="directives">
+<h2>Directives</h2>
+<p>Implemented directives:</p>
+<blockquote>
+label,
+alert,
+panel,
+media</blockquote>
+<p>Implemented roles:</p>
+<blockquote>
+glyph,
+code,
+kbd</blockquote>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<p>For more informations about the usage of each directive, read the corresponding class description.
+Or checkout this demo page.</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies</h2>
+<p>In order to use this plugin, you need to use a template that supports bootstrap 3.1.1 with the glyph font setup
+correctly. Usually you should have this structure:</p>
+<pre class="literal-block">
+static
+├──  css
+|     └──  bootstrap.min.css
+├──  font
+|     └──  glyphicons-halflings-regular.ttf
+└──  js
+      └──
+</pre>
+</div>
+<div class="section" id="warning">
+<h2>Warning</h2>
+<p>In order to support some unique features and avoid conflicts with bootstrap, this plugin will use a custom html writer which
+is modifying the traditional docutils output.</p>
+</div>
+</p>
+            </article>
+          </dd>
+          <dd>
+            <a href="#p46">w3c validate</a>
+            <article id="p46" class="content">
+              <p><h1>
+<a name="user-content-w3c_validate-plugin" class="anchor" href="#w3c_validate-plugin"><span class="octicon octicon-link"></span></a>w3c_validate plugin</h1>
+
+<p>This is a plugin for Pelican that submits generated HTML content to the
+<a href="http://validator.w3.org/">W3C Markup Validation Service</a>.</p>
+
+<p>After all content is generated, the output folder is traversed for HTML files,
+and the content is submitted to the W3C validator, after which the results
+are displayed. For example:</p>
+
+<pre><code>-&gt; writing /tmp/_output/sitemap.xml
+-&gt; Validating: /tmp/_output/archives.html
+ERROR: line: 2; col: 52; message: Bad value http://www.w3.org/1999/html for the attribute xmlns (only http://www.w3.
+-&gt; Validating: /tmp/_output/categories.html
+ERROR: line: 2; col: 52; message: Bad value http://www.w3.org/1999/html for the attribute xmlns (only http://www.w3.
+</code></pre>
+
+<p><strong>Note</strong>: The above output assumes you have called Pelican with the <code>--debug</code>
+flag. Otherwise, you will see errors (if any) but not the file currently being
+validated.</p>
+
+<h2>
+<a name="user-content-dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<ul>
+<li>
+<p><a href="https://pypi.python.org/pypi/py_w3c/0.1.0">py_w3c</a>, which can be installed with pip:</p>
+
+<p>$ pip install py_w3c</p>
+</li>
+</ul><h2>
+<a name="user-content-todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<p>[ ] - add tests</p></p>
+            </article>
+          </dd>
+        </dl>
+    </section>
+
+    <div class="row">
+      <div class="or-spacer">
+        <div class="mask"></div>
+      </div>
+    </div>
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <span>Built by</span>
+        <h2><a href="https://github.com/nikhilkalige">Nikhil Kalige</a></h2>
+      </div>
+    </footer>
+
+
+    <script src="http://nikhilkalige.github.io/pelican-plugins-site/theme/js/jquery.min.js"></script>
+    <script src="http://nikhilkalige.github.io/pelican-plugins-site/theme/js/foundation.min.js"></script>
+    <script src="http://nikhilkalige.github.io/pelican-plugins-site/theme/js/app.js"></script>
+  </body>
+</html>
