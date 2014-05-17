@@ -1589,87 +1589,8 @@ Therefor the usage with subcategories is:</p>
             </article>
           </dd>
           <dd>
-            <a href="#p25">nikhilkalige</a>
+            <a href="#p25">optimize images</a>
             <article id="p25" class="content">
-              <p><p>This plugin allows you to use the <a class="reference external" href="https://github.com/miracle2k/webassets">Webassets</a> module to manage assets such as
-CSS and JS files. The module must first be installed:</p>
-<pre class="literal-block">
-pip install webassets
-</pre>
-<p>The Webassets module allows you to perform a number of useful asset management
-functions, including:</p>
-<ul class="simple">
-<li>CSS minifier (<tt class="docutils literal">cssmin</tt>, <tt class="docutils literal">yui_css</tt>, ...)</li>
-<li>CSS compiler (<tt class="docutils literal">less</tt>, <tt class="docutils literal">sass</tt>, ...)</li>
-<li>JS minifier (<tt class="docutils literal">uglifyjs</tt>, <tt class="docutils literal">yui_js</tt>, <tt class="docutils literal">closure</tt>, ...)</li>
-</ul>
-<p>Others filters include CSS URL rewriting, integration of images in CSS via data
-URIs, and more. Webassets can also append a version identifier to your asset
-URL to convince browsers to download new versions of your assets when you use
-far-future expires headers. Please refer to the <a class="reference external" href="http://webassets.readthedocs.org/en/latest/builtin_filters.html">Webassets documentation</a> for
-more information.</p>
-<p>When used with Pelican, Webassets is configured to process assets in the
-<tt class="docutils literal">OUTPUT_PATH/theme</tt> directory. You can use Webassets in your templates by
-including one or more template tags. The Jinja variable <tt class="docutils literal">{{ ASSET_URL }}</tt> can
-be used in templates and is relative to the <tt class="docutils literal">theme/</tt> url. The
-<tt class="docutils literal">{{ ASSET_URL }}</tt> variable should be used in conjunction with the
-<tt class="docutils literal">{{ SITEURL }}</tt> variable in order to generate URLs properly. For example:</p>
-<div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;cssmin&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;css/style.min.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/inuit.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/pygment-monokai.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/main.css&quot;</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">    &lt;link rel=&quot;stylesheet&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
-<span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
-</pre></div>
-<p>... will produce a minified css file with a version identifier that looks like:</p>
-<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://{SITEURL}/theme/css/style.min.css?b3a7c807&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</pre></div>
-<p>These filters can be combined. Here is an example that uses the SASS compiler
-and minifies the output:</p>
-<div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;sass,cssmin&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;css/style.min.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/style.scss&quot;</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">    &lt;link rel=&quot;stylesheet&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
-<span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
-</pre></div>
-<p>Another example for Javascript:</p>
-<div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;uglifyjs&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;js/packed.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/jquery.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/base.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/widgets.js&quot;</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">    &lt;script src=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;&lt;/script&gt;</span>
-<span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
-</pre></div>
-<p>The above will produce a minified JS file:</p>
-<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://{SITEURL}/theme/js/packed.js?00703b9d&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre></div>
-<p>Pelican's debug mode is propagated to Webassets to disable asset packaging
-and instead work with the uncompressed assets.</p>
-<p>If you need to create named bundles (for example, if you need to compile SASS
-files before minifying with other CSS files), you can use the <tt class="docutils literal">ASSET_BUNDLES</tt>
-variable in your settings file. This is an ordered sequence of 3-tuples, where
-the 3-tuple is defined as <tt class="docutils literal">(name, args, kwargs)</tt>. This tuple is passed to the
-<a class="reference external" href="http://webassets.readthedocs.org/en/latest/environment.html#registering-bundles">environment's register() method</a>. The following will compile two SCSS files
-into a named bundle, using the <tt class="docutils literal">pyscss</tt> filter:</p>
-<div class="highlight"><pre><span class="n">ASSET_BUNDLES</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="s">&#39;scss&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;colors.scss&#39;</span><span class="p">,</span> <span class="s">&#39;main.scss&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;filters&#39;</span><span class="p">:</span> <span class="s">&#39;pyscss&#39;</span><span class="p">}),</span>
-<span class="p">)</span>
-</pre></div>
-<p>Many of Webasset's available compilers have additional configuration options
-(i.e. 'Less', 'Sass', 'Stylus', 'Closure_js').  You can pass these options to
-Webassets using the <tt class="docutils literal">ASSET_CONFIG</tt> in your settings file.</p>
-<p>The following will handle Google Closure's compilation level and locate
-LessCSS's binary:</p>
-<div class="highlight"><pre><span class="n">ASSET_CONFIG</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;closure_compressor_optimization&#39;</span><span class="p">,</span> <span class="s">&#39;WHITESPACE_ONLY&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s">&#39;less_bin&#39;</span><span class="p">,</span> <span class="s">&#39;lessc.cmd&#39;</span><span class="p">),</span> <span class="p">)</span>
-</pre></div>
-<p>If you wish to place your assets in locations other than the theme output
-directory, you can use <tt class="docutils literal">ASSET_SOURCE_PATHS</tt> in your settings file to provide
-webassets with a list of additional directories to search, relative to the
-theme's top-level directory. For example:</p>
-<div class="highlight"><pre><span class="n">ASSET_SOURCE_PATHS</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s">&#39;vendor/css&#39;</span><span class="p">,</span>
-    <span class="s">&#39;scss&#39;</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</p>
-            </article>
-          </dd>
-          <dd>
-            <a href="#p26">optimize images</a>
-            <article id="p26" class="content">
               <p><h1>
 <a name="user-content-optimize-images-plugin-for-pelican" class="anchor" href="#optimize-images-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Optimize Images Plugin For Pelican</h1>
 
@@ -1697,8 +1618,8 @@ pelican.</p></p>
             </article>
           </dd>
           <dd>
-            <a href="#p27">pdf</a>
-            <article id="p27" class="content">
+            <a href="#p26">pdf</a>
+            <article id="p26" class="content">
               <p><p>The PDF Generator plugin automatically exports RST articles and pages
 as PDF files as part of the site-generation process. PDFs are saved to
 output/pdf/</p>
@@ -1706,8 +1627,8 @@ output/pdf/</p>
             </article>
           </dd>
           <dd>
-            <a href="#p28">pelican comment system</a>
-            <article id="p28" class="content">
+            <a href="#p27">pelican comment system</a>
+            <article id="p27" class="content">
               <p><h1>
 <a name="user-content-pelican-comment-system" class="anchor" href="#pelican-comment-system"><span class="octicon octicon-link"></span></a>Pelican comment system</h1>
 
@@ -1760,8 +1681,8 @@ The comments are stored in Markdown files. Each comment in it own file.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p29">pelican vimeo</a>
-            <article id="p29" class="content">
+            <a href="#p28">pelican vimeo</a>
+            <article id="p28" class="content">
               <p><p>Pelican Vimeo is a plugin to enabled you to embed Vimeo videos in your pages
 and articles.</p>
 <div class="section" id="installation">
@@ -1810,8 +1731,8 @@ and articles.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p30">pelican youtube</a>
-            <article id="p30" class="content">
+            <a href="#p29">pelican youtube</a>
+            <article id="p29" class="content">
               <p><p>Pelican YouTube is a plugin to enabled you to embed YouTube videos in your pages
 and articles.</p>
 <div class="section" id="installation">
@@ -1860,8 +1781,8 @@ and articles.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p31">post stats</a>
-            <article id="p31" class="content">
+            <a href="#p30">post stats</a>
+            <article id="p30" class="content">
               <p><p>A Pelican plugin to calculate various statistics about a post and store them in an article.stats dictionary:</p>
 <ul class="simple">
 <li><tt class="docutils literal">wc</tt>: how many words</li>
@@ -1900,8 +1821,8 @@ and articles.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p32">random article</a>
-            <article id="p32" class="content">
+            <a href="#p31">random article</a>
+            <article id="p31" class="content">
               <p><h1>
 <a name="user-content-random-article-plugin-for-pelican" class="anchor" href="#random-article-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Random Article Plugin For Pelican</h1>
 
@@ -1926,8 +1847,8 @@ saved at <code>SITEURL</code>.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p33">read more link</a>
-            <article id="p33" class="content">
+            <a href="#p32">read more link</a>
+            <article id="p32" class="content">
               <p><h1>
 <a name="user-content-read-more-link" class="anchor" href="#read-more-link"><span class="octicon octicon-link"></span></a>Read More Link</h1>
 
@@ -1958,8 +1879,8 @@ READ_MORE_LINK_FORMAT = '&lt;a class="read-more" href="/{url}"&gt;{text}&lt;/a&g
             </article>
           </dd>
           <dd>
-            <a href="#p34">related posts</a>
-            <article id="p34" class="content">
+            <a href="#p33">related posts</a>
+            <article id="p33" class="content">
               <p><p>This plugin adds the <tt class="docutils literal">related_posts</tt> variable to the article's context.
 By default, up to 5 articles are listed. You can customize this value by
 defining <tt class="docutils literal">RELATED_POSTS_MAX</tt> in your settings file:</p>
@@ -1986,8 +1907,8 @@ related_posts: slug1,slug2,slug3...slugN</blockquote>
             </article>
           </dd>
           <dd>
-            <a href="#p35">render math</a>
-            <article id="p35" class="content">
+            <a href="#p34">render math</a>
+            <article id="p34" class="content">
               <p><h1>
 <a name="user-content-math-render-plugin-for-pelican" class="anchor" href="#math-render-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Math Render Plugin For Pelican</h1>
 
@@ -2208,8 +2129,8 @@ refer to that equation number by <code>$</code>\ref{eq}<code>$</code>.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p36">representative image</a>
-            <article id="p36" class="content">
+            <a href="#p35">representative image</a>
+            <article id="p35" class="content">
               <p><h1>
 <a name="user-content-summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a>Summary</h1>
 
@@ -2221,8 +2142,8 @@ refer to that equation number by <code>$</code>\ref{eq}<code>$</code>.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p37">share post</a>
-            <article id="p37" class="content">
+            <a href="#p36">share post</a>
+            <article id="p36" class="content">
               <p><h1>
 <a name="user-content-share-post" class="anchor" href="#share-post"><span class="octicon octicon-link"></span></a>Share Post</h1>
 
@@ -2301,8 +2222,8 @@ be unobtrusive depending on how Pelican theme uses them.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p38">simple footnotes</a>
-            <article id="p38" class="content">
+            <a href="#p37">simple footnotes</a>
+            <article id="p37" class="content">
               <p><h1>
 <a name="user-content-simple-footnotes" class="anchor" href="#simple-footnotes"><span class="octicon octicon-link"></span></a>Simple Footnotes</h1>
 
@@ -2333,8 +2254,8 @@ it looks for the <code>[ref]</code> and <code>[/ref]</code> once the conversion 
             </article>
           </dd>
           <dd>
-            <a href="#p39">sitemap</a>
-            <article id="p39" class="content">
+            <a href="#p38">sitemap</a>
+            <article id="p38" class="content">
               <p><p>The sitemap plugin generates plain-text or XML sitemaps. You can use the
 <tt class="docutils literal">SITEMAP</tt> variable in your settings file to configure the behavior of the
 plugin.</p>
@@ -2399,8 +2320,8 @@ For more information: &lt;<a class="reference external" href="http://www.sitemap
             </article>
           </dd>
           <dd>
-            <a href="#p40">static comments</a>
-            <article id="p40" class="content">
+            <a href="#p39">static comments</a>
+            <article id="p39" class="content">
               <p><h2>
 <a name="user-content-static-comments" class="anchor" href="#static-comments"><span class="octicon octicon-link"></span></a>Static comments</h2>
 
@@ -2431,8 +2352,8 @@ are located. Default is <code>comments</code>.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p41">subcategory</a>
-            <article id="p41" class="content">
+            <a href="#p40">subcategory</a>
+            <article id="p40" class="content">
               <p><h1>
 <a name="user-content-subcategory-plugin" class="anchor" href="#subcategory-plugin"><span class="octicon octicon-link"></span></a>Subcategory Plugin</h1>
 
@@ -2523,8 +2444,8 @@ SUBCATEGORY_FEED_RSS = 'feeds/%s.rss.xml'
             </article>
           </dd>
           <dd>
-            <a href="#p42">summary</a>
-            <article id="p42" class="content">
+            <a href="#p41">summary</a>
+            <article id="p41" class="content">
               <p><p>This plugin allows easy, variable length summaries directly embedded into the
 body of your articles. It introduces two new settings: <tt class="docutils literal">SUMMARY_BEGIN_MARKER</tt>
 and <tt class="docutils literal">SUMMARY_END_MARKER</tt>: strings which can be placed directly into an article
@@ -2553,8 +2474,8 @@ beginning marker and continue to the end of the body.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p43">test data</a>
-            <article id="p43" class="content">
+            <a href="#p42">test data</a>
+            <article id="p42" class="content">
               <p><p>Place tests for your plugin here. <tt class="docutils literal">test_data</tt> folder contains following
 common data for your tests, if you need them.</p>
 <table border="1" class="docutils">
@@ -2583,8 +2504,8 @@ common data for your tests, if you need them.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p44">thumbnailer</a>
-            <article id="p44" class="content">
+            <a href="#p43">thumbnailer</a>
+            <article id="p43" class="content">
               <p><h1>
 <a name="user-content-thumbnail-creation-of-images" class="anchor" href="#thumbnail-creation-of-images"><span class="octicon octicon-link"></span></a>Thumbnail Creation of images</h1>
 
@@ -2617,8 +2538,8 @@ The generated filename will be originalname_thumbnailname.ext unless THUMBNAIL_K
             </article>
           </dd>
           <dd>
-            <a href="#p45">tipue search</a>
-            <article id="p45" class="content">
+            <a href="#p44">tipue search</a>
+            <article id="p44" class="content">
               <p><h1>
 <a name="user-content-tipue-search" class="anchor" href="#tipue-search"><span class="octicon octicon-link"></span></a>Tipue Search</h1>
 
@@ -2698,8 +2619,8 @@ especially for large sites.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p46">twitter bootstrap rst directives</a>
-            <article id="p46" class="content">
+            <a href="#p45">twitter bootstrap rst directives</a>
+            <article id="p45" class="content">
               <p><div class="section" id="twitter-bootstrap-directive-for-restructured-text">
 <h2>Twitter Bootstrap Directive for restructured text</h2>
 <p>This plugin defines some rst directive that enable a clean usage of the twitter bootstrap CSS and Javascript components.</p>
@@ -2746,8 +2667,8 @@ is modifying the traditional docutils output.</p>
             </article>
           </dd>
           <dd>
-            <a href="#p47">w3c validate</a>
-            <article id="p47" class="content">
+            <a href="#p46">w3c validate</a>
+            <article id="p46" class="content">
               <p><h1>
 <a name="user-content-w3c_validate-plugin" class="anchor" href="#w3c_validate-plugin"><span class="octicon octicon-link"></span></a>w3c_validate plugin</h1>
 
