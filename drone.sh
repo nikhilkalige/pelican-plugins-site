@@ -1,4 +1,5 @@
-git checkout master
+#!/bin/bash
+set -x
 git config core.filemode false
 pip install -r requirements.txt --use-mirrors
 rm -rf content
