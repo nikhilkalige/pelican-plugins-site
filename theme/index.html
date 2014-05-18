@@ -1,71 +1,352 @@
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Foundation</title>
     <link rel="stylesheet" href="stylesheets/app.css" />
     <script src="bower_components/modernizr/modernizr.js"></script>
-  </head>
-  <body>
+</head>
+<body>
 
     <header class="row">
-      <div class="large-12 columns">
-        <h1>PELICAN PLUGINS</h1>
-        <p>A collection of plugins for pelican</p>
-      </div>
+        <div class="large-12 columns">
+            <h1>PELICAN PLUGINS</h1>
+            <p>A collection of plugins for pelican</p>
+        </div>
     </header>
 
     <div class="row">
-      <div class="or-spacer">
-        <div class="mask"></div>
-      </div>
+        <div class="or-spacer">
+            <div class="mask"></div>
+        </div>
     </div>
 
     <section class="row">
-      <div class="large-12 columns">
+        <div class="large-12 columns">
+            <h2 id="the-plugins">The Plugins</h2>
+            <p>Plugins are a way to add features to Pelican without having to directly modify the Pelican core</p>
+        </div>
+        <div class="large-12 columns">
+            <ul class=" temp small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal1">HTML ENTITIES FOR RESTRUCTURED TEXT</a>
+                    <div id="myModal1" class="modal reveal-modal" data-reveal>
+                        <h2>HTML ENTITIES FOR RESTRUCTURED TEXT</h2>
+                        <article>
+                            <p><p>This plugin allows you to use the <a class="reference external" href="https://github.com/miracle2k/webassets">Webassets</a> module to manage assets such as
+                            CSS and JS files. The module must first be installed:</p>
+                            <pre class="literal-block">
+                            pip install webassets
+                            </pre>
+                            <p>The Webassets module allows you to perform a number of useful asset management
+                            functions, including:</p>
+                            <ul class="simple">
+                            <li>CSS minifier (<tt class="docutils literal">cssmin</tt>, <tt class="docutils literal">yui_css</tt>, ...)</li>
+                            <li>CSS compiler (<tt class="docutils literal">less</tt>, <tt class="docutils literal">sass</tt>, ...)</li>
+                            <li>JS minifier (<tt class="docutils literal">uglifyjs</tt>, <tt class="docutils literal">yui_js</tt>, <tt class="docutils literal">closure</tt>, ...)</li>
+                            </ul>
+                            <p>Others filters include CSS URL rewriting, integration of images in CSS via data
+                            URIs, and more. Webassets can also append a version identifier to your asset
+                            URL to convince browsers to download new versions of your assets when you use
+                            far-future expires headers. Please refer to the <a class="reference external" href="http://webassets.readthedocs.org/en/latest/builtin_filters.html">Webassets documentation</a> for
+                            more information.</p>
+                            <p>When used with Pelican, Webassets is configured to process assets in the
+                            <tt class="docutils literal">OUTPUT_PATH/theme</tt> directory. You can use Webassets in your templates by
+                            including one or more template tags. The Jinja variable <tt class="docutils literal">{{ ASSET_URL }}</tt> can
+                            be used in templates and is relative to the <tt class="docutils literal">theme/</tt> url. The
+                            <tt class="docutils literal">{{ ASSET_URL }}</tt> variable should be used in conjunction with the
+                            <tt class="docutils literal">{{ SITEURL }}</tt> variable in order to generate URLs properly. For example:</p>
+                            <div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;cssmin&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;css/style.min.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/inuit.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/pygment-monokai.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/main.css&quot;</span> <span class="cp">%}</span><span class="x"></span>
+                            <span class="x">    &lt;link rel=&quot;stylesheet&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
+                            <span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
+                            </pre></div>
+                            <p>... will produce a minified css file with a version identifier that looks like:</p>
+                            <div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://{SITEURL}/theme/css/style.min.css?b3a7c807&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+                            </pre></div>
+                            <p>These filters can be combined. Here is an example that uses the SASS compiler
+                            and minifies the output:</p>
+                            <div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;sass,cssmin&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;css/style.min.css&quot;</span><span class="o">,</span> <span class="s2">&quot;css/style.scss&quot;</span> <span class="cp">%}</span><span class="x"></span>
+                            <span class="x">    &lt;link rel=&quot;stylesheet&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
+                            <span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
+                            </pre></div>
+                            <p>Another example for Javascript:</p>
+                            <div class="highlight"><pre><span class="cp">{%</span> <span class="k">assets</span> <span class="nv">filters</span><span class="o">=</span><span class="s2">&quot;uglifyjs&quot;</span><span class="o">,</span> <span class="nv">output</span><span class="o">=</span><span class="s2">&quot;js/packed.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/jquery.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/base.js&quot;</span><span class="o">,</span> <span class="s2">&quot;js/widgets.js&quot;</span> <span class="cp">%}</span><span class="x"></span>
+                            <span class="x">    &lt;script src=&quot;</span><span class="cp">{{</span> <span class="nv">SITEURL</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">ASSET_URL</span> <span class="cp">}}</span><span class="x">&quot;&gt;&lt;/script&gt;</span>
+                            <span class="cp">{%</span> <span class="k">endassets</span> <span class="cp">%}</span><span class="x"></span>
+                            </pre></div>
+                            <p>The above will produce a minified JS file:</p>
+                            <div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://{SITEURL}/theme/js/packed.js?00703b9d&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+                            </pre></div>
+                            <p>Pelican's debug mode is propagated to Webassets to disable asset packaging
+                            and instead work with the uncompressed assets.</p>
+                            <p>If you need to create named bundles (for example, if you need to compile SASS
+                            files before minifying with other CSS files), you can use the <tt class="docutils literal">ASSET_BUNDLES</tt>
+                            variable in your settings file. This is an ordered sequence of 3-tuples, where
+                            the 3-tuple is defined as <tt class="docutils literal">(name, args, kwargs)</tt>. This tuple is passed to the
+                            <a class="reference external" href="http://webassets.readthedocs.org/en/latest/environment.html#registering-bundles">environment's register() method</a>. The following will compile two SCSS files
+                            into a named bundle, using the <tt class="docutils literal">pyscss</tt> filter:</p>
+                            <div class="highlight"><pre><span class="n">ASSET_BUNDLES</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="p">(</span><span class="s">&#39;scss&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;colors.scss&#39;</span><span class="p">,</span> <span class="s">&#39;main.scss&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;filters&#39;</span><span class="p">:</span> <span class="s">&#39;pyscss&#39;</span><span class="p">}),</span>
+                            <span class="p">)</span>
+                            </pre></div>
+                            <p>Many of Webasset's available compilers have additional configuration options
+                            (i.e. 'Less', 'Sass', 'Stylus', 'Closure_js').  You can pass these options to
+                            Webassets using the <tt class="docutils literal">ASSET_CONFIG</tt> in your settings file.</p>
+                            <p>The following will handle Google Closure's compilation level and locate
+                            LessCSS's binary:</p>
+                            <div class="highlight"><pre><span class="n">ASSET_CONFIG</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;closure_compressor_optimization&#39;</span><span class="p">,</span> <span class="s">&#39;WHITESPACE_ONLY&#39;</span><span class="p">),</span>
+                                            <span class="p">(</span><span class="s">&#39;less_bin&#39;</span><span class="p">,</span> <span class="s">&#39;lessc.cmd&#39;</span><span class="p">),</span> <span class="p">)</span>
+                            </pre></div>
+                            <p>If you wish to place your assets in locations other than the theme output
+                            directory, you can use <tt class="docutils literal">ASSET_SOURCE_PATHS</tt> in your settings file to provide
+                            webassets with a list of additional directories to search, relative to the
+                            theme's top-level directory. For example:</p>
+                            <div class="highlight"><pre><span class="n">ASSET_SOURCE_PATHS</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="s">&#39;vendor/css&#39;</span><span class="p">,</span>
+                                <span class="s">&#39;scss&#39;</span><span class="p">,</span>
+                            <span class="p">)</span>
+                            </pre></div>
+                            </p>
+                        </article>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal2">TWITTER BOOTSTRAP RST DIRECTIVES</a>
+                    <div id="myModal2" class="modal reveal-modal" data-reveal>
+                        <h2>TWITTER BOOTSTRAP RST DIRECTIVES</h2>
+                        <article>
+                            <p><h1>
+                            <a name="user-content-tipue-search" class="anchor" href="#tipue-search"><span class="octicon octicon-link"></span></a>Tipue Search</h1>
 
-        <h2 id="the-plugins">The Plugins</h1>
-        <p>Plugins are a way to add features to Pelican without having to directly modify the Pelican core</p>
+                            <p>A Pelican plugin to serialize generated HTML to JSON that can be used by jQuery plugin - Tipue Search.</p>
 
-        <dl class="accordion" data-accordion>
-          <dd>
-            <a href="#panel1">ABOUT US</a>
-            <article id="panel1" class="ac-small content">
-              <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
-            </article>
-          </dd>
-          <dd>
-            <a href="#panel2">Accordion 2</a>
-            <article id="panel2" class="ac-small content">
-              <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
-            </article>
-          </dd>
-          <dd>
-            <a href="#panel3">Accordion 3</a>
-            <article id="panel3" class="ac-small content">
-              <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
-            </article>
-          </dd>
-        </dl>
-      </div>
+                            <p>Copyright (c) Talha Mansoor</p>
+
+                            <table>
+                            <thead><tr>
+                            <th>Author</th>
+                            <th>Talha Mansoor</th>
+                            </tr></thead>
+                            <tbody>
+                            <tr>
+                            <td>Author Email</td>
+                            <td><a href="mailto:talha131@gmail.com">talha131@gmail.com</a></td>
+                            </tr>
+                            <tr>
+                            <td>Author Homepage</td>
+                            <td><a href="http://onCrashReboot.com">http://onCrashReboot.com</a></td>
+                            </tr>
+                            <tr>
+                            <td>Github Account</td>
+                            <td><a href="https://github.com/talha131">https://github.com/talha131</a></td>
+                            </tr>
+                            </tbody>
+                            </table><h1>
+                            <a name="user-content-why-do-you-need-it" class="anchor" href="#why-do-you-need-it"><span class="octicon octicon-link"></span></a>Why do you need it?</h1>
+
+                            <p>Static sites do not offer search feature out of the box. <a href="http://www.tipue.com/search/">Tipue Search</a>
+                            is a jQuery plugin that search the static site without using any third party service, like DuckDuckGo or Google.</p>
+
+                            <p>Tipue Search offers 4 search modes. Its <a href="http://www.tipue.com/search/docs/json/">JSON search mode</a> is the best search mode
+                            especially for large sites.</p>
+
+                            <p>Tipue's JSON search mode requires the textual content of site in JSON format.</p>
+
+                            <h1>
+                            <a name="user-content-requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+                            <p>Tipue Search requires BeautifulSoup.</p>
+
+                            <div class="highlight highlight-bash"><pre>pip install beautifulsoup4
+                            </pre></div>
+
+                            <h1>
+                            <a name="user-content-how-tipue-search-works" class="anchor" href="#how-tipue-search-works"><span class="octicon octicon-link"></span></a>How Tipue Search works</h1>
+
+                            <p>Tipue Search serializes the generated HTML into JSON. Format of JSON is as follows</p>
+
+                            <div class="highlight highlight-python"><pre><span class="p">{</span>
+                            <span class="s">"pages"</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                            <span class="s">"text"</span><span class="p">:</span> <span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero."</span><span class="p">,</span>
+                            <span class="s">"tags"</span><span class="p">:</span> <span class="s">"Example Category"</span><span class="p">,</span>
+                            <span class="s">"loc"</span> <span class="p">:</span> <span class="s">"http://oncrashreboot.com/plugin-example.html"</span><span class="p">,</span>
+                            <span class="s">"title"</span><span class="p">:</span> <span class="s">"Everything you want to know about Lorem Ipsum"</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                            <span class="s">"text"</span><span class="p">:</span> <span class="s">"Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh."</span><span class="p">,</span>
+                            <span class="s">"tags"</span><span class="p">:</span> <span class="s">"Example Category"</span><span class="p">,</span>
+                            <span class="s">"loc"</span> <span class="p">:</span> <span class="s">"http://oncrashreboot.com/plugin-example-2.html"</span><span class="p">,</span>
+                            <span class="s">"title"</span><span class="p">:</span> <span class="s">"Review of the book Lorem Ipsum"</span>
+                            <span class="p">}</span>
+                            <span class="p">]</span>
+                            <span class="p">}</span>
+                            </pre></div>
+
+                            <p>JSON is written to file <code>tipuesearch_content.json</code> which is created in the root of <code>output</code> directory.</p>
+
+                            <h1>
+                            <a name="user-content-how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h1>
+
+                            <p>To utilize JSON Search mode, your theme needs to have Tipue Search properly configured in it. <a href="http://www.tipue.com/search/docs/json/">Official documentation</a> has the required details.</p>
+
+                            <p>Pelican <a href="https://github.com/talha131/pelican-elegant">Elegant Theme</a> has Tipue Search configured. You can view its code to understand the configuration. </p></p>
+                        </article>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" class="btn" data-reveal-id="myModal">CJK-AUTO-SPACING</a>
+                    <div id="myModal" class="modal reveal-modal" data-reveal>
+                        <h2>CJK-AUTO-SPACING</h2>
+                        <article id="p19" class="content">
+                            <p><p>This plugin extends the translations functionality by creating internationalized sub-sites for the default site. It is therefore redundant with the <em>*_LANG_{SAVE_AS,URL}</em> variables, so it disables them to prevent conflicts.</p>
+                            <div class="section" id="what-it-does">
+                            <h2>What it does</h2>
+                            <ol class="arabic simple">
+                            <li>The <em>*_LANG_URL</em> and <em>*_LANG_SAVE_AS</em> variables are set to their normal counterparts (e.g. <em>ARTICLE_URL</em>) so they don't conflict with this scheme.</li>
+                            <li>While building the site for <em>DEFAULT_LANG</em> the translations of pages and articles are not generated, but their relations to the original content is kept via links to them.</li>
+                            <li>For each non-default language a &quot;sub-site&quot; with a modified config <a class="footnote-reference" href="#conf" id="id1">[1]</a> is created <a class="footnote-reference" href="#run" id="id2">[2]</a>, linking the translations to the originals (if available). The configured language code is appended to the <em>OUTPUT_PATH</em> and <em>SITEURL</em> of each sub-site. For each sub-site, <em>DEFAULT_LANG</em> is changed to the language of the sub-site so that articles in a different language are treated as translations.</li>
+                            </ol>
+                            <p>If <em>HIDE_UNTRANSLATED_CONTENT</em> is True (default), content without a translation for a language is generated as hidden (for pages) or draft (for articles) for the corresponding language sub-site.</p>
+                            <table class="docutils footnote" frame="void" id="conf" rules="none">
+                            <colgroup><col class="label" /><col /></colgroup>
+                            <tbody valign="top">
+                            <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>For each language a config override is given in the <em>I18N_SUBSITES</em> dictionary.</td></tr>
+                            </tbody>
+                            </table>
+                            <table class="docutils footnote" frame="void" id="run" rules="none">
+                            <colgroup><col class="label" /><col /></colgroup>
+                            <tbody valign="top">
+                            <tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Using a new <em>PELICAN_CLASS</em> instance and its <tt class="docutils literal">run</tt> method, so each sub-site could even have a different <em>PELICAN_CLASS</em> if specified in <em>I18N_SUBSITES</em> conf overrides.</td></tr>
+                            </tbody>
+                            </table>
+                            </div>
+                            <div class="section" id="setting-it-up">
+                            <h2>Setting it up</h2>
+                            <p>For each extra used language code, a language-specific variables overrides dictionary must be given (but can be empty) in the <em>I18N_SUBSITES</em> dictionary</p>
+                            <div class="highlight"><pre><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;i18n_subsites&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+                            <span class="c"># mapping: language_code -&gt; conf_overrides_dict</span>
+                            <span class="n">I18N_SUBSITES</span> <span class="o">=</span> <span class="p">{</span>
+                                <span class="s">&#39;cz&#39;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s">&#39;SITENAME&#39;</span><span class="p">:</span> <span class="s">&#39;Hezkej blog&#39;</span><span class="p">,</span>
+                                    <span class="p">}</span>
+                                <span class="p">}</span>
+                            </pre></div>
+                            <ul class="simple">
+                            <li>The language code is the language identifier used in the <em>lang</em> metadata. It is appended to <em>OUTPUT_PATH</em> and <em>SITEURL</em> of each I18N sub-site.</li>
+                            <li>The internationalized config overrides dictionary may specify configuration variable overrides — e.g. a different <em>LOCALE</em>, <em>SITENAME</em>, <em>TIMEZONE</em>, etc. However, it <strong>must not</strong> override <em>OUTPUT_PATH</em> and <em>SITEURL</em> as they are modified automatically by appending the language code.</li>
+                            </ul>
+                            <div class="section" id="localizing-templates">
+                            <h3>Localizing templates</h3>
+                            <p>Most importantly, this plugin can use localized templates for each sub-site. There are two approaches to having the templates localized:</p>
+                            <ul class="simple">
+                            <li>You can set a different <em>THEME</em> override for each language in <em>I18N_SUBSITES</em>, e.g. by making a copy of a theme <tt class="docutils literal">my_theme</tt> to <tt class="docutils literal">my_theme_lang</tt> and then editing the templates in the new localized theme. This approach means you don't have to deal with gettext <tt class="docutils literal">*.po</tt> files, but it is harder to maintain over time.</li>
+                            <li>You use only one theme and localize the templates using the <a class="reference external" href="http://jinja.pocoo.org/docs/templates/#i18n">jinja2.ext.i18n Jinja2 extension</a>. For a kickstart read this <a class="reference external" href="./localizing_using_jinja2.rst">guide</a>.</li>
+                            </ul>
+                            <p>It may be convenient to add language buttons to your theme in addition to the translation links of articles and pages. These buttons could, for example, point to the <em>SITEURL</em> of each (sub-)site. For this reason the plugin adds these variables to the template context:</p>
+                            <dl class="docutils">
+                            <dt>main_lang</dt>
+                            <dd>The language of the top-level site — the original <em>DEFAULT_LANG</em></dd>
+                            <dt>main_siteurl</dt>
+                            <dd>The <em>SITEURL</em> of the top-level site — the original <em>SITEURL</em></dd>
+                            <dt>lang_siteurls</dt>
+                            <dd>An ordered dictionary, mapping all used languages to their <em>SITEURL</em>. The <tt class="docutils literal">main_lang</tt> is the first key with <tt class="docutils literal">main_siteurl</tt> as the value. This dictionary is useful for implementing global language buttons that show the language of the currently viewed (sub-)site too.</dd>
+                            <dt>extra_siteurls</dt>
+                            <dd>An ordered dictionary, subset of <tt class="docutils literal">lang_siteurls</tt>, the current <em>DEFAULT_LANG</em> of the rendered (sub-)site is not included, so for each (sub-)site <tt class="docutils literal">set(extra_siteurls) == set(lang_siteurls) - <span class="pre">set([DEFAULT_LANG])</span></tt>. This dictionary is useful for implementing global language buttons that do not show the current language.</dd>
+                            </dl>
+                            <p>If you don't like the default ordering of the ordered dictionaries, use a Jinja2 filter to alter the ordering.</p>
+                            <p>This short <a class="reference external" href="./implementing_language_buttons.rst">howto</a> shows two example implementations of language buttons.</p>
+                            </div>
+                            </div>
+                            <div class="section" id="usage-notes">
+                            <h2>Usage notes</h2>
+                            <ul class="simple">
+                            <li>It is <strong>mandatory</strong> to specify <em>lang</em> metadata for each article and page as <em>DEFAULT_LANG</em> is later changed for each sub-site, so content without <em>lang</em> metadata woudl be rendered in every (sub-)site.</li>
+                            <li>As with the original translations functionality, <em>slug</em> metadata is used to group translations. It is therefore often convenient to compensate for this by overriding the content URL (which defaults to slug) using the <em>URL</em> and <em>Save_as</em> metadata.</li>
+                            </ul>
+                            </div>
+                            <div class="section" id="future-plans">
+                            <h2>Future plans</h2>
+                            <ul class="simple">
+                            <li>add a test suite</li>
+                            </ul>
+                            </div>
+                            <div class="section" id="development">
+                            <h2>Development</h2>
+                            <ul class="simple">
+                            <li>A demo and test site is in the <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch and can be seen at <a class="reference external" href="http://smartass101.github.io/pelican-plugins/">http://smartass101.github.io/pelican-plugins/</a></li>
+                            </ul>
+                            </div>
+                            </p>
+                        </article>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal">GOODREADS ACTIVITY</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal">PELICAN COMMENT SYSTEM</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal">PDF</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal">I18N SUBTITLES</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal">GALLERY</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+                <li class="mlink">
+                    <a href="#" data-reveal-id="myModal">BETTER FIGURES AND IMAGES</a>
+                    <div id="myModal" class="reveal-modal" data-reveal>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </section>
 
     <div class="row">
-      <div class="or-spacer">
-        <div class="mask"></div>
-      </div>
+        <div class="or-spacer">
+            <div class="mask"></div>
+        </div>
     </div>
 
     <footer class="row">
-      <div class="large-12 columns">
-        <span>Built by</span>
-        <h2><a href="https://github.com/nikhilkalige">Nikhil Kalige</a></h2>
-      </div>
+        <div class="large-12 columns">
+            <span>Built by</span>
+            <h2><a href="https://github.com/nikhilkalige">Nikhil Kalige</a></h2>
+        </div>
     </footer>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/foundation/js/foundation.min.js"></script>
     <script src="js/app.js"></script>
-  </body>
+    <script src="js/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript">
+        $('.temp').each(function() {
+            $(this).children('.mlink').matchHeight(true);
+        });
+    </script>
+</body>
 </html>
