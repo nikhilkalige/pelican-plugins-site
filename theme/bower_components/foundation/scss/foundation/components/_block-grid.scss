@@ -59,7 +59,12 @@ $block-grid-media-queries: true !default;
 
   @if $per-row {
     &>li {
-      width: 100%/$per-row;
+      //width: 100%/$per-row;
+      $margin: 1%;
+      $width: (100% - 2 * $per-row * $margin) / $per-row;
+      width: $width;
+      margin: $margin;
+
       @if $include-spacing {
         padding: 0 ($spacing/2) $spacing;
       }

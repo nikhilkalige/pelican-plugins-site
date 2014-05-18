@@ -56,3 +56,6 @@ docs/_build/
 .sass-cache
 
 .idea
+
+theme/stylesheets/app_old.css
+index_old.html
