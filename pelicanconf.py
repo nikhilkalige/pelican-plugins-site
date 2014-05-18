@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Nikhil Kalige'
 SITENAME = u'Pelican Plugins'
-SITEURL = 'http://nikhilkalige.github.io/pelican-plugins-site'
+SITEURL = ''
 
 TIMEZONE = 'Asia/Kolkata'
 
