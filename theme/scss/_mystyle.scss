@@ -1,24 +1,10 @@
 @font-face {
-    font-family: 'FFF';
-    src:
-         url('fonts/FFF_Tusj.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-@font-face {
-    font-family: 'oswald';
-    src:
-         url('fonts/Oswald-Light.otf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'or';
-    src:
-         url('fonts/Oswald-Regular.otf') format('truetype');
+    font-family: 'open_sans';
+    src: url('fonts/open_sans/OpenSans-Regular-webfont.eot');
+    src: url('fonts/open_sans/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/open_sans/OpenSans-Regular-webfont.woff') format('woff'),
+         url('fonts/open_sans/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('fonts/open_sans/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -39,13 +25,21 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'BebasNeue';
+    src:
+         url('fonts/BebasNeue.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background-color: #EDEDED;
     font-size: 18px;
 }
 
 header {
-    padding-top: 15em;
+    padding-top: 5em;
     position: relative;
     //padding-top: 8em;
     text-align: center;
@@ -57,7 +51,7 @@ header {
     }
 
     p {
-        font-family: 'oswald';
+        font-family: 'open_sans';
         font-size: 1.4em;
         margin: 1em 0;
     }
@@ -67,6 +61,22 @@ dl dd {
     margin-bottom: 2px;
 }
 
+
+/* @media only screen and (min-width: 64.063em)
+    .large-block-grid-3 > li {
+        width: 33.33333%;
+        list-style: none;
+    }
+@media only screen and (min-width: 40.063em)
+    .medium-block-grid-2 > li {
+        width: 50%;
+        list-style: none;
+    }
+@media only screen
+    .small-block-grid-1 > li {
+        width: 100%;
+        list-style: none;
+    } */
 section {
 
     #the-plugins {
@@ -79,12 +89,66 @@ section {
         font-weight: 500;
     }
     #the-plugins +  p {
-        font-family: 'oswald';
+        font-family: 'open_sans';
         font-size: 1.4em;
+        text-align: center;
+        padding-bottom: 2em;
+    }
+
+    & > div {
         text-align: center;
     }
 
-    .accordion {
+    ul {
+        margin: 0 0.625rem;
+    }
+
+    .mlink {
+        text-align: center;
+        padding: 0rem 0.625rem;
+        display: table;
+
+        & > a {
+            display: table-cell;
+            vertical-align: middle;
+
+            font-family: "BebasNeue";
+            font-size: rem-calc(30);
+            line-height: 1.2;
+
+            position: relative;
+
+            //.btn {
+            border: 3px solid #000;
+            background: none;
+            cursor: pointer;
+            padding: rem-calc(25) rem-calc(40);
+            text-transform: uppercase;
+            outline: none;
+            position: relative;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+
+            &:after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                -webkit-transition: all 0.3s;
+                -moz-transition: all 0.3s;
+                transition: all 0.3s;
+            }
+
+            &:hover,
+            &:active {
+                color: #eee;
+                background: #555;
+                border-color: #f06060;
+            }
+        }
+    }
+
+    /* .accordion {
         transition: all 0.5s linear;
         //width: 400px;
         margin: 10px auto 30px auto;
@@ -137,7 +201,7 @@ section {
             //text-shadow: 0px 1px 1px rgba(255,255,255, 0.6);
             /* box-shadow:
                 0px 0px 0px 1px rgba(155,155,155,0.3),
-                0px 2px 2px rgba(0,0,0,0.1); */
+                0px 2px 2px rgba(0,0,0,0.1);
         }
 
         article{
@@ -231,7 +295,7 @@ section {
                 }
             }
         }
-    }
+    }*/
 }
 
 footer {
@@ -292,7 +356,7 @@ footer {
 }
 
 .or-spacer {
-  margin: 8em auto;
+  margin: 5em auto;
   position:relative;
 
   .mask {
@@ -305,4 +369,114 @@ footer {
       box-shadow:0 0 8px black;
     }
   }
+}
+
+.modal {
+    //color: #fff;
+    background: #e74c3c;
+    background: #fff;
+    border-radius: 3px;
+
+    &>h2 {
+        margin: 0;
+        padding: 0.4em;
+        text-align: center;
+        font-size: 2.4em;
+        font-weight: 300;
+        opacity: 0.8;
+        background: rgba(0,0,0,0.1);
+        border-radius: 3px 3px 0 0;
+    }
+
+    article  {
+        background: #fff;
+        margin-top: -1px;
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
+
+        padding: 0 rem-calc(36) rem-calc(40) rem-calc(36);
+
+        font-size: 1.4rem;
+        font-family: 'open_sans';
+
+        -webkit-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+        -moz-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+        -o-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+        -ms-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+        transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
+
+        & > :first-child {
+            padding-top: 40px;
+        }
+
+        a {
+            color: #41B7D8;
+
+            &:hover {
+                color: #d17;
+            }
+        }
+
+        ul, ol, dl {
+            font-size: 1.4rem;
+        }
+
+        h1,h2,h3,h4,h5 {
+            text-align: center;
+            font-family: 'BebasNeue';
+        }
+
+        p {
+            font-size: inherit;
+        }
+
+        .literal, code, pre {
+            padding: 0 3px 2px;
+            font-family: Menlo, Monaco, "Courier New", monospace;
+            font-family: "Ubuntu Mono";
+            font-size: 1.1rem;
+            color: #444;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        .literal, code {
+            padding: 3px 4px;
+            color: #d14;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+        }
+
+        pre {
+            display: block;
+            padding: 8.5px;
+            margin: 0 0 9px;
+            line-height: 1.5;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,0.15);
+            white-space: pre;
+            white-space: pre-wrap;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+        pre.prettyprint {
+            margin-bottom: 18px;
+        }
+        pre code {
+            padding: 0;
+            color: inherit;
+            background-color: transparent;
+            border: 0;
+        }
+
+        table {
+            margin: 0 auto;
+
+            td, th {
+                text-align: center;
+            }
+        }
+    }
 }
