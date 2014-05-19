@@ -386,6 +386,34 @@ footer {
         opacity: 0.8;
         background: rgba(0,0,0,0.1);
         border-radius: 3px 3px 0 0;
+        transition: all 0.3s linear;
+
+
+        a {
+            position: relative;
+            padding: 0 1rem;
+            &:after {
+                content: "";
+                width: 64px;
+                height: 64px;
+                margin: 0 5px 0 0;
+                background: url(../images/github.svg);
+                background-position: 0 0px;
+                display: inline-block;
+                top: -7px;
+                left: -64px;
+                position: absolute;
+                opacity: 0;
+            }
+
+            &:hover {
+                color: #41B7D8;
+            }
+
+            &:hover:after {
+                opacity: 1;
+            }
+        }
     }
 
     article  {
@@ -397,7 +425,7 @@ footer {
 
         padding: 0 rem-calc(36) rem-calc(40) rem-calc(36);
 
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-family: 'open_sans';
 
         -webkit-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
@@ -419,7 +447,7 @@ footer {
         }
 
         ul, ol, dl {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         h1,h2,h3,h4,h5 {
@@ -479,4 +507,8 @@ footer {
             }
         }
     }
+}
+
+.modal-h2-hover {
+    background: rgba(0,0,0,0.8) !important;
 }

@@ -42,3 +42,4 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     'extras/htaccess': {'path': '.htaccess'},
     }
+DOCUTILS_SETTINGS = {'report_level': 'quiet'}
