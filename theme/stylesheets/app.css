@@ -4265,8 +4265,36 @@ footer a:focus {
   opacity: 0.8;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 3px 3px 0 0;
+  transition: all 0.3s linear;
 }
-/* line 391, ../scss/_mystyle.scss */
+/* line 392, ../scss/_mystyle.scss */
+.modal > h2 a {
+  position: relative;
+  padding: 0 1rem;
+}
+/* line 395, ../scss/_mystyle.scss */
+.modal > h2 a:after {
+  content: "";
+  width: 64px;
+  height: 64px;
+  margin: 0 5px 0 0;
+  background: url(../images/github.svg);
+  background-position: 0 0px;
+  display: inline-block;
+  top: -7px;
+  left: -64px;
+  position: absolute;
+  opacity: 0;
+}
+/* line 409, ../scss/_mystyle.scss */
+.modal > h2 a:hover {
+  color: #41B7D8;
+}
+/* line 413, ../scss/_mystyle.scss */
+.modal > h2 a:hover:after {
+  opacity: 1;
+}
+/* line 419, ../scss/_mystyle.scss */
 .modal article {
   background: #fff;
   margin-top: -1px;
@@ -4282,32 +4310,32 @@ footer a:focus {
   -ms-transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
   transition: max-height 0.3s ease-in-out, box-shadow 0.6s linear;
 }
-/* line 409, ../scss/_mystyle.scss */
+/* line 437, ../scss/_mystyle.scss */
 .modal article > :first-child {
   padding-top: 40px;
 }
-/* line 413, ../scss/_mystyle.scss */
+/* line 441, ../scss/_mystyle.scss */
 .modal article a {
   color: #41B7D8;
 }
-/* line 416, ../scss/_mystyle.scss */
+/* line 444, ../scss/_mystyle.scss */
 .modal article a:hover {
   color: #d17;
 }
-/* line 421, ../scss/_mystyle.scss */
+/* line 449, ../scss/_mystyle.scss */
 .modal article ul, .modal article ol, .modal article dl {
   font-size: 1.4rem;
 }
-/* line 425, ../scss/_mystyle.scss */
+/* line 453, ../scss/_mystyle.scss */
 .modal article h1, .modal article h2, .modal article h3, .modal article h4, .modal article h5 {
   text-align: center;
   font-family: 'BebasNeue';
 }
-/* line 430, ../scss/_mystyle.scss */
+/* line 458, ../scss/_mystyle.scss */
 .modal article p {
   font-size: inherit;
 }
-/* line 434, ../scss/_mystyle.scss */
+/* line 462, ../scss/_mystyle.scss */
 .modal article .literal, .modal article code, .modal article pre {
   padding: 0 3px 2px;
   font-family: Menlo, Monaco, "Courier New", monospace;
@@ -4318,14 +4346,14 @@ footer a:focus {
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 444, ../scss/_mystyle.scss */
+/* line 472, ../scss/_mystyle.scss */
 .modal article .literal, .modal article code {
   padding: 3px 4px;
   color: #d14;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
 }
-/* line 451, ../scss/_mystyle.scss */
+/* line 479, ../scss/_mystyle.scss */
 .modal article pre {
   display: block;
   padding: 8.5px;
@@ -4339,24 +4367,29 @@ footer a:focus {
   word-break: break-all;
   word-wrap: break-word;
 }
-/* line 464, ../scss/_mystyle.scss */
+/* line 492, ../scss/_mystyle.scss */
 .modal article pre.prettyprint {
   margin-bottom: 18px;
 }
-/* line 467, ../scss/_mystyle.scss */
+/* line 495, ../scss/_mystyle.scss */
 .modal article pre code {
   padding: 0;
   color: inherit;
   background-color: transparent;
   border: 0;
 }
-/* line 474, ../scss/_mystyle.scss */
+/* line 502, ../scss/_mystyle.scss */
 .modal article table {
   margin: 0 auto;
 }
-/* line 477, ../scss/_mystyle.scss */
+/* line 505, ../scss/_mystyle.scss */
 .modal article table td, .modal article table th {
   text-align: center;
+}
+
+/* line 512, ../scss/_mystyle.scss */
+.modal-h2-hover {
+  background: rgba(0, 0, 0, 0.8) !important;
 }
 
 /* line 26, ../scss/_my_accordion.scss */

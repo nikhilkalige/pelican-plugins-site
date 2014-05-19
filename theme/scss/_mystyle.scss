@@ -386,6 +386,34 @@ footer {
         opacity: 0.8;
         background: rgba(0,0,0,0.1);
         border-radius: 3px 3px 0 0;
+        transition: all 0.3s linear;
+
+
+        a {
+            position: relative;
+            padding: 0 1rem;
+            &:after {
+                content: "";
+                width: 64px;
+                height: 64px;
+                margin: 0 5px 0 0;
+                background: url(../images/github.svg);
+                background-position: 0 0px;
+                display: inline-block;
+                top: -7px;
+                left: -64px;
+                position: absolute;
+                opacity: 0;
+            }
+
+            &:hover {
+                color: #41B7D8;
+            }
+
+            &:hover:after {
+                opacity: 1;
+            }
+        }
     }
 
     article  {
@@ -479,4 +507,8 @@ footer {
             }
         }
     }
+}
+
+.modal-h2-hover {
+    background: rgba(0,0,0,0.8) !important;
 }
