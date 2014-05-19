@@ -96,6 +96,9 @@ if 'tree' in tree:
         extension = value['ext']
         contents = value['contents']
 
+        if name == 'test_data':
+            continue
+
         #remove underscore from names
         title = name.replace('_', ' ')
         folder_link = repo_link + '/' + 'tree/master/' + name
