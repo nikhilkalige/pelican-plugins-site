@@ -3784,7 +3784,7 @@ dialog > :last-child, .reveal-modal > :last-child {
 @media only screen and (min-width: 40.063em) {
   /* line 164, ../bower_components/foundation/scss/foundation/components/_reveal.scss */
   dialog, .reveal-modal {
-    top: 6.25rem;
+    top: 0.3125rem;
   }
 }
 /* line 174, ../bower_components/foundation/scss/foundation/components/_reveal.scss */
