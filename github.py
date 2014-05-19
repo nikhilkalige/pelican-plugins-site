@@ -40,7 +40,7 @@ def convert_to_html(content, title, link):
     html = (
         "<html>\n<head>\n"
         + "<title>" + title + "</title>\n"
-        + "<link>" + link + "</link>\n"
+        + "<meta name=\"link\" content=\"" + link + "\"/>"
         + "</head>\n <body>"
         + html.decode('utf-8')
         + "</body></html>"
