@@ -32,8 +32,12 @@
                 <li class="mlink">
                     <a href="#" data-reveal-id="m0">assets</a>
                     <div id="m0" class="modal reveal-modal" data-reveal>
-                        <h2>assets</h2>
-                        <article><p>This plugin allows you to use the <a class="reference external" href="https://github.com/miracle2k/webassets">Webassets</a> module to manage assets such as
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/assets">assets</a>
+                        </h2>
+                        <article><div class="section" id="asset-management">
+<h2>Asset management</h2>
+<p>This plugin allows you to use the <a class="reference external" href="https://github.com/miracle2k/webassets">Webassets</a> module to manage assets such as
 CSS and JS files. The module must first be installed:</p>
 <pre class="literal-block">
 pip install webassets
@@ -106,6 +110,7 @@ theme's top-level directory. For example:</p>
     <span class="s">&#39;scss&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -113,19 +118,20 @@ theme's top-level directory. For example:</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m1">better figures and images</a>
                     <div id="m1" class="modal reveal-modal" data-reveal>
-                        <h2>better figures and images</h2>
-                        <article><ul class="simple">
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/better_figures_and_images">better figures and images</a>
+                        </h2>
+                        <article><div class="section" id="requirements">
+<h2>Requirements</h2>
+<ul class="simple">
 <li>pip install pillow beautifulsoup4</li>
 </ul>
 <div class="section" id="summary">
-<h2>Summary</h2>
+<h3>Summary</h3>
 <p>This plug-in:</p>
 <ul class="simple">
 <li>Adds a <cite>style=&quot;width: ???px; height: auto;&quot;</cite> attribute to any <cite>&lt;img&gt;</cite> tags in the content, by checking</li>
 </ul>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 15)</p>
-Bullet list ends without a blank line; unexpected unindent.</div>
 <p>the dimensions of the image file and adding the appropriate <cite>style=&quot;width: ???px; height: auto;&quot;</cite> to the <cite>&lt;img&gt;</cite> tag.
 - Also finds any <cite>div class=&quot;figures&quot;</cite> tags in the content, that contain images and adds the same style to them too.
 - If RESPONSIVE_IMAGES setting is true, it adds <cite>style=&quot;width: ???px; max-width: 100%; height: auto;&quot;</cite> instead.
@@ -136,31 +142,16 @@ Bullet list ends without a blank line; unexpected unindent.</div>
 <dt>&lt;div class=&quot;figure&quot;&gt;</dt>
 <dd><p class="first">&lt;img alt=&quot;/static/images/image.jpg&quot; src=&quot;/static/images/image.jpg&quot; /&gt;
 &lt;p class=&quot;caption&quot;&gt;</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 26)</p>
-Unexpected indentation.</div>
 <blockquote>
 This is the caption of the figure.</blockquote>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 27)</p>
-Block quote ends without a blank line; unexpected unindent.</div>
 <p>&lt;/p&gt;
 &lt;div class=&quot;legend&quot;&gt;</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 29)</p>
-Unexpected indentation.</div>
 <blockquote>
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</blockquote>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 31)</p>
-Block quote ends without a blank line; unexpected unindent.</div>
 <p class="last">&lt;/div&gt;</p>
 </dd>
 </dl>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 32)</p>
-Definition list ends without a blank line; unexpected unindent.</div>
 <p>&lt;/div&gt;</p>
 </blockquote>
 <p>into output like this:</p>
@@ -169,31 +160,16 @@ Definition list ends without a blank line; unexpected unindent.</div>
 <dt>&lt;div class=&quot;figure&quot; style=&quot;width: 250px; height: auto;&quot;&gt;</dt>
 <dd><p class="first">&lt;img style=&quot;width: 250px; height: auto;&quot; alt=&quot;&quot; src=&quot;/static/images/image.jpg&quot; /&gt;
 &lt;p class=&quot;caption&quot;&gt;</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 39)</p>
-Unexpected indentation.</div>
 <blockquote>
 This is the caption of the figure.</blockquote>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 40)</p>
-Block quote ends without a blank line; unexpected unindent.</div>
 <p>&lt;/p&gt;
 &lt;div class=&quot;legend&quot;&gt;</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 42)</p>
-Unexpected indentation.</div>
 <blockquote>
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</blockquote>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 44)</p>
-Block quote ends without a blank line; unexpected unindent.</div>
 <p class="last">&lt;/div&gt;</p>
 </dd>
 </dl>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 45)</p>
-Definition list ends without a blank line; unexpected unindent.</div>
 <p>&lt;/div&gt;</p>
 </blockquote>
 <p>or this, if RESPONSIVE_IMAGES = True:</p>
@@ -202,33 +178,19 @@ Definition list ends without a blank line; unexpected unindent.</div>
 <dt>&lt;div class=&quot;figure&quot; style=&quot;width: 250px; max-width: 100%; height: auto;&quot;&gt;</dt>
 <dd><p class="first">&lt;img style=&quot;width: 250px; max-width: 100%; height: auto;&quot; alt=&quot;&quot; src=&quot;/static/images/image.jpg&quot; /&gt;
 &lt;p class=&quot;caption&quot;&gt;</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 52)</p>
-Unexpected indentation.</div>
 <blockquote>
 This is the caption of the figure.</blockquote>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 53)</p>
-Block quote ends without a blank line; unexpected unindent.</div>
 <p>&lt;/p&gt;
 &lt;div class=&quot;legend&quot;&gt;</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 55)</p>
-Unexpected indentation.</div>
 <blockquote>
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</blockquote>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 57)</p>
-Block quote ends without a blank line; unexpected unindent.</div>
 <p class="last">&lt;/div&gt;</p>
 </dd>
 </dl>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/better_figures_and_images.rst</tt>, line 58)</p>
-Definition list ends without a blank line; unexpected unindent.</div>
 <p>&lt;/div&gt;</p>
 </blockquote>
+</div>
 </div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
@@ -237,7 +199,9 @@ Definition list ends without a blank line; unexpected unindent.</div>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m2">cjk-auto-spacing</a>
                     <div id="m2" class="modal reveal-modal" data-reveal>
-                        <h2>cjk-auto-spacing</h2>
+                        <h2>
+                            <a href="">cjk-auto-spacing</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-cjk-auto-spacing" class="anchor" href="#cjk-auto-spacing"><span class="octicon octicon-link"></span></a>CJK Auto Spacing</h1>
 
@@ -280,7 +244,9 @@ Title: CJK Auto Spacing Test Page
                 <li class="mlink">
                     <a href="#" data-reveal-id="m3">clean summary</a>
                     <div id="m3" class="modal reveal-modal" data-reveal>
-                        <h2>clean summary</h2>
+                        <h2>
+                            <a href="">clean summary</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-clean-summary-plugin" class="anchor" href="#clean-summary-plugin"><span class="octicon octicon-link"></span></a>Clean Summary Plugin</h1>
 
@@ -326,8 +292,20 @@ clean summary. Eg.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m4">code include</a>
                     <div id="m4" class="modal reveal-modal" data-reveal>
-                        <h2>code include</h2>
-                        <article><p>Use this plugin to make writing coding tutorials easier! You can
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/code_include">code include</a>
+                        </h2>
+                        <article><div class="section" id="include-pygments-highlighted-code-with-restructuredtext">
+<h2>Include Pygments highlighted code with reStructuredText</h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">author:</th><td class="field-body">Colin Dunklau</td>
+</tr>
+</tbody>
+</table>
+<p>Use this plugin to make writing coding tutorials easier! You can
 maintain the example source files separately from the actual article.</p>
 <p>Based heavily on <tt class="docutils literal">docutils.parsers.rst.directives.Include</tt>. Include
 a file and output as a code block formatted with pelican's Pygments
@@ -336,7 +314,7 @@ directive.</p>
 circular import. It was fixed in trunk:
 <a class="reference external" href="http://sourceforge.net/p/docutils/bugs/214/">http://sourceforge.net/p/docutils/bugs/214/</a></p>
 <div class="section" id="directives">
-<h2>Directives</h2>
+<h3>Directives</h3>
 <pre class="code rst literal-block">
 <span class="p">..</span> <span class="ow">code-include</span><span class="p">::</span> incfile.py
     <span class="nc">:lexer:</span> <span class="nf">string, name of the Pygments lexer to use, default 'text'</span>
@@ -349,7 +327,7 @@ circular import. It was fixed in trunk:
 docutils <tt class="docutils literal">include</tt> directive, that is, they index from zero.</p>
 </div>
 <div class="section" id="example">
-<h2>Example</h2>
+<h3>Example</h3>
 <p>./incfile.py:</p>
 <pre class="code python literal-block">
 <span class="c"># These two comment lines will not</span>
@@ -382,6 +360,7 @@ A function to help insult those silly English knnnnnnniggets:
     <span class="nc">:end-line:</span> <span class="nf">11</span>
 </pre>
 </div>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -389,7 +368,9 @@ A function to help insult those silly English knnnnnnniggets:
                 <li class="mlink">
                     <a href="#" data-reveal-id="m5">creole reader</a>
                     <div id="m5" class="modal reveal-modal" data-reveal>
-                        <h2>creole reader</h2>
+                        <h2>
+                            <a href="">creole reader</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-creole-reader" class="anchor" href="#creole-reader"><span class="octicon octicon-link"></span></a>Creole Reader</h1>
 
@@ -443,7 +424,9 @@ print("Hello World")
                 <li class="mlink">
                     <a href="#" data-reveal-id="m6">custom article urls</a>
                     <div id="m6" class="modal reveal-modal" data-reveal>
-                        <h2>custom article urls</h2>
+                        <h2>
+                            <a href="">custom article urls</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-custom-article-urls" class="anchor" href="#custom-article-urls"><span class="octicon octicon-link"></span></a>Custom Article URLs</h1>
 
@@ -491,19 +474,15 @@ you normally would.</p></article>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m7">disqus static</a>
                     <div id="m7" class="modal reveal-modal" data-reveal>
-                        <h2>disqus static</h2>
-                        <article><div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/ubuntu/src/github.com/NikhilKalige/pelican-plugins-site/content/disqus_static.rst</tt>, line 5)</p>
-<p>Title underline too short.</p>
-<pre class="literal-block">
-Disqus static comment plugin for Pelican
-====================================
-</pre>
-</div>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/disqus_static">disqus static</a>
+                        </h2>
+                        <article><div class="section" id="disqus-static-comment-plugin-for-pelican">
+<h2>Disqus static comment plugin for Pelican</h2>
 <p>This plugin adds a disqus_comments property to all articles.
 Comments are fetched at generation time using disqus API.</p>
 <div class="section" id="installation">
-<h2>Installation</h2>
+<h3>Installation</h3>
 <p>Because we use disqus API to retrieve the comments you need to create an application at
 <a class="reference external" href="http://disqus.com/api/applications/">http://disqus.com/api/applications/</a> which will provide you with a secret and public keys for the API.</p>
 <p>We use disqus-python package for communication with disqus API:
@@ -519,7 +498,7 @@ DISQUS_PUBLIC_KEY = u'YOUR_PUBLIC_KEY'
 </pre>
 </div>
 <div class="section" id="usage">
-<h2>Usage</h2>
+<h3>Usage</h3>
 <div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.disqus_comments</span> <span class="cp">%}</span>
 <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;disqus_static_comments&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;h4&gt;</span><span class="cp">{{</span> <span class="nv">article.disqus_comment_count</span> <span class="cp">}}</span> comments<span class="nt">&lt;/h4&gt;</span>
@@ -554,6 +533,7 @@ DISQUS_PUBLIC_KEY = u'YOUR_PUBLIC_KEY'
 <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
 </pre></div>
 </div>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -561,7 +541,9 @@ DISQUS_PUBLIC_KEY = u'YOUR_PUBLIC_KEY'
                 <li class="mlink">
                     <a href="#" data-reveal-id="m8">extract toc</a>
                     <div id="m8" class="modal reveal-modal" data-reveal>
-                        <h2>extract toc</h2>
+                        <h2>
+                            <a href="">extract toc</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-extract-table-of-content" class="anchor" href="#extract-table-of-content"><span class="octicon octicon-link"></span></a>Extract Table of Content</h1>
 
@@ -687,7 +669,9 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula 
                 <li class="mlink">
                     <a href="#" data-reveal-id="m9">feed summary</a>
                     <div id="m9" class="modal reveal-modal" data-reveal>
-                        <h2>feed summary</h2>
+                        <h2>
+                            <a href="">feed summary</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-feed-summary" class="anchor" href="#feed-summary"><span class="octicon octicon-link"></span></a>Feed Summary</h1>
 
@@ -734,7 +718,9 @@ PLUGINS = [
                 <li class="mlink">
                     <a href="#" data-reveal-id="m10">gallery</a>
                     <div id="m10" class="modal reveal-modal" data-reveal>
-                        <h2>gallery</h2>
+                        <h2>
+                            <a href="">gallery</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-gallery" class="anchor" href="#gallery"><span class="octicon octicon-link"></span></a>Gallery</h1>
 
@@ -864,8 +850,12 @@ as well as the filename extension to be stripped and the title of an image to be
                 <li class="mlink">
                     <a href="#" data-reveal-id="m11">github activity</a>
                     <div id="m11" class="modal reveal-modal" data-reveal>
-                        <h2>github activity</h2>
-                        <article><p>This plugin makes use of the <a class="reference external" href="https://crate.io/packages/feedparser/">feedparser</a> library that you'll need to
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/github_activity">github activity</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>GitHub activity</h2>
+<p>This plugin makes use of the <a class="reference external" href="https://crate.io/packages/feedparser/">feedparser</a> library that you'll need to
 install.</p>
 <p>Set the <tt class="docutils literal">GITHUB_ACTIVITY_FEED</tt> parameter to your GitHub activity feed.
 For example, to track Pelican project activity, the setting would be:</p>
@@ -893,6 +883,7 @@ variable, as in this example:</p>
 </pre>
 <p><tt class="docutils literal">github_activity</tt> is a list of lists. The first element is the title,
 and the second element is the raw HTML from GitHub.</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -900,10 +891,15 @@ and the second element is the raw HTML from GitHub.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m12">global license</a>
                     <div id="m12" class="modal reveal-modal" data-reveal>
-                        <h2>global license</h2>
-                        <article><p>This plugin allows you to define a <tt class="docutils literal">LICENSE</tt> setting and adds the contents of that
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/global_license">global license</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Global license</h2>
+<p>This plugin allows you to define a <tt class="docutils literal">LICENSE</tt> setting and adds the contents of that
 license variable to the article's context, making that variable available to use
 from within your theme's templates.</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -911,7 +907,9 @@ from within your theme's templates.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m13">goodreads activity</a>
                     <div id="m13" class="modal reveal-modal" data-reveal>
-                        <h2>goodreads activity</h2>
+                        <h2>
+                            <a href="">goodreads activity</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-goodreads-activity" class="anchor" href="#goodreads-activity"><span class="octicon octicon-link"></span></a>Goodreads Activity</h1>
 
@@ -1014,7 +1012,9 @@ details.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m14">googleplus comments</a>
                     <div id="m14" class="modal reveal-modal" data-reveal>
-                        <h2>googleplus comments</h2>
+                        <h2>
+                            <a href="">googleplus comments</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-googleplus-comments-plugin-for-pelican" class="anchor" href="#googleplus-comments-plugin-for-pelican"><span class="octicon octicon-link"></span></a>GooglePlus Comments Plugin For Pelican</h1>
 
@@ -1043,8 +1043,12 @@ PLUGINS = ["googleplus_comments"]
                 <li class="mlink">
                     <a href="#" data-reveal-id="m15">gravatar</a>
                     <div id="m15" class="modal reveal-modal" data-reveal>
-                        <h2>gravatar</h2>
-                        <article><p>This plugin assigns the <tt class="docutils literal">author_gravatar</tt> variable to the Gravatar URL and
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/gravatar">gravatar</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Gravatar</h2>
+<p>This plugin assigns the <tt class="docutils literal">author_gravatar</tt> variable to the Gravatar URL and
 makes the variable available within the article's context. You can add
 <tt class="docutils literal">AUTHOR_EMAIL</tt> to your settings file to define the default author's email
 address. Obviously, that email address must be associated with a Gravatar
@@ -1061,6 +1065,7 @@ Email:  john.doe&#64;example.com
 <p>If the email address is defined via at least one of the two methods above, the
 <tt class="docutils literal">author_gravatar</tt> variable is added to the article's context. For markdown,
 it is critical the 'E' in Email is capitalized.</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -1068,13 +1073,18 @@ it is critical the 'E' in Email is capitalized.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m16">gzip cache</a>
                     <div id="m16" class="modal reveal-modal" data-reveal>
-                        <h2>gzip cache</h2>
-                        <article><p>Certain web servers (e.g., Nginx) can use a static cache of gzip-compressed
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/gzip_cache">gzip cache</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Gzip cache</h2>
+<p>Certain web servers (e.g., Nginx) can use a static cache of gzip-compressed
 files to prevent the server from compressing files during an HTTP call. Since
 compression occurs at another time, these compressed files can be compressed
 at a higher compression level for increased optimization.</p>
 <p>The <tt class="docutils literal">gzip_cache</tt> plugin compresses all common text type files into a <tt class="docutils literal">.gz</tt>
 file within the same directory as the original file.</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -1082,7 +1092,9 @@ file within the same directory as the original file.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m17">HTML Entities for reStructuredText</a>
                     <div id="m17" class="modal reveal-modal" data-reveal>
-                        <h2>HTML Entities for reStructuredText</h2>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/html_entity">HTML Entities for reStructuredText</a>
+                        </h2>
                         <article><p>This plugin allows you to enter HTML entities such as &amp;copy;, &amp;lt;, &amp;#149; inline in a RST document, as opposed
 to the tedious method of creating substitution definitions.</p>
 <div class="section" id="roles">
@@ -1107,7 +1119,9 @@ to the tedious method of creating substitution definitions.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m18">html rst directive</a>
                     <div id="m18" class="modal reveal-modal" data-reveal>
-                        <h2>html rst directive</h2>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/html_rst_directive">html rst directive</a>
+                        </h2>
                         <article><div class="section" id="html-tags-for-restructuredtext">
 <h2>HTML tags for reStructuredText</h2>
 <p>This plugin allows you to use HTML tags from within reST documents.</p>
@@ -1155,10 +1169,14 @@ to the tedious method of creating substitution definitions.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m19">i18n subsites</a>
                     <div id="m19" class="modal reveal-modal" data-reveal>
-                        <h2>i18n subsites</h2>
-                        <article><p>This plugin extends the translations functionality by creating internationalized sub-sites for the default site. It is therefore redundant with the <em>*_LANG_{SAVE_AS,URL}</em> variables, so it disables them to prevent conflicts.</p>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/i18n_subsites">i18n subsites</a>
+                        </h2>
+                        <article><div class="section" id="i18n-sub-sites-plugin">
+<h2>I18N Sub-sites Plugin</h2>
+<p>This plugin extends the translations functionality by creating internationalized sub-sites for the default site. It is therefore redundant with the <em>*_LANG_{SAVE_AS,URL}</em> variables, so it disables them to prevent conflicts.</p>
 <div class="section" id="what-it-does">
-<h2>What it does</h2>
+<h3>What it does</h3>
 <ol class="arabic simple">
 <li>The <em>*_LANG_URL</em> and <em>*_LANG_SAVE_AS</em> variables are set to their normal counterparts (e.g. <em>ARTICLE_URL</em>) so they don't conflict with this scheme.</li>
 <li>While building the site for <em>DEFAULT_LANG</em> the translations of pages and articles are not generated, but their relations to the original content is kept via links to them.</li>
@@ -1179,7 +1197,7 @@ to the tedious method of creating substitution definitions.</p>
 </table>
 </div>
 <div class="section" id="setting-it-up">
-<h2>Setting it up</h2>
+<h3>Setting it up</h3>
 <p>For each extra used language code, a language-specific variables overrides dictionary must be given (but can be empty) in the <em>I18N_SUBSITES</em> dictionary</p>
 <div class="highlight"><pre><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;i18n_subsites&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 
@@ -1195,7 +1213,7 @@ to the tedious method of creating substitution definitions.</p>
 <li>The internationalized config overrides dictionary may specify configuration variable overrides — e.g. a different <em>LOCALE</em>, <em>SITENAME</em>, <em>TIMEZONE</em>, etc. However, it <strong>must not</strong> override <em>OUTPUT_PATH</em> and <em>SITEURL</em> as they are modified automatically by appending the language code.</li>
 </ul>
 <div class="section" id="localizing-templates">
-<h3>Localizing templates</h3>
+<h4>Localizing templates</h4>
 <p>Most importantly, this plugin can use localized templates for each sub-site. There are two approaches to having the templates localized:</p>
 <ul class="simple">
 <li>You can set a different <em>THEME</em> override for each language in <em>I18N_SUBSITES</em>, e.g. by making a copy of a theme <tt class="docutils literal">my_theme</tt> to <tt class="docutils literal">my_theme_lang</tt> and then editing the templates in the new localized theme. This approach means you don't have to deal with gettext <tt class="docutils literal">*.po</tt> files, but it is harder to maintain over time.</li>
@@ -1217,23 +1235,24 @@ to the tedious method of creating substitution definitions.</p>
 </div>
 </div>
 <div class="section" id="usage-notes">
-<h2>Usage notes</h2>
+<h3>Usage notes</h3>
 <ul class="simple">
 <li>It is <strong>mandatory</strong> to specify <em>lang</em> metadata for each article and page as <em>DEFAULT_LANG</em> is later changed for each sub-site, so content without <em>lang</em> metadata woudl be rendered in every (sub-)site.</li>
 <li>As with the original translations functionality, <em>slug</em> metadata is used to group translations. It is therefore often convenient to compensate for this by overriding the content URL (which defaults to slug) using the <em>URL</em> and <em>Save_as</em> metadata.</li>
 </ul>
 </div>
 <div class="section" id="future-plans">
-<h2>Future plans</h2>
+<h3>Future plans</h3>
 <ul class="simple">
 <li>add a test suite</li>
 </ul>
 </div>
 <div class="section" id="development">
-<h2>Development</h2>
+<h3>Development</h3>
 <ul class="simple">
 <li>A demo and test site is in the <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch and can be seen at <a class="reference external" href="http://smartass101.github.io/pelican-plugins/">http://smartass101.github.io/pelican-plugins/</a></li>
 </ul>
+</div>
 </div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
@@ -1242,7 +1261,9 @@ to the tedious method of creating substitution definitions.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m20">ical</a>
                     <div id="m20" class="modal reveal-modal" data-reveal>
-                        <h2>ical</h2>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/ical">ical</a>
+                        </h2>
                         <article><div class="section" id="id1">
 <h2>ical</h2>
 <p>This plugin looks for and parses an <tt class="docutils literal">.ics</tt> file if it is defined in a given
@@ -1289,7 +1310,9 @@ template in order to display the calendar:</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m21">interlinks</a>
                     <div id="m21" class="modal reveal-modal" data-reveal>
-                        <h2>interlinks</h2>
+                        <h2>
+                            <a href="">interlinks</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-interlinks" class="anchor" href="#interlinks"><span class="octicon octicon-link"></span></a>Interlinks</h1>
 
@@ -1351,7 +1374,9 @@ Search in [Wikipedia](wikipedia_en&gt;python), ([here](wikipedia_es&gt;python) i
                 <li class="mlink">
                     <a href="#" data-reveal-id="m22">liquid tags</a>
                     <div id="m22" class="modal reveal-modal" data-reveal>
-                        <h2>liquid tags</h2>
+                        <h2>
+                            <a href="">liquid tags</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-liquid-style-tags" class="anchor" href="#liquid-style-tags"><span class="octicon octicon-link"></span></a>Liquid-style Tags</h1>
 
@@ -1516,7 +1541,9 @@ comments are rendered as standard code input cells.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m23">multi part</a>
                     <div id="m23" class="modal reveal-modal" data-reveal>
-                        <h2>multi part</h2>
+                        <h2>
+                            <a href="">multi part</a>
+                        </h2>
                         <article><h2>
 <a name="user-content-multi-parts-posts" class="anchor" href="#multi-parts-posts"><span class="octicon octicon-link"></span></a>Multi parts posts</h2>
 
@@ -1549,12 +1576,16 @@ to display other parts of current post.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m24">neighbors</a>
                     <div id="m24" class="modal reveal-modal" data-reveal>
-                        <h2>neighbors</h2>
-                        <article><p>This plugin adds <tt class="docutils literal">next_article</tt> (newer) and <tt class="docutils literal">prev_article</tt> (older)
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/neighbors">neighbors</a>
+                        </h2>
+                        <article><div class="section" id="neighbor-articles-plugin-for-pelican">
+<h2>Neighbor Articles Plugin for Pelican</h2>
+<p>This plugin adds <tt class="docutils literal">next_article</tt> (newer) and <tt class="docutils literal">prev_article</tt> (older)
 variables to the article's context.</p>
 <p>Also adds <tt class="docutils literal">next_article_in_category</tt> and <tt class="docutils literal">prev_article_in_category</tt>.</p>
 <div class="section" id="usage">
-<h2>Usage</h2>
+<h3>Usage</h3>
 <div class="highlight"><pre> <span class="nt">&lt;ul&gt;</span>
  <span class="cp">{%</span> <span class="k">if</span> <span class="nv">article.prev_article</span> <span class="cp">%}</span>
      <span class="nt">&lt;li&gt;</span>
@@ -1590,7 +1621,7 @@ variables to the article's context.</p>
 </pre></div>
 </div>
 <div class="section" id="usage-with-the-subcategory-plugin">
-<h2>Usage with the Subcategory plugin</h2>
+<h3>Usage with the Subcategory plugin</h3>
 <p>If you want to get the neigbors within a subcategory it's a little different.
 Since an article can belong to more than one subcategory, subcategories are
 stored in a list. If you have an article with subcategories like</p>
@@ -1634,6 +1665,7 @@ Therefor the usage with subcategories is:</p>
  <span class="nt">&lt;/ul&gt;</span>
 </pre></div>
 </div>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -1641,7 +1673,9 @@ Therefor the usage with subcategories is:</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m25">optimize images</a>
                     <div id="m25" class="modal reveal-modal" data-reveal>
-                        <h2>optimize images</h2>
+                        <h2>
+                            <a href="">optimize images</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-optimize-images-plugin-for-pelican" class="anchor" href="#optimize-images-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Optimize Images Plugin For Pelican</h1>
 
@@ -1672,10 +1706,15 @@ pelican.</p></article>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m26">pdf</a>
                     <div id="m26" class="modal reveal-modal" data-reveal>
-                        <h2>pdf</h2>
-                        <article><p>The PDF Generator plugin automatically exports RST articles and pages
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/pdf">pdf</a>
+                        </h2>
+                        <article><div class="section" id="pdf-generator">
+<h2>PDF Generator</h2>
+<p>The PDF Generator plugin automatically exports RST articles and pages
 as PDF files as part of the site-generation process. PDFs are saved to
 output/pdf/</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -1683,7 +1722,9 @@ output/pdf/</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m27">pelican comment system</a>
                     <div id="m27" class="modal reveal-modal" data-reveal>
-                        <h2>pelican comment system</h2>
+                        <h2>
+                            <a href="">pelican comment system</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-pelican-comment-system" class="anchor" href="#pelican-comment-system"><span class="octicon octicon-link"></span></a>Pelican comment system</h1>
 
@@ -1739,11 +1780,15 @@ The comments are stored in Markdown files. Each comment in it own file.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m28">pelican vimeo</a>
                     <div id="m28" class="modal reveal-modal" data-reveal>
-                        <h2>pelican vimeo</h2>
-                        <article><p>Pelican Vimeo is a plugin to enabled you to embed Vimeo videos in your pages
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/pelican_vimeo">pelican vimeo</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Pelican Vimeo</h2>
+<p>Pelican Vimeo is a plugin to enabled you to embed Vimeo videos in your pages
 and articles.</p>
 <div class="section" id="installation">
-<h2>Installation</h2>
+<h3>Installation</h3>
 <p>To install pelican-vimeo, simply install it from PyPI:</p>
 <div class="highlight"><pre><span class="nv">$ </span>pip install pelican-vimeo
 </pre></div>
@@ -1756,7 +1801,7 @@ and articles.</p>
 </pre></div>
 </div>
 <div class="section" id="usage">
-<h2>Usage</h2>
+<h3>Usage</h3>
 <p>In your article or page, you simply need to add a line to embed you video.</p>
 <div class="highlight"><pre><span class="p">..</span> <span class="ow">vimeo</span><span class="p">::</span> VIDEO_ID
 </pre></div>
@@ -1766,7 +1811,7 @@ and articles.</p>
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
 <div class="section" id="additional-arguments">
-<h3>Additional arguments</h3>
+<h4>Additional arguments</h4>
 <p>You can also specify a <cite>width</cite>, <cite>height</cite> and <cite>alignment</cite></p>
 <div class="highlight"><pre><span class="p">..</span> <span class="ow">vimeo</span><span class="p">::</span> 37818131
 <span class="nc">:width:</span> <span class="nf">800</span>
@@ -1781,8 +1826,9 @@ and articles.</p>
 </div>
 </div>
 <div class="section" id="license">
-<h2>License</h2>
+<h3>License</h3>
 <p><a class="reference external" href="http://opensource.org/licenses/MIT">MIT</a> license.</p>
+</div>
 </div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
@@ -1791,11 +1837,15 @@ and articles.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m29">pelican youtube</a>
                     <div id="m29" class="modal reveal-modal" data-reveal>
-                        <h2>pelican youtube</h2>
-                        <article><p>Pelican YouTube is a plugin to enabled you to embed YouTube videos in your pages
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/pelican_youtube">pelican youtube</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Pelican YouTube</h2>
+<p>Pelican YouTube is a plugin to enabled you to embed YouTube videos in your pages
 and articles.</p>
 <div class="section" id="installation">
-<h2>Installation</h2>
+<h3>Installation</h3>
 <p>To install pelican-youtube, simply install it from PyPI:</p>
 <div class="highlight"><pre><span class="nv">$ </span>pip install pelican-youtube
 </pre></div>
@@ -1808,7 +1858,7 @@ and articles.</p>
 </pre></div>
 </div>
 <div class="section" id="usage">
-<h2>Usage</h2>
+<h3>Usage</h3>
 <p>In your article or page, you simply need to add a line to embed you video.</p>
 <div class="highlight"><pre><span class="p">..</span> <span class="ow">youtube</span><span class="p">::</span> VIDEO_ID
 </pre></div>
@@ -1818,7 +1868,7 @@ and articles.</p>
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
 <div class="section" id="additional-arguments">
-<h3>Additional arguments</h3>
+<h4>Additional arguments</h4>
 <p>You can also specify a <cite>width</cite>, <cite>height</cite> and <cite>alignment</cite></p>
 <div class="highlight"><pre><span class="p">..</span> <span class="ow">youtube</span><span class="p">::</span> 37818131
 <span class="nc">:width:</span> <span class="nf">800</span>
@@ -1833,8 +1883,9 @@ and articles.</p>
 </div>
 </div>
 <div class="section" id="license">
-<h2>License</h2>
+<h3>License</h3>
 <p><a class="reference external" href="http://opensource.org/licenses/MIT">MIT</a> license.</p>
+</div>
 </div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
@@ -1843,8 +1894,12 @@ and articles.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m30">post stats</a>
                     <div id="m30" class="modal reveal-modal" data-reveal>
-                        <h2>post stats</h2>
-                        <article><p>A Pelican plugin to calculate various statistics about a post and store them in an article.stats dictionary:</p>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/post_stats">post stats</a>
+                        </h2>
+                        <article><div class="section" id="post-statistics">
+<h2>Post Statistics</h2>
+<p>A Pelican plugin to calculate various statistics about a post and store them in an article.stats dictionary:</p>
 <ul class="simple">
 <li><tt class="docutils literal">wc</tt>: how many words</li>
 <li><tt class="docutils literal">read_mins</tt>: how many minutes would it take to read this article, based on 250 wpm (<a class="reference external" href="http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension">http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension</a>)</li>
@@ -1873,10 +1928,11 @@ and articles.</p>
 </pre></div>
 <p>and can be used to create a tag/word cloud for a post.</p>
 <div class="section" id="requirements">
-<h2>Requirements</h2>
+<h3>Requirements</h3>
 <p><cite>post_stats</cite> requires BeautifulSoup.</p>
 <div class="highlight"><pre><span class="gp">$</span> pip install beautifulsoup4
 </pre></div>
+</div>
 </div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
@@ -1885,7 +1941,9 @@ and articles.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m31">random article</a>
                     <div id="m31" class="modal reveal-modal" data-reveal>
-                        <h2>random article</h2>
+                        <h2>
+                            <a href="">random article</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-random-article-plugin-for-pelican" class="anchor" href="#random-article-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Random Article Plugin For Pelican</h1>
 
@@ -1913,7 +1971,9 @@ saved at <code>SITEURL</code>.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m32">read more link</a>
                     <div id="m32" class="modal reveal-modal" data-reveal>
-                        <h2>read more link</h2>
+                        <h2>
+                            <a href="">read more link</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-read-more-link" class="anchor" href="#read-more-link"><span class="octicon octicon-link"></span></a>Read More Link</h1>
 
@@ -1947,8 +2007,12 @@ READ_MORE_LINK_FORMAT = '&lt;a class="read-more" href="/{url}"&gt;{text}&lt;/a&g
                 <li class="mlink">
                     <a href="#" data-reveal-id="m33">related posts</a>
                     <div id="m33" class="modal reveal-modal" data-reveal>
-                        <h2>related posts</h2>
-                        <article><p>This plugin adds the <tt class="docutils literal">related_posts</tt> variable to the article's context.
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/related_posts">related posts</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Related posts</h2>
+<p>This plugin adds the <tt class="docutils literal">related_posts</tt> variable to the article's context.
 By default, up to 5 articles are listed. You can customize this value by
 defining <tt class="docutils literal">RELATED_POSTS_MAX</tt> in your settings file:</p>
 <pre class="literal-block">
@@ -1970,6 +2034,7 @@ The 'related_posts:' meta data works together with your existing slugs:</p>
 <blockquote>
 related_posts: slug1,slug2,slug3...slugN</blockquote>
 <p>N represents the RELATED_POSTS_MAX</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -1977,7 +2042,9 @@ related_posts: slug1,slug2,slug3...slugN</blockquote>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m34">render math</a>
                     <div id="m34" class="modal reveal-modal" data-reveal>
-                        <h2>render math</h2>
+                        <h2>
+                            <a href="">render math</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-math-render-plugin-for-pelican" class="anchor" href="#math-render-plugin-for-pelican"><span class="octicon octicon-link"></span></a>Math Render Plugin For Pelican</h1>
 
@@ -2201,7 +2268,9 @@ refer to that equation number by <code>$</code>\ref{eq}<code>$</code>.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m35">representative image</a>
                     <div id="m35" class="modal reveal-modal" data-reveal>
-                        <h2>representative image</h2>
+                        <h2>
+                            <a href="">representative image</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a>Summary</h1>
 
@@ -2216,7 +2285,9 @@ refer to that equation number by <code>$</code>\ref{eq}<code>$</code>.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m36">share post</a>
                     <div id="m36" class="modal reveal-modal" data-reveal>
-                        <h2>share post</h2>
+                        <h2>
+                            <a href="">share post</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-share-post" class="anchor" href="#share-post"><span class="octicon octicon-link"></span></a>Share Post</h1>
 
@@ -2298,7 +2369,9 @@ be unobtrusive depending on how Pelican theme uses them.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m37">simple footnotes</a>
                     <div id="m37" class="modal reveal-modal" data-reveal>
-                        <h2>simple footnotes</h2>
+                        <h2>
+                            <a href="">simple footnotes</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-simple-footnotes" class="anchor" href="#simple-footnotes"><span class="octicon octicon-link"></span></a>Simple Footnotes</h1>
 
@@ -2332,8 +2405,12 @@ it looks for the <code>[ref]</code> and <code>[/ref]</code> once the conversion 
                 <li class="mlink">
                     <a href="#" data-reveal-id="m38">sitemap</a>
                     <div id="m38" class="modal reveal-modal" data-reveal>
-                        <h2>sitemap</h2>
-                        <article><p>The sitemap plugin generates plain-text or XML sitemaps. You can use the
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/sitemap">sitemap</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Sitemap</h2>
+<p>The sitemap plugin generates plain-text or XML sitemaps. You can use the
 <tt class="docutils literal">SITEMAP</tt> variable in your settings file to configure the behavior of the
 plugin.</p>
 <p>The <tt class="docutils literal">SITEMAP</tt> variable must be a Python dictionary and can contain three keys:</p>
@@ -2393,6 +2470,7 @@ For more information: &lt;<a class="reference external" href="http://www.sitemap
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -2400,7 +2478,9 @@ For more information: &lt;<a class="reference external" href="http://www.sitemap
                 <li class="mlink">
                     <a href="#" data-reveal-id="m39">static comments</a>
                     <div id="m39" class="modal reveal-modal" data-reveal>
-                        <h2>static comments</h2>
+                        <h2>
+                            <a href="">static comments</a>
+                        </h2>
                         <article><h2>
 <a name="user-content-static-comments" class="anchor" href="#static-comments"><span class="octicon octicon-link"></span></a>Static comments</h2>
 
@@ -2434,7 +2514,9 @@ are located. Default is <code>comments</code>.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m40">subcategory</a>
                     <div id="m40" class="modal reveal-modal" data-reveal>
-                        <h2>subcategory</h2>
+                        <h2>
+                            <a href="">subcategory</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-subcategory-plugin" class="anchor" href="#subcategory-plugin"><span class="octicon octicon-link"></span></a>Subcategory Plugin</h1>
 
@@ -2528,8 +2610,12 @@ SUBCATEGORY_FEED_RSS = 'feeds/%s.rss.xml'
                 <li class="mlink">
                     <a href="#" data-reveal-id="m41">summary</a>
                     <div id="m41" class="modal reveal-modal" data-reveal>
-                        <h2>summary</h2>
-                        <article><p>This plugin allows easy, variable length summaries directly embedded into the
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/summary">summary</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Summary</h2>
+<p>This plugin allows easy, variable length summaries directly embedded into the
 body of your articles. It introduces two new settings: <tt class="docutils literal">SUMMARY_BEGIN_MARKER</tt>
 and <tt class="docutils literal">SUMMARY_END_MARKER</tt>: strings which can be placed directly into an article
 to mark the beginning and end of a summary. When found, the standard
@@ -2553,6 +2639,7 @@ and this content occurs after the summary.
 beginning marker was found, it starts at the top of the body. It is possible
 to leave out the end marker instead, in which case the summary will start at the
 beginning marker and continue to the end of the body.</p>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -2560,8 +2647,12 @@ beginning marker and continue to the end of the body.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m42">test data</a>
                     <div id="m42" class="modal reveal-modal" data-reveal>
-                        <h2>test data</h2>
-                        <article><p>Place tests for your plugin here. <tt class="docutils literal">test_data</tt> folder contains following
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/test_data">test data</a>
+                        </h2>
+                        <article><div class="section" id="id1">
+<h2>Test Data</h2>
+<p>Place tests for your plugin here. <tt class="docutils literal">test_data</tt> folder contains following
 common data for your tests, if you need them.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -2585,6 +2676,7 @@ common data for your tests, if you need them.</p>
 </tr>
 </tbody>
 </table>
+</div>
 </article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
@@ -2592,7 +2684,9 @@ common data for your tests, if you need them.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m43">thumbnailer</a>
                     <div id="m43" class="modal reveal-modal" data-reveal>
-                        <h2>thumbnailer</h2>
+                        <h2>
+                            <a href="">thumbnailer</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-thumbnail-creation-of-images" class="anchor" href="#thumbnail-creation-of-images"><span class="octicon octicon-link"></span></a>Thumbnail Creation of images</h1>
 
@@ -2628,7 +2722,9 @@ The generated filename will be originalname_thumbnailname.ext unless THUMBNAIL_K
                 <li class="mlink">
                     <a href="#" data-reveal-id="m44">tipue search</a>
                     <div id="m44" class="modal reveal-modal" data-reveal>
-                        <h2>tipue search</h2>
+                        <h2>
+                            <a href="">tipue search</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-tipue-search" class="anchor" href="#tipue-search"><span class="octicon octicon-link"></span></a>Tipue Search</h1>
 
@@ -2711,7 +2807,9 @@ especially for large sites.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m45">twitter bootstrap rst directives</a>
                     <div id="m45" class="modal reveal-modal" data-reveal>
-                        <h2>twitter bootstrap rst directives</h2>
+                        <h2>
+                            <a href="https://github.com/NikhilKalige/pelican-plugins/tree/master/twitter_bootstrap_rst_directives">twitter bootstrap rst directives</a>
+                        </h2>
                         <article><div class="section" id="twitter-bootstrap-directive-for-restructured-text">
 <h2>Twitter Bootstrap Directive for restructured text</h2>
 <p>This plugin defines some rst directive that enable a clean usage of the twitter bootstrap CSS and Javascript components.</p>
@@ -2761,7 +2859,9 @@ is modifying the traditional docutils output.</p>
                 <li class="mlink">
                     <a href="#" data-reveal-id="m46">w3c validate</a>
                     <div id="m46" class="modal reveal-modal" data-reveal>
-                        <h2>w3c validate</h2>
+                        <h2>
+                            <a href="">w3c validate</a>
+                        </h2>
                         <article><h1>
 <a name="user-content-w3c_validate-plugin" class="anchor" href="#w3c_validate-plugin"><span class="octicon octicon-link"></span></a>w3c_validate plugin</h1>
 
