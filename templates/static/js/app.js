@@ -1,28 +1,18 @@
 // Foundation JavaScript
 // Documentation can be found at: http://foundation.zurb.com/docs
+
+var document_top = 0;
 $(document).foundation({
     reveal: {
-        open: function() {
-            //$('body').css("overflow", "hidden")
+        opened: function() {
+            document_top = $('.modal.open').offset().top;
         },
-        close: function() {
-            //$('body').css("overflow", "auto")
+        closed: function() {
+            $('body').css("overflow", "auto");
+            $('html, body').animate({
+                scrollTop: document_top
+            }, 300)
         },
-        css : {
-            open : {
-              'opacity': 0,
-              'visibility': 'visible',
-              'display' : 'block',
-              'overflow-y': 'auto',
-              'max-height': '95%'
-            },
-            close : {
-              'opacity': 1,
-              'visibility': 'hidden',
-              'display': 'none',
-              'overflow-y': 'inherit'
-            }
-        }
     }
 });
 
