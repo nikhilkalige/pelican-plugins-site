@@ -34,21 +34,28 @@ def module_readme(path):
     return readme.decoded.decode('utf-8'), extension
 
 
-def convert_to_html(content, title):
+def convert_to_html(content, title, link):
     html = user.markdown(content)
     # format it to suit requirements pelican
     html = (
-        "<html>\n<head>\n<title>"
-        + title
-        + "</title>\n </head>\n <body>"
+        "<html>\n<head>\n"
+        + "<title>" + title + "</title>\n"
+        + "<link>" + link + "</link>\n"
+        + "</head>\n <body>"
         + html.decode('utf-8')
         + "</body></html>"
         )
     return html
 
+
+def insert_string(str, new_str, pos):
+    return str[:pos] + new_str + str[pos:]
+
+
 user = github.login(token=os.environ.get('TOKEN'))
 repo = user.repository(REPO_USERNAME, REPO_NAME)
 tree = repo.tree('master').to_json()
+repo_link = repo.html_url
 
 sub_dir = []
 sub_module = []
@@ -91,6 +98,7 @@ if 'tree' in tree:
 
         #remove underscore from names
         title = name.replace('_', ' ')
+        folder_link = repo_link + '/' + 'tree/master/' + name
         file_name = name + '.' + ('rst' if extension == 'rst' else 'html')
 
         with codecs.open(os.path.join(loc, file_name), 'w', 'utf-8') as outfile:
@@ -100,10 +108,13 @@ if 'tree' in tree:
                     html = (title + '\n' + '#' * len(title) + '\n' + '\n' + contents)
                 else:
                     html = contents
+                # append link
+                position = re.search('[#]{3,}(?:\r|\n|\r\n)', html)
+                html = insert_string(html, (':link: ' + folder_link), position.end())
 
             elif extension == 'md':
-            #    outfile.write('Title:' + value['name'] + '\n' + '\n' + value['contents'])
-                html = convert_to_html(contents, title)
+                html = convert_to_html(contents, title, folder_link)
+
             outfile.write(html)
 
     # create files from readme

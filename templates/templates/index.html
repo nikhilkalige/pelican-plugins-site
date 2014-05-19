@@ -26,7 +26,9 @@
                 <li class="mlink">
                     <a href="#" data-reveal-id="{{'m' ~ i}}">{{ article.title }}</a>
                     <div id="{{'m' ~ i}}" class="modal reveal-modal" data-reveal>
-                        <h2>{{ article.title }}</h2>
+                        <h2>
+                            <a href="{{ article.link }}">{{ article.title }}</a>
+                        </h2>
                         <article>{{ article.content }}</article>
                         <a class="close-reveal-modal">&#215;</a>
                     </div>
